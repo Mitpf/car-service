@@ -1,0 +1,10 @@
+{
+    "game_1": {
+        "_id": "game_2",
+        "name": "Bright",
+        "imageUrl": "images/MineCraft.png",
+        "maxlevel": 4,
+        "genres": "Action, Crime, Fantasy",
+        "description": "Set in a world where fantasy creatures live side by side with humans. A human cop is forced to work with an Orc to find a weapon everyone is prepared to kill for. Set in a world where fantasy creatures live side by side with humans. A human cop is forced to work with an Orc to find a weapon everyone is prepared to kill for."
+    }
+}

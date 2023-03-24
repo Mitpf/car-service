@@ -1,0 +1,26 @@
+{
+    "game_1": {
+        "_id": "game_1",
+        "title": "Bright",
+        "imageUrl": "images/MineCraft.png",
+        "maxlevel": 4,
+        "category": "Action, Crime, Fantasy",
+        "summary": "Set in a world where fantasy creatures live side by side with humans. A human cop is forced to work with an Orc to find a weapon everyone is prepared to kill for. Set in a world where fantasy creatures live side by side with humans. A human cop is forced to work with an Orc to find a weapon everyone is prepared to kill for."
+    },
+    "game_2": {
+        "_id": "game_2",
+        "title": "Need For Speed",
+        "imageUrl": "https://www.giantbomb.com/a/uploads/scale_small/8/81005/2955849-6602809030-811-n.jpg",
+        "maxlevel": 6,
+        "category": "Action, Sport",
+        "summary": "A mechanic who moonlights as an underground race-car driver strives to take the top prize in America's most prominent street race in order to have his revenge against the ambitious ex-NASCAR champ who had him framed and sent to prison."
+    },
+    "game_3": {
+        "_id": "game_3",
+        "title": "Revolt",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/5/5b/Re-Volt_Coverart.jpg",
+        "maxlevel": 15,
+        "category": "sport, Action",
+        "summary": "It's a wonderfully addictive combination of a kart racing game and a simulator. "
+    }
+}
