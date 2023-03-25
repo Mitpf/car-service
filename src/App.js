@@ -12,8 +12,6 @@ function App() {
     document.title = "Car Service - Reminder";  
   }, []);
 
-
-
   return (
     <div >
       <br />

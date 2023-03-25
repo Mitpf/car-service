@@ -1,59 +1,112 @@
-import { useState } from 'react';
+
+
+
+import { useState, Fragment, useEffect } from 'react';
 import { OrderListRow } from '../OrderListRow/OrderListRow';
-import {OrderListInfoPlus} from '../OrderListRowInfoPlus/OderListInfoPlus'
+import { OrderListInfoPlus } from '../OrderListRowInfoPlus/OderListInfoPlus'
 
 
 
 export const Clientstable = () => {
 
-    const cars = [{ id: 123 }, { id: 456 }, { id: 789 }];
+    const [orders, setOrders] = useState({});
+    const [openInfoMethod, setopenInfoMethod] = useState('one');
 
-    const [showInfoPlus, setInfo] = useState({});
+    useEffect(() => {
+        fetch(`http://localhost:3030/jsonstore/orders`)
+            .then(response => response.json())
+            .then(result => setOrders(result))
+    }, [])
+
+
+
+
+
+    const [showInfoPlus, setshowInfoPlus] = useState({});
 
     const toggleShowInfoPlus = (e) => {
 
-        const id = e.currentTarget.id
+        const id = e.currentTarget.id;
 
-        /* setInfo(state => ({ ...state, [id]: !state[id] })) */
-        setInfo(state => ({ [id]: !state[id] }))
+        openInfoMethod === 'one'
+            ? setshowInfoPlus(state => ({ [id]: !state[id] }))
+            : setshowInfoPlus(state => ({ ...state, [id]: !state[id] }))
 
     }
+
+    const changeOpenMethod = e => setopenInfoMethod(e.target.value);
+
     return (
 
 
 
         <div >
+
+            <div className="radioDiv">
+                <input
+                    type="radio"
+                    value="multi"
+                    name="infoplus"
+                    checked={openInfoMethod === 'multi'}
+                    onChange={changeOpenMethod}
+                />
+
+                <label htmlFor="multi">Multi-Info Open</label>
+
+                <input
+                    type="radio"
+                    value="one"
+                    name="infoplus"
+                    checked={openInfoMethod === 'one'}
+                    onChange={changeOpenMethod}
+                />
+
+                <label htmlFor="one">only-oneInfo Open</label>
+
+            </div>
             <table className="rwd-table">
                 <tbody>
 
-                    <tr>
-                        <th>Service-Order No</th>
-                        <th>Type service</th>
-                        <th>Status</th>
-                        <th>Owner car</th>
-                        <th>Car model</th>
-                        <th>Calc Price</th>
+                    <tr >
+                        <th >Service-Order No</th>
+                        <th >Type service</th>
+                        <th >Owner car</th>
+                        <th >Car model</th>
+                        <th >Calc Price</th>
+                        <th >Status</th>
                     </tr>
 
-                    {cars.map(x => (
 
-                        <>
+                    {Object.values(orders).map(x => (
+
+
+                        <Fragment key={x._id}>
                             <OrderListRow
-                                id={x.id}
-                                key={x.id}
+                                //id={x._id}
+                                {...x}
                                 toggleShowInfoPlus={toggleShowInfoPlus}
                                 showInfoPlus={showInfoPlus}
                             />
-                            {showInfoPlus[x.id]  && <OrderListInfoPlus id={x.id} key={x.id}/>}
-                        </>
+                            {showInfoPlus[x._id] && <OrderListInfoPlus id={x._id} {...x} />}
+                        </Fragment>
 
 
 
-                    ))};
 
+
+
+                    ))}
 
                 </tbody>
             </table>
+
+
+
+
+
+
+
+
 
 
         </div>
@@ -72,3 +125,4 @@ pads
 accumaltor
 winter tires
 summer tires */
+

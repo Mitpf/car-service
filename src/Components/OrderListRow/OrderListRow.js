@@ -1,37 +1,73 @@
 
 
-export const OrderListRow = ({ id, toggleShowInfoPlus, showInfoPlus
+export const OrderListRow = ({
+    _id,
+    userId,
+    type,
+    status,
+    carInfo,
+    calcPrice,
+    toggleShowInfoPlus,
+    showInfoPlus
 }) => {
     return (
-        
-                <>
+        <tr id={_id} onClick={(e) => toggleShowInfoPlus(e)} className="trbtn">
 
-                    <tr id={id} onClick={(e) => toggleShowInfoPlus(e)} className="trbtn">
-                        <td data-th="OWNER CAR NAME">
-                            UPS5005
-                        </td>
-                        <td data-th="CAR MODEL">
-                            UPS
-                        </td>
-                        <td data-th="CAR INFO">
-                            ASDF19218
-                        </td>
-                        <td data-th="STATUS/LAST REPAIR">
-                            06/25/2016
-                        </td>
-                        <td data-th="PHOTO">
-                            12/25/2016
-                        </td>
-                        <td data-th="Net Amount">
-                            $8,322.12
-                        </td>
-                    </tr>
+            <td data-th="Service-Order No" >
+                {_id}
+            </td>
+            <td data-th="Type service" >
+                {type}
+            </td>
+            <td data-th="Owner car" >
+                {userId}
+            </td>
+            <td data-th="Car model" >
+                {carInfo.carBrand}
+                {carInfo.carModel}
 
-                    
-                </>
+            </td>
+            <td data-th="Calc Price" >
+                {calcPrice}
+            </td>
+            <td data-th="Status" >
+                {status}
+            </td>
 
-
+        </tr>
     );
 };
 
 
+/* 
+
+addNote
+: 
+""
+calcPrice
+: 
+370
+carInfo
+: 
+{carBrand: 'Toytoa', carModel: 'Corolla', productDate: '2017 February', engine: 'gasoline', km: 176355, …}
+problemDescript
+: 
+{title: 'Belt noise', text: 'There is some noise from belts'}
+serviceInfo
+: 
+{diagnostic: 'broken cylinder', resolveBrief: 'changed with new cylinder'}
+status
+: 
+"working in progress"
+type
+: 
+"Problem"
+userId
+: 
+"asd04566"
+_id
+: 
+"order_001"
+
+
+*/

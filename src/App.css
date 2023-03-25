@@ -189,7 +189,24 @@ body {
 }
 
 .tdinfo {
+  vertical-align: top;
   background-color: rgb(193, 189, 189);
   font-size: small;
- 
+
+}
+
+.radioDiv {
+  text-align: center;
+  margin: auto;
+  color: #61dafb;
+}
+
+.arrow {
+  margin-top: 0px;
+  width: 25px;
+}
+
+td .arrow{
+  vertical-align: top;
+  margin-top: 0px;
 }
