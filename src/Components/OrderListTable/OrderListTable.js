@@ -20,8 +20,6 @@ export const Clientstable = () => {
 
 
 
-
-
     const [showInfoPlus, setshowInfoPlus] = useState({});
 
     const toggleShowInfoPlus = (e) => {
@@ -89,11 +87,6 @@ export const Clientstable = () => {
                             />
                             {showInfoPlus[x._id] && <OrderListInfoPlus id={x._id} {...x} />}
                         </Fragment>
-
-
-
-
-
 
                     ))}
 
