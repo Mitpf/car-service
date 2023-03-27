@@ -1,13 +1,12 @@
 
-import {
-  useEffect,
-  Routes,
-  Route,
-} from 'react';
+import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import { MainNavigation } from './Components/MainNavigation/MainNavigation';
-import { Clientstable } from './Components/OrderListTable/OrderListTable';
+import { Login } from './Components/LoginRegister/Login/Login';
+import { OrderListTable } from './Components/OrdersTable/OrderListTable/OrderListTable';
+import { Register } from './Components/LoginRegister/Register/Register';
 
 
 
@@ -18,18 +17,20 @@ function App() {
   }, []);
 
   return (
-    <div >
 
+    <>
       <MainNavigation />
 
-      <h2 className="header">Admin view Order-CarList</h2>
+      <Routes>
+        <Route path='/' element={<h>Home</h>} />
+        <Route path='/orders/list' element={<OrderListTable/>} />
+        <Route path='/login' element={<Login/>} />
+        <Route path='/register' element={<Register/>} />
+      </Routes>
 
 
-      <Clientstable />
+    </>
 
-
-
-    </div>
   );
 }
 

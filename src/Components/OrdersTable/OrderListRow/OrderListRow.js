@@ -1,5 +1,7 @@
 
 
+import styles from '../OrdersTable.module.css'
+
 export const OrderListRow = ({
     _id,
     userId,
@@ -11,7 +13,7 @@ export const OrderListRow = ({
     showInfoPlus
 }) => {
     return (
-        <tr id={_id} onClick={(e) => toggleShowInfoPlus(e)} className="trbtn">
+        <tr id={_id} onClick={(e) => toggleShowInfoPlus(e)} className={styles["trbtn"]}>
 
             <td data-th="Service-Order No" >
                 {_id}

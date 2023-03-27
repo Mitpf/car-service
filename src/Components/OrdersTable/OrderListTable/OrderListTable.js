@@ -1,13 +1,14 @@
 
 
 
+
 import { useState, Fragment, useEffect } from 'react';
 import { OrderListRow } from '../OrderListRow/OrderListRow';
 import { OrderListInfoPlus } from '../OrderListRowInfoPlus/OderListInfoPlus'
+import styles from '../OrdersTable.module.css'
 
 
-
-export const Clientstable = () => {
+export const OrderListTable = () => {
 
     const [orders, setOrders] = useState({});
     const [openInfoMethod, setopenInfoMethod] = useState('one');
@@ -40,7 +41,9 @@ export const Clientstable = () => {
 
         <div >
 
-            <div className="radioDiv">
+        <h1 className={styles.header}>Service Orders list</h1>
+
+            <div className={styles.radioDiv}>
                 <input
                     type="radio"
                     value="multi"
@@ -62,7 +65,7 @@ export const Clientstable = () => {
                 <label htmlFor="one">only-oneInfo Open</label>
 
             </div>
-            <table className="rwd-table">
+            <table className={styles["rwd-table"]}>
                 <tbody>
 
                     <tr >
@@ -93,29 +96,9 @@ export const Clientstable = () => {
                 </tbody>
             </table>
 
-
-
-
-
-
-
-
-
-
         </div>
 
     );
 }
 
-
-/* 
-left 3 years or change after 1200 km
-oil change - after 2000 km
-timing belt - 3 years left, or change after 23 000 km
-car insurance vignette
-Car Inspection
-pads
-accumaltor
-winter tires
-summer tires */
 
