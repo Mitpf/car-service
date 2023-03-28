@@ -1,16 +1,23 @@
+
+
+
+
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
+  
 }
 
 
 
 header {
-  background-color: #0a165a;
+  background-color: #203553;
   padding: 0 5%;
   box-shadow: 0 10px 20px rgb(0, 0, 0/5%), 0 6px 6px rgb(0, 0, 0/6%);
+  font-weight:500;
 }
 
 header nav {
@@ -28,7 +35,7 @@ header nav {
 
 .logo a {
   text-decoration: none;
-  font-size: 26px;
+  font-size: 20px;
   color: #fff;
   text-transform: uppercase;
   font-weight: 800;

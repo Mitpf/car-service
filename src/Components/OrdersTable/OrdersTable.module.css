@@ -14,7 +14,7 @@
 
 .rwd-table tr:first-child {
   border-top: none;
-  background: #428bca;
+  background: #2e4c79;
   color: #fff;
 }
 
@@ -112,13 +112,6 @@
 
 /* THE END OF THE IMPORTANT STUFF */
 
-/* Basic Styling */
-body {
-  background: #4B79A1;
-  background: -webkit-linear-gradient(to left, #4B79A1, #283E51);
-  background: linear-gradient(to left, #4B79A1, #283E51);
-}
-
 
 
 
@@ -129,7 +122,7 @@ body {
 
 .tdinfo {
   vertical-align: top;
-  background-color: rgb(193, 189, 189);
+  background-color: rgb(215, 216, 223);
   font-size: small;
 
 }
@@ -137,7 +130,7 @@ body {
 .radioDiv {
   text-align: center;
   margin-bottom: 3px;
-  color: #61dafb;
+  color: #0bb7eb;
 }
 
 .arrow {
@@ -160,5 +153,5 @@ td .arrow{
 
 img {
   border-radius: 8px;
-  max-width: 140px;
+  max-width: 135px;
 }

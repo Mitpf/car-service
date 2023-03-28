@@ -4,9 +4,9 @@ import { Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import { MainNavigation } from './Components/MainNavigation/MainNavigation';
-import { Login } from './Components/LoginRegister/Login/Login';
 import { OrderListTable } from './Components/OrdersTable/OrderListTable/OrderListTable';
-import { Register } from './Components/LoginRegister/Register/Register';
+import { Auth } from './Components/Auth/Auth'
+
 
 
 
@@ -21,11 +21,12 @@ function App() {
     <>
       <MainNavigation />
 
+      
       <Routes>
         <Route path='/' element={<h>Home</h>} />
-        <Route path='/orders/list' element={<OrderListTable/>} />
-        <Route path='/login' element={<Login/>} />
-        <Route path='/register' element={<Register/>} />
+        <Route path='/orders/list' element={<OrderListTable />} />
+        <Route path='/user/auth/*' element={<Auth />} />
+
       </Routes>
 
 
@@ -35,6 +36,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

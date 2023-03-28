@@ -3,12 +3,12 @@
 /* BASIC */
 
 
-a {
+ #footerButton {
   color: #92badd;
   display: inline-block;
   text-decoration: none;
   font-weight: 400;
-}
+} 
 
 h2 {
   text-align: center;
@@ -63,11 +63,38 @@ h2 {
 
 h2.inactive {
   color: #cccccc;
+
 }
 
 h2.active {
   color: #0d0d0d;
   border-bottom: 2px solid #5fbae9;
+}
+
+.inactive {
+  color: #cccccc;
+
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #cccccc;
+
+}
+
+.active {
+  color: #0d0d0d;
+  border-bottom: 2px solid #5fbae9;
+
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #cccccc;
 }
 
 
@@ -294,6 +321,7 @@ input[type=text]:placeholder {
 
 
 .redirectText {
-  color: grey;
+  color: rgb(165, 159, 159);
 
 }
+
