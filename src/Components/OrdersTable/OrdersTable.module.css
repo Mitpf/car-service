@@ -155,3 +155,9 @@ img {
   border-radius: 8px;
   max-width: 135px;
 }
+
+.orderPhotos{
+  border-radius: 4px;
+  width: 70px;
+  margin:10px;
+}

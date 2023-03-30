@@ -10,6 +10,7 @@ import { MainNavigation } from './Components/MainNavigation/MainNavigation';
 import { OrderListTable } from './Components/OrdersTable/OrderListTable/OrderListTable';
 import { AuthMainPage } from './Components/Auth/AuthMainPage';
 import { Logout } from './Components/Auth/Logout/Logout';
+import { CreateOrder } from './Components/CreateOrder/CreateOrder';
 
 
 
@@ -24,15 +25,14 @@ function App() {
 
   const navigateTo = useNavigate();
   const [auth, setAuth] = useState({});
-  const authServiceHttpReq = authServiceRequests(auth.accessToken);
+  const authServTokenReq = authServiceRequests(auth.accessToken);
 
   console.log('acc token', auth.accessToken);
 
   const onLoginSubmit = async (data) => {
     try {
-      const result = await authServiceHttpReq.login(data);
-      console.log(result);
-      console.log('token', auth.accessToken);
+      const result = await authServTokenReq.login(data);
+
       setAuth(result);
 
       navigateTo('/');
@@ -42,7 +42,7 @@ function App() {
   };
 
   const onLogout = async () => {
-    await authServiceHttpReq.logout();
+    await authServTokenReq.logout();
 
     setAuth({});
   };
@@ -55,7 +55,7 @@ function App() {
     }
 
     try {
-      const result = await authServiceHttpReq.register(registerData);
+      const result = await authServTokenReq.register(registerData);
       setAuth(result);
       console.log("result registri", result);
       navigateTo('/');
@@ -89,7 +89,8 @@ function App() {
           <Route path='/' element={<h1>Home</h1>} />
           <Route path='/orders/list' element={<OrderListTable />} />
           <Route path='/user/auth/*' element={<AuthMainPage />} />
-          <Route path='user/auth/logout' element={<Logout />} />
+          <Route path='/user/auth/logout' element={<Logout />} />
+          <Route path='/user/createorder' element={<CreateOrder />} />
 
         </Routes>
 
@@ -123,7 +124,7 @@ export default App;
             "km": 176355
         },
 
-        
+
         "status":"working in progress",
         "serviceInfo":{
             "diagnostic":"broken cylinder",

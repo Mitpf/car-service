@@ -5,13 +5,12 @@ import styles from '../OrdersTable.module.css'
 export const OrderListRow = ({
     _id,
     userId,
-    type,
-    status,
+    typeOrder,
     carInfo,
-    calcPrice,
     toggleShowInfoPlus,
     showInfoPlus
 }) => {
+const categoriesOrder=Object.keys(typeOrder).filter(key=>typeOrder[key]);
     return (
         <tr id={_id} onClick={(e) => toggleShowInfoPlus(e)} className={styles["trbtn"]}>
 
@@ -19,21 +18,21 @@ export const OrderListRow = ({
                 {_id}
             </td>
             <td data-th="Type service" >
-                {type}
+                {categoriesOrder.join(', ')}
+                
             </td>
             <td data-th="Owner car" >
                 {userId}
             </td>
             <td data-th="Car model" >
-                {carInfo.carBrand}
-                {carInfo.carModel}
+                {carInfo.brandModel}
 
             </td>
             <td data-th="Calc Price" >
-                {calcPrice}
+                na
             </td>
             <td data-th="Status" >
-                {status}
+                working
             </td>
 
         </tr>
@@ -41,35 +40,3 @@ export const OrderListRow = ({
 };
 
 
-/* 
-
-addNote
-: 
-""
-calcPrice
-: 
-370
-carInfo
-: 
-{carBrand: 'Toytoa', carModel: 'Corolla', productDate: '2017 February', engine: 'gasoline', km: 176355, …}
-problemDescript
-: 
-{title: 'Belt noise', text: 'There is some noise from belts'}
-serviceInfo
-: 
-{diagnostic: 'broken cylinder', resolveBrief: 'changed with new cylinder'}
-status
-: 
-"working in progress"
-type
-: 
-"Problem"
-userId
-: 
-"asd04566"
-_id
-: 
-"order_001"
-
-
-*/
