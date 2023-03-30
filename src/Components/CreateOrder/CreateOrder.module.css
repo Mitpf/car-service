@@ -2,19 +2,20 @@
 
 
 .container {
-    width: 100%;
+    width: 55%;
     padding-right: 15px;
     padding-left: 15px;
-    margin-right: auto;
+    margin-top: 40px;
     margin-left: auto;
+    margin-right: auto;
+
+
+
 }
 
 .title {
-    background: -webkit-gradient(linear, left top, right bottom, color-stop(0, #5195A8), color-stop(100, #70EAFF));
-    background: -moz-linear-gradient(top left, #5195A8 0%, #70EAFF 100%);
-    background: -ms-linear-gradient(top left, #5195A8 0%, #70EAFF 100%);
-    background: -o-linear-gradient(top left, #5195A8 0%, #70EAFF 100%);
-    background: linear-gradient(to bottom right, #5195A8 0%, #70EAFF 100%);
+
+    background: linear-gradient(to bottom right, #2a2c50 0%, #3a557c 100%);
     border-radius: 5px 5px 0 0;
     padding: 20px;
     color: #f6f6f6;
@@ -36,40 +37,40 @@
     }
 }
 
-form {
+
+.form {
     flex: 4;
 }
 
-.Yorder {
-    flex: 2;
-}
 
-h2 {
+
+.header {
     margin: 0;
     padding-left: 15px;
 }
+
 
 .required {
     color: red;
 }
 
-label,
-table {
+
+.label {
     display: block;
-    margin: 15px;
+    margin: 13px;
+    margin-right: 15px;
 }
 
-label>span {
+
+.labelspan {
     float: left;
     width: 25%;
-    margin-top: 12px;
     padding-right: 10px;
 }
 
-input[type="text"],
-input[type="tel"],
-input[type="email"],
-select {
+
+
+.inpTxtMailTel {
     width: 70%;
     height: 30px;
     padding: 5px 10px;
@@ -78,11 +79,67 @@ select {
     color: #888;
 }
 
-select {
-    width: 72%;
-    height: 45px;
+.description {
+    height: 55px;
+    size: 50px;
+    float: left;
+    width: 25%;
+    padding-right: 10px;
+}
+
+
+.descriptionText {
+
+    width: 70%;
+    height: 125px;
     padding: 5px 10px;
     margin-bottom: 10px;
+    border: 1px solid #dadada;
+    color: #888;
+
+    
+}
+
+
+.consumables{
+    margin-left: 35px;
+    margin-bottom: 125px;
+}
+.titleInput{
+margin-top: 35px;
+}
+
+.inputCheckbox {
+margin-left: 5px;
+}
+
+.buttonLinks{
+    
+    padding: 3px;
+    margin-right: 40px;
+    display: block;
+    margin-bottom: 15px ;
+}
+
+.bottom{
+    margin-bottom:55px;
+}
+
+
+.carInfo{
+    
+}
+
+/*
+
+
+.Yorder {
+    flex: 2;
+}
+
+
+.Yorder>div {
+    padding: 15px 0;
 }
 
 .Yorder {
@@ -91,6 +148,16 @@ select {
     padding: 20px;
     border: 1px solid #dadada;
 }
+
+
+
+select {
+    width: 72%;
+    height: 45px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
 
 table {
     margin: 0;
@@ -112,10 +179,13 @@ tr>td:nth-child(2) {
     color: #52ad9c;
 }
 
+
+
 td {
     border-bottom: 1px solid #dadada;
     padding: 25px 25px 25px 0;
 }
+
 
 p {
     display: block;
@@ -124,9 +194,6 @@ p {
     padding-left: 25px;
 }
 
-.Yorder>div {
-    padding: 15px 0;
-}
 
 button {
     width: 100%;
@@ -140,7 +207,9 @@ button {
     font-weight: bold;
 }
 
+
 button:hover {
     cursor: pointer;
     background: #428a7d;
 }
+ */
