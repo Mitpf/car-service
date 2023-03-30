@@ -7,7 +7,7 @@ import { Register } from './Register/Register'
 import styles from './Auth.modules.css'
 
 
-export const Auth = () => {
+export const AuthMainPage = () => {
 
     const navStyle = ({ isActive }) => isActive ? "active" : "inactive underlineHover"
 

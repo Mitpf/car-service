@@ -1,11 +1,15 @@
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 
-import styles from './MainNavigation.module.css'
+import styles from './MainNavigation.module.css';
+import { AuthContext } from '../../contexts/AuthContext';
 
-import { Link } from 'react-router-dom'
+
 
 export const MainNavigation = () => {
 
-
+  const { isAuthenticated, userEmail } = useContext(AuthContext)
+  console.log('isauth', isAuthenticated);
   return (
 
     <>
@@ -19,18 +23,20 @@ export const MainNavigation = () => {
             <li><Link to="/orders/list">Service Orders</Link></li>
             <li><a href="#">About Us</a></li>
             <li><a href="#">Resolved Problems</a></li>
-           
-            <li><Link to="/user/auth/login">Login/register</Link></li>
 
-            <li><a href="#"><label htmlFor="droplist1" className={styles["toggle"]}>User</label></a>
+            {!isAuthenticated && <li><Link to="/user/auth/login">Login/register</Link></li>}
+            
+
+            {isAuthenticated && <li><a href="#"><label htmlFor="droplist1" className={styles.user}>{userEmail}</label></a>
               <input type="checkbox" id="droplist1" />
               {/* =============FirstDropDown================== */}
               <ul>
-                <li><a href="#">Service A</a></li>
-                <li><a href="#">Service B</a></li>
-                <li><a href="#">Service D</a></li>
+                <li><a href="#">make Order</a></li>
+                <li><a href="#">Car Reminder</a></li>
+                <li><Link to="/user/auth/logout">Logout</Link></li>
               </ul>
-            </li>
+            </li>}
+
           </ul>
         </nav>
       </header>

@@ -49,18 +49,18 @@
     "order_003": {
         "_id": "order_003",
         "userId": "asd04568",
-        "type": "Problem",
-        "addNote":"",
+        "type": "Consumables",
+        "addNote":"To change oil change, oil filter, air filter",
         "problemDescript":{
-            "title":"Belt noise",
-            "text":"There is some noise from belts"} ,
+            "title":"",
+            "text":""} ,
         "carInfo": {
-            "carBrand": "Toyta",
-            "carModel": "Corolla",
-            "productDate": "2017 February",
+            "carBrand": "Peugeot",
+            "carModel": "207",
+            "productDate": "2010 February",
             "engine": "gasoline",
-            "km": 176355,
-            "imageUrl":"https://images.pistonheads.com/nimg/46047/mceu_43385771511659963122696.jpg"
+            "km": 195355,
+            "imageUrl":"http://www.tuning.bg/public/upload/gallery/extended/normal/3b2455ec2ea7da9d7a0f81c1f2e6493a.jpg"
         },
         "status":"working in progress",
         "serviceInfo":{
@@ -276,3 +276,5 @@
 } 
 
 }
+
+

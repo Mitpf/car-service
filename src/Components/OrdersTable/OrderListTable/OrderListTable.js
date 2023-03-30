@@ -6,19 +6,25 @@ import { useState, Fragment, useEffect } from 'react';
 import { OrderListRow } from '../OrderListRow/OrderListRow';
 import { OrderListInfoPlus } from '../OrderListRowInfoPlus/OderListInfoPlus'
 import styles from '../OrdersTable.module.css'
-
+import { httpRequests } from '../../../services/httpRequests';
 
 export const OrderListTable = () => {
 
+    const httpreq = httpRequests();
     const [orders, setOrders] = useState({});
     const [openInfoMethod, setopenInfoMethod] = useState('one');
 
     useEffect(() => {
-        fetch(`http://localhost:3030/jsonstore/orders`)
-            .then(response => response.json())
-            .then(result => setOrders(result))
+        httpreq.get(`http://localhost:3030/jsonstore/scarorders`)
+            .then(result => {setOrders(result); console.log(result);})
     }, [])
 
+   
+    useEffect(() => { 
+        console.log(openInfoMethod); 
+        setshowInfoPlus({})
+        // since we are using state, we have to pass it as a dependency 
+   }, [openInfoMethod]); 
 
 
     const [showInfoPlus, setshowInfoPlus] = useState({});
@@ -33,6 +39,8 @@ export const OrderListTable = () => {
 
     }
 
+    
+
     const changeOpenMethod = e => setopenInfoMethod(e.target.value);
 
     return (
@@ -41,7 +49,7 @@ export const OrderListTable = () => {
 
         <div >
 
-        <h1 className={styles.header}>Service Orders list</h1>
+            <h1 className={styles.header}>Service Orders list</h1>
 
             <div className={styles.radioDiv}>
                 <input

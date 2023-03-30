@@ -80,11 +80,8 @@ header nav {
 }
 
 .NavMenu li a label::after {
-  content: "+";
-  position: absolute;
-  right: 0;
-  top: 0;
-  font-size: 20px;
+  content: " ∇";
+  font-size: 10px;
 }
 
 .NavMenu>li>a label::after {
@@ -258,4 +255,8 @@ header nav {
 
 .menubrop {
   display: none;
+}
+
+.user {
+  text-transform: lowercase;
 }
