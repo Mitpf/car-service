@@ -30,9 +30,54 @@ export const useCreateOrder = () => {
         imageUrl: ''
     };
 
+  
     const onSubmitHandler = () => {
-        console.log('click');
-        console.log(values);
+        const { problem,
+            consumables,
+            title,
+            text,
+            photos,
+            brandModel,
+            productDate,
+            engine,
+            km,
+            imageUrl,
+            flNames,
+            email,
+            phoneNumber,
+            bookedDate,
+            bookedHour } = values;
+
+        const orderData = {
+            typeOrder: {
+                problem,
+                consumables
+            },
+            description: {
+                title,
+                text,
+                photos
+            },
+            carInfo: {
+                brandModel,
+                productDate,
+                engine,
+                km,
+                imageUrl
+            },
+            user: {
+                flNames,
+                email,
+                phoneNumber
+            },
+            carAbmissionDate: {
+                date: bookedDate,
+                hour: bookedHour
+            }
+        }
+
+
+        console.log('orderdata',orderData);
     }
 
     const { values, changeHandler, onSubmit } = useForm(initValues, onSubmitHandler);
