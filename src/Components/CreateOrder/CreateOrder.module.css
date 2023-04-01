@@ -74,7 +74,7 @@
     width: 70%;
     height: 30px;
     padding: 5px 10px;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
     border: 1px solid #dadada;
     color: #888;
 }
@@ -91,44 +91,64 @@
 .descriptionText {
 
     width: 70%;
-    height: 125px;
+    height: 70px;
     padding: 5px 10px;
     margin-bottom: 10px;
     border: 1px solid #dadada;
     color: #888;
 
-    
+
 }
 
 
-.consumables{
+.consumables {
     margin-left: 35px;
     margin-bottom: 125px;
 }
-.titleInput{
-margin-top: 35px;
-}
+
+
 
 .inputCheckbox {
-margin-left: 5px;
+    margin-left: 5px;
 }
 
-.buttonLinks{
-    
+.buttonLinks {
+
     padding: 3px;
-    margin-right: 40px;
-    display: block;
-    margin-bottom: 15px ;
+    display: inline;
+    margin-left: 12px;
+    margin-bottom: 25px;
 }
 
-.bottom{
-    margin-bottom:55px;
+.bottom {
+    margin-bottom: 55px;
 }
 
 
-.carInfo{
+.carInfo {
+    margin-top: 15px;
+    color: rgb(68, 7, 182);
+    margin-left: 12px;
+    margin-bottom:15px ;
+}
+
+.orderInfo {
+
+    color: rgb(68, 7, 182);
     
+    margin-left: 12px;
+   
 }
+
+.spanmargin {
+
+    margin-left: 12px;
+}
+
+
+
+
+
 
 /*
 

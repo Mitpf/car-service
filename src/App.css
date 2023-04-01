@@ -4,5 +4,37 @@ body {
   background: linear-gradient(to left, #4B79A1, #283E51);
 }
 
-/*  */
 
+
+#submitButton {
+  margin-top: 27px;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  text-align: center;
+  display: block;
+  width: 200px;
+}
+
+#bookDate {
+  width: 200px;
+  display: inline;
+}
+
+#bookHour {
+  width: 200px;
+  margin-left: 10px;
+  margin-right: auto;
+  display: inline;
+}
+
+#headOrder{
+  margin-top: 25px;
+}
+#headPhotoLinks{
+  margin-bottom: 10px;
+  margin-left: 13px;
+}
+
+/*  */

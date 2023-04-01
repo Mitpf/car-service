@@ -28,6 +28,7 @@ function App() {
   const authServTokenReq = authServiceRequests(auth.accessToken);
 
   console.log('acc token', auth.accessToken);
+  console.log('auth', auth);
 
   const onLoginSubmit = async (data) => {
     try {
@@ -74,8 +75,12 @@ function App() {
     userId: auth._id,
     token: auth.accessToken,
     userEmail: auth.email,
-    isAuthenticated: !!auth.accessToken
-
+    isAuthenticated: !!auth.accessToken,
+    userContacts: {
+      email: auth.email,
+      phoneNumber: auth.phoneNumber,
+      flNames: auth.firstLastNames
+    }
   };
 
 
@@ -103,37 +108,4 @@ function App() {
 }
 
 export default App;
-
-
-/* 
-
-
-
-"order_012": {
-        "_id": "order_012",
-        "userId": "asd04576",
-        "typeOrder": "Problem", //or Consumabale
-        "description":{
-            "title":"Belt noise",
-            "text":"There is some noise from belts"},
-        "carInfo": {
-            "carBrand": "Toyta",
-            "carModel": "Corolla",
-            "productDate": "2017 February",
-            "engine": "gasoline",
-            "km": 176355
-        },
-
-
-        "status":"working in progress",
-        "serviceInfo":{
-            "diagnostic":"broken cylinder",
-            "resolveBrief":"changed with new cylinder"
-        },
-        "calcPrice":350
-
-
-*/
-
-
 
