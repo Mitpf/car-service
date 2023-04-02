@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import {Fragment, useContext } from 'react';
+import { Fragment, useContext } from 'react';
 
 
 import styles from './MainNavigation.module.css';
@@ -50,7 +50,7 @@ export const MainNavigation = () => {
                   <input type="checkbox" id="droplist1" />
                   {/* =============FirstDropDown================== */}
                   <ul>
-                    
+
                     <li><Link to="/user/auth/logout">Logout</Link></li>
                   </ul>
                 </li>
@@ -61,11 +61,7 @@ export const MainNavigation = () => {
             </nav>
           </header>
 
-          <div class={styles["search-container"]}>
-	    <form action="">
-	      <input classname={styles.inpSearch} type="text" placeholder="Search..." name="search"/>
-	    </form>
-  	</div>
+          
 
         </>
       }
@@ -125,16 +121,13 @@ export const MainNavigation = () => {
         <header>
           <nav>
             <div className={styles["logo"]}><Link to="/"> Service Car Reminder</Link></div>
-            {
-              isAuthenticated && isAdmin &&
-              <h4 className={styles.admin}>ADMIN MODE</h4>
-            }
-
+            
             <label htmlFor="menubrop" className={styles["bartoggle"]}>≡</label>
             <input type="checkbox" id="menubrop" className={styles.menubrop} />
             <ul className={styles["NavMenu"]}>
 
               <li><a href="#">Resolved Problems</a></li>
+              <li><a href="#">CAR-reminder demo</a></li>
               <li><a href="#">About Us</a></li>
 
 

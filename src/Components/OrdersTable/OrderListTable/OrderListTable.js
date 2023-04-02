@@ -16,7 +16,7 @@ export const OrderListTable = ({ loadXdata }) => {
     const { token } = useContext(AuthContext);
     const orderServiceReqtoken = orderServiceRequests(token);
 
-   
+
     const [orders, setOrders] = useState({});
     const [openInfoMethod, setopenInfoMethod] = useState('one');
     const [showInfoPlus, setshowInfoPlus] = useState({});
@@ -61,6 +61,13 @@ export const OrderListTable = ({ loadXdata }) => {
         <div >
 
             <h1 className={styles.header}>Service Orders list</h1>
+
+            <div class={styles["search-container"]}>
+                <form action="">
+                    <input classname={styles.inpSearch} type="text" placeholder="Search..." name="search" />
+                    
+                </form>
+            </div>
 
             <div className={styles.radioDiv}>
                 <input
