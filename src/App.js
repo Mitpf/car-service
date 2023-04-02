@@ -5,7 +5,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { authServiceRequests } from './services/authServiceRequests';
 import { AuthContext } from './contexts/AuthContext';
 import { loadData } from './loadData/loadData';
-import { orderService } from './services/orderService';
+import { orderServiceRequests } from './services/orderService';
 
 import './App.css';
 import { MainNavigation } from './Components/MainNavigation/MainNavigation';
@@ -13,6 +13,7 @@ import { OrderListTable } from './Components/OrdersTable/OrderListTable/OrderLis
 import { AuthMainPage } from './Components/Auth/AuthMainPage';
 import { Logout } from './Components/Auth/Logout/Logout';
 import { CreateOrder } from './Components/CreateOrder/CreateOrder';
+import { Home } from './Components/HOME/Home';
 
 
 
@@ -29,8 +30,7 @@ function App() {
   const [auth, setAuth] = useState({ accessToken: null });
   const authServTokenReq = authServiceRequests(auth.accessToken);
 
-  console.log('acc token', auth.accessToken);
-  console.log('auth', auth);
+
 
   const onLoginSubmit = async (data) => {
     try {
@@ -82,7 +82,7 @@ function App() {
         const result = await authServTokenReq.register(x.user);
 
         setAuth(result);
-        const orderServiceToken = orderService(result.accessToken);
+        const orderServiceToken = orderServiceRequests(result.accessToken);
         await orderServiceToken.create(x.data);
 
       }
@@ -103,6 +103,7 @@ function App() {
     token: auth.accessToken,
     userEmail: auth.email,
     isAuthenticated: !!auth.accessToken,
+    isAdmin: '60f0cf0b-34b0-4abd-9769-8c42f830dffc' === auth._id,
     userContacts: {
       email: auth.email,
       phoneNumber: auth.phoneNumber,
@@ -121,7 +122,7 @@ function App() {
 
 
         <Routes>
-          <Route path='/' element={<h1>Home</h1>} />
+          <Route path='/' element={<Home/>} />
           <Route path='/orders/list' element={<OrderListTable {...{ loadXdata }} />} />
           <Route path='/user/auth/*' element={<AuthMainPage />} />
           <Route path='/user/auth/logout' element={<Logout />} />

@@ -1,35 +1,41 @@
 
 
+import styles from '../OrdersTable.module.css';
 
-
-import { useState, Fragment, useEffect } from 'react';
+import { useState, Fragment, useEffect, useContext } from 'react';
 import { OrderListRow } from '../OrderListRow/OrderListRow';
 import { OrderListInfoPlus } from '../OrderListRowInfoPlus/OderListInfoPlus'
-import styles from '../OrdersTable.module.css'
-import { httpRequests } from '../../../services/httpRequests';
+
+import { AuthContext } from '../../../contexts/AuthContext';
+
+import { orderServiceRequests } from '../../../services/orderService';
 
 
 export const OrderListTable = ({ loadXdata }) => {
 
+    const { token } = useContext(AuthContext);
+    const orderServiceReqtoken = orderServiceRequests(token);
 
-
-    const httpreq = httpRequests();
+   
     const [orders, setOrders] = useState({});
     const [openInfoMethod, setopenInfoMethod] = useState('one');
     const [showInfoPlus, setshowInfoPlus] = useState({});
 
     useEffect(() => {
-        httpreq.get(`http://localhost:3030/data/clientorders`)
-            .then(result => { setOrders(result); console.log("res", result); })
+        orderServiceReqtoken.getAll()
+            .then(result => {
+                setOrders(result);
+                console.log("res", result);
+            })
 
-    }, [orders,loadXdata])
+    }, [loadXdata])
 
 
     useEffect(() => {
         console.log(openInfoMethod);
         setshowInfoPlus({})
 
-    }, [openInfoMethod]);
+    }, []);
 
 
 

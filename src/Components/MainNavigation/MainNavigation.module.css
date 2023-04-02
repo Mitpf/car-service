@@ -1,14 +1,9 @@
-
-
-
-
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
-  
+
 }
 
 
@@ -17,7 +12,7 @@ header {
   background-color: #203553;
   padding: 0 5%;
   box-shadow: 0 10px 20px rgb(0, 0, 0/5%), 0 6px 6px rgb(0, 0, 0/6%);
-  font-weight:500;
+  font-weight: 500;
 }
 
 header nav {
@@ -259,4 +254,39 @@ header nav {
 
 .user {
   text-transform: lowercase;
+}
+
+.admin {
+  color: rgb(250, 9, 9);
+  text-decoration: chartreuse;
+  text-shadow: #9fe293;
+
+}
+
+
+/* SEARCH BOX */
+
+
+
+
+* {
+  font-family: 'Poppins', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+.search-container {
+  max-width: 600px;
+  margin: 50px auto;
+}
+
+.inpSearch {
+  display: block;
+  width: calc(100% - 24px);
+  /*20px [ left & Right ] padding + 4px border [ left & Right ] */
+  font-size: 18px;
+  font-weight: 600;
+  color: #20066f;
+  padding: 10px;
+  border: 2px solid #04f99f;
 }

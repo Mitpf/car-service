@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { useForm } from './useForm';
 import { httpRequests } from '../services/httpRequests';
-import { orderService } from '../services/orderService';
+import { orderServiceRequests } from '../services/orderService';
 
 
 
@@ -12,7 +12,7 @@ export const useCreateOrder = () => {
 
     const { userContacts, token } = useContext(AuthContext);
     const { email, phoneNumber, flNames } = userContacts;
-    const orderServiceToken = orderService(token);
+    const orderServiceToken = orderServiceRequests(token);
 
     const onSubmitHandler = async () => {
         const { problem, consumables, title, text,
