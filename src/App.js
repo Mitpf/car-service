@@ -4,6 +4,8 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { authServiceRequests } from './services/authServiceRequests';
 import { AuthContext } from './contexts/AuthContext';
+import { loadData } from './loadData/loadData';
+import { orderService } from './services/orderService';
 
 import './App.css';
 import { MainNavigation } from './Components/MainNavigation/MainNavigation';
@@ -24,7 +26,7 @@ function App() {
   }, []);
 
   const navigateTo = useNavigate();
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useState({ accessToken: null });
   const authServTokenReq = authServiceRequests(auth.accessToken);
 
   console.log('acc token', auth.accessToken);
@@ -48,13 +50,16 @@ function App() {
     setAuth({});
   };
 
+
+
+
   const onRegisterSubmit = async (values) => {
-    console.log('clickreg values', values);
+
     const { repassword, ...registerData } = values;
     if (repassword !== registerData.password) {
       return;
     }
-
+    console.log('regdata', registerData);
     try {
       const result = await authServTokenReq.register(registerData);
       setAuth(result);
@@ -66,6 +71,28 @@ function App() {
     }
 
   };
+
+
+
+  const loadXdata = async () => {
+    const dataArr = loadData();
+
+    dataArr.forEach(async x => {
+      try {
+        const result = await authServTokenReq.register(x.user);
+
+        setAuth(result);
+        const orderServiceToken = orderService(result.accessToken);
+        await orderServiceToken.create(x.data);
+
+      }
+      catch (error) {
+        console.log('There is a problem', error);
+      }
+
+    })
+  }
+
 
 
   const contextValues = {
@@ -80,8 +107,11 @@ function App() {
       email: auth.email,
       phoneNumber: auth.phoneNumber,
       flNames: auth.firstLastNames
-    }
+    },
+
+
   };
+
 
 
   return (
@@ -92,7 +122,7 @@ function App() {
 
         <Routes>
           <Route path='/' element={<h1>Home</h1>} />
-          <Route path='/orders/list' element={<OrderListTable />} />
+          <Route path='/orders/list' element={<OrderListTable {...{ loadXdata }} />} />
           <Route path='/user/auth/*' element={<AuthMainPage />} />
           <Route path='/user/auth/logout' element={<Logout />} />
           <Route path='/user/createorder' element={<CreateOrder />} />

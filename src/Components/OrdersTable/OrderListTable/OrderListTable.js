@@ -8,26 +8,31 @@ import { OrderListInfoPlus } from '../OrderListRowInfoPlus/OderListInfoPlus'
 import styles from '../OrdersTable.module.css'
 import { httpRequests } from '../../../services/httpRequests';
 
-export const OrderListTable = () => {
+
+export const OrderListTable = ({ loadXdata }) => {
+
+
 
     const httpreq = httpRequests();
     const [orders, setOrders] = useState({});
     const [openInfoMethod, setopenInfoMethod] = useState('one');
+    const [showInfoPlus, setshowInfoPlus] = useState({});
 
     useEffect(() => {
-        httpreq.get(`http://localhost:3030/jsonstore/scarorders`)
-            .then(result => {setOrders(result); console.log(result);})
-    }, [])
+        httpreq.get(`http://localhost:3030/data/clientorders`)
+            .then(result => { setOrders(result); console.log("res", result); })
 
-   
-    useEffect(() => { 
-        console.log(openInfoMethod); 
+    }, [orders,loadXdata])
+
+
+    useEffect(() => {
+        console.log(openInfoMethod);
         setshowInfoPlus({})
-        // since we are using state, we have to pass it as a dependency 
-   }, [openInfoMethod]); 
+
+    }, [openInfoMethod]);
 
 
-    const [showInfoPlus, setshowInfoPlus] = useState({});
+
 
     const toggleShowInfoPlus = (e) => {
 
@@ -39,9 +44,9 @@ export const OrderListTable = () => {
 
     }
 
-    
-
     const changeOpenMethod = e => setopenInfoMethod(e.target.value);
+
+
 
     return (
 
@@ -72,7 +77,10 @@ export const OrderListTable = () => {
 
                 <label htmlFor="one">only-oneInfo Open</label>
 
+                <button onClick={loadXdata}>loadxData</button>
+
             </div>
+
             <table className={styles["rwd-table"]}>
                 <tbody>
 
@@ -85,21 +93,29 @@ export const OrderListTable = () => {
                         <th >Status</th>
                     </tr>
 
+                    {Object.values(orders).length === 0 &&
+                        <>
+                            <h1 className={styles.warning}>no orders in DB or </h1>
+                            <h1 className={styles.warning} >not connected to the SERVER </h1>
+                        </>
 
-                    {Object.values(orders).map(x => (
+                    }
+                    {
+                        Object.values(orders).map(x => (
 
 
-                        <Fragment key={x._id}>
-                            <OrderListRow
-                                //id={x._id}
-                                {...x}
-                                toggleShowInfoPlus={toggleShowInfoPlus}
-                                showInfoPlus={showInfoPlus}
-                            />
-                            {showInfoPlus[x._id] && <OrderListInfoPlus id={x._id} {...x} />}
-                        </Fragment>
+                            <Fragment key={x._id}>
+                                <OrderListRow
+                                    //id={x._id}
+                                    {...x}
+                                    toggleShowInfoPlus={toggleShowInfoPlus}
+                                    showInfoPlus={showInfoPlus}
+                                />
+                                {showInfoPlus[x._id] && <OrderListInfoPlus id={x._id} {...x} />}
+                            </Fragment>
 
-                    ))}
+                        ))
+                    }
 
                 </tbody>
             </table>

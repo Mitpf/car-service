@@ -1,20 +1,27 @@
 
-import { useCreateOrder } from '../../hooks/useCreateOrder';
+
 
 import styles from './CreateOrder.module.css';
 import { OrderCarInfo } from './OrderCarInfo';
-import { OrderFormCarService } from './OrderFormCarService';
 import { OrderFormContacts } from './OrderFormContacts';
+import { OrderFormCarService } from './OrderFormCarService';
+
+import { useCreateOrder } from '../../hooks/useCreateOrder';
+
 
 
 
 
 export const CreateOrder = () => {
 
-    const { values, changeHandler, onSubmit, countInputs, addInputfields,
-        removeInputfields, flNames, email, phoneNumber } = useCreateOrder();
 
 
+    const { values, changeHandler, onSubmit, countInputs,
+        addInputfields, removeInputfields, flNames, email, phoneNumber } = useCreateOrder();
+
+        
+
+        
     return (
 
         <div className={styles.container}>

@@ -3,14 +3,33 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { useForm } from './useForm';
 import { httpRequests } from '../services/httpRequests';
+import { orderService } from '../services/orderService';
 
 
 
 
 export const useCreateOrder = () => {
 
-    const { userContacts } = useContext(AuthContext);
+    const { userContacts, token } = useContext(AuthContext);
     const { email, phoneNumber, flNames } = userContacts;
+    const orderServiceToken = orderService(token);
+
+    const onSubmitHandler = async () => {
+        const { problem, consumables, title, text,
+            photos, brandModel, productDate, engine, km, imageUrl,
+            flNames, email, phoneNumber, bookedDate, bookedHour } = values;
+
+        const orderData = {
+            typeOrder: { problem, consumables },
+            description: { title, text, photos },
+            carInfo: { brandModel, productDate, engine, km, imageUrl },
+            user: { flNames, email, phoneNumber },
+            carAbmissionDate: { date: bookedDate, hour: bookedHour }
+        }
+
+        const result = await orderServiceToken.create(orderData);
+    }
+
 
     const initValues = {
         flNames: flNames || '',
@@ -29,56 +48,6 @@ export const useCreateOrder = () => {
         km: '',
         imageUrl: ''
     };
-
-  
-    const onSubmitHandler = () => {
-        const { problem,
-            consumables,
-            title,
-            text,
-            photos,
-            brandModel,
-            productDate,
-            engine,
-            km,
-            imageUrl,
-            flNames,
-            email,
-            phoneNumber,
-            bookedDate,
-            bookedHour } = values;
-
-        const orderData = {
-            typeOrder: {
-                problem,
-                consumables
-            },
-            description: {
-                title,
-                text,
-                photos
-            },
-            carInfo: {
-                brandModel,
-                productDate,
-                engine,
-                km,
-                imageUrl
-            },
-            user: {
-                flNames,
-                email,
-                phoneNumber
-            },
-            carAbmissionDate: {
-                date: bookedDate,
-                hour: bookedHour
-            }
-        }
-
-
-        console.log('orderdata',orderData);
-    }
 
     const { values, changeHandler, onSubmit } = useForm(initValues, onSubmitHandler);
 
