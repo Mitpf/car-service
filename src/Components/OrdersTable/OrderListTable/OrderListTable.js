@@ -10,6 +10,8 @@ import { AuthContext } from '../../../contexts/AuthContext';
 
 import { orderServiceRequests } from '../../../services/orderService';
 
+import { useCheckForUpdates } from '../../../hooks/useCheckForUpdates';
+
 
 export const OrderListTable = ({ loadXdata }) => {
 
@@ -33,33 +35,12 @@ export const OrderListTable = ({ loadXdata }) => {
 
     }, [loadXdata]);
 
+    /* usage usecheckforupdates httpService,setStateLength, stateLength, setData,[additional depedencys] */
 
-    useEffect(() => {
-        const intervalId = setInterval(async () => {
-          try {
-            const response = await fetch('http://localhost:3030/data/clientorders');
-            const data = await response.json();
-            if (data.length !== ordersLength) {
-              setOrdersLength(data.length);
-              setOrders(data);
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        }, 3000); // Poll every 1 seconds
-    
-        return () => {
-          clearInterval(intervalId);
-        };
-      }, [ordersLength]);
+    useCheckForUpdates(orderServiceReqtoken.getAll,
+        setOrdersLength, ordersLength,
+        setOrders, [setOrdersLength, loadXdata]);
 
-
-
-    useEffect(() => {
-        console.log(openInfoMethod);
-        setshowInfoPlus({})
-
-    }, []);
 
 
 
@@ -76,34 +57,34 @@ export const OrderListTable = ({ loadXdata }) => {
 
     const changeOpenMethod = e => setopenInfoMethod(e.target.value);
 
-/* 
-
- const [clientOrders, setClientOrders] = useState([]);
-  const [ordersLength, setOrdersLength] = useState(0);
-
-  useEffect(() => {
-    const intervalId = setInterval(async () => {
-      try {
-        const response = await fetch('http://localhost:3030/data/clientorders');
-        const data = await response.json();
-        if (data.length !== ordersLength) {
-          setOrdersLength(data.length);
-          setOrders(data);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }, 3000); // Poll every 3 seconds
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [ordersLength]);
-
-
-
-
-*/
+    /* 
+    
+     const [clientOrders, setClientOrders] = useState([]);
+      const [ordersLength, setOrdersLength] = useState(0);
+    
+      useEffect(() => {
+        const intervalId = setInterval(async () => {
+          try {
+            const response = await fetch('http://localhost:3030/data/clientorders');
+            const data = await response.json();
+            if (data.length !== ordersLength) {
+              setOrdersLength(data.length);
+              setOrders(data);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }, 3000); // Poll every 3 seconds
+    
+        return () => {
+          clearInterval(intervalId);
+        };
+      }, [ordersLength]);
+    
+    
+    
+    
+    */
 
     return (
 

@@ -191,6 +191,19 @@ td .arrow {
 }
 
 
+.homeLink{
+  text-align: center;
+  color: #d8e7f3;
+  list-style-type: none;
+  text-decoration: none;
+}
+.homeLink a{
+  text-decoration: none;
+  color: hsl(191, 100%, 49%);
+  
+}
+
+
 /* SEARCH BOX */
 
 * {
