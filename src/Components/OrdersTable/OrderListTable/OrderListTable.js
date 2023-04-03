@@ -17,7 +17,9 @@ export const OrderListTable = ({ loadXdata }) => {
     const orderServiceReqtoken = orderServiceRequests(token);
 
 
-    const [orders, setOrders] = useState({});
+    const [orders, setOrders] = useState([]);
+    const [ordersLength, setOrdersLength] = useState(0);
+    const [change, setChange] = useState(false);
     const [openInfoMethod, setopenInfoMethod] = useState('one');
     const [showInfoPlus, setshowInfoPlus] = useState({});
 
@@ -25,10 +27,32 @@ export const OrderListTable = ({ loadXdata }) => {
         orderServiceReqtoken.getAll()
             .then(result => {
                 setOrders(result);
-                console.log("res", result);
+                setOrdersLength(result.length);
             })
 
-    }, [loadXdata])
+
+    }, [loadXdata]);
+
+
+    useEffect(() => {
+        const intervalId = setInterval(async () => {
+          try {
+            const response = await fetch('http://localhost:3030/data/clientorders');
+            const data = await response.json();
+            if (data.length !== ordersLength) {
+              setOrdersLength(data.length);
+              setOrders(data);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }, 3000); // Poll every 1 seconds
+    
+        return () => {
+          clearInterval(intervalId);
+        };
+      }, [ordersLength]);
+
 
 
     useEffect(() => {
@@ -52,7 +76,34 @@ export const OrderListTable = ({ loadXdata }) => {
 
     const changeOpenMethod = e => setopenInfoMethod(e.target.value);
 
+/* 
 
+ const [clientOrders, setClientOrders] = useState([]);
+  const [ordersLength, setOrdersLength] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      try {
+        const response = await fetch('http://localhost:3030/data/clientorders');
+        const data = await response.json();
+        if (data.length !== ordersLength) {
+          setOrdersLength(data.length);
+          setOrders(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }, 3000); // Poll every 3 seconds
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [ordersLength]);
+
+
+
+
+*/
 
     return (
 
@@ -65,7 +116,7 @@ export const OrderListTable = ({ loadXdata }) => {
             <div class={styles["search-container"]}>
                 <form action="">
                     <input classname={styles.inpSearch} type="text" placeholder="Search..." name="search" />
-                    
+
                 </form>
             </div>
 

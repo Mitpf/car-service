@@ -1,9 +1,12 @@
 import { httpRequests } from "./httpRequests";
 
+ 
 const baseUrl = 'http://localhost:3030/data/clientorders'
 
 
 export const orderServiceRequests = (token) => {
+
+
 
     const httpReqToken = httpRequests(token);
 
@@ -25,7 +28,7 @@ export const orderServiceRequests = (token) => {
     const create = async (orderData) => {
         const result = await httpReqToken.post(baseUrl, orderData);
         console.log('result', result);
-        return result;
+    return result;
     }
 
 
@@ -38,7 +41,10 @@ export const orderServiceRequests = (token) => {
 
     return {
         create,
-        getAll
+        getAll,
+        getOne,
+        edit,
+        deleteOrder
     }
 
 }

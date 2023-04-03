@@ -122,10 +122,17 @@
 
 .tdinfo {
   vertical-align: top;
-  background-color: rgb(215, 216, 223);
-  font-size: small;
-
+  background-color: #e1ee7d63;
+  font-size:smaller;
+  
 }
+
+.tdService {
+  vertical-align: top;
+  background-color:#e2f4586b;
+  font-size: small;
+}
+
 
 .radioDiv {
   text-align: center;
@@ -160,11 +167,27 @@ td .arrow {
   border-radius: 4px;
   width: 70px;
   margin: 10px;
-  display:inline-block
+  display: inline-block
 }
 
-.warning{
+.warning {
   color: chartreuse;
+}
+
+.hcOrder {
+  color: blue;
+  font-weight: 800;
+  font-size: large;
+  margin-bottom: 15px;
+}
+
+.infoHead {
+  font-weight: 900;
+}
+
+.notAccept{
+  font-weight: 900;
+  
 }
 
 
