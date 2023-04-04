@@ -58,7 +58,34 @@ body {
   -ms-transition: none;
   -o-transition: none;
   transition: none;
-  float: left;
+  
+}
+
+#disabledButton {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+
+  
+  border: none;
+  
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 14px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 12px 12px 12px 12px;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+ 
 }
 
 #notAcceptedStatus{

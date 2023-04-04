@@ -1,7 +1,13 @@
 
 
-import styles from '../OrdersTable.module.css'
+import styles from '../OrdersTable.module.css';
 
+import { servCarOrderService } from '../../../services/servCarOrderService';
+
+import { useEffect, useContext, useState } from 'react';
+import { AuthContext } from '../../../contexts/AuthContext';
+
+/* export component */
 export const OrderListRow = ({
     _id,
     user,
@@ -9,11 +15,34 @@ export const OrderListRow = ({
     carInfo,
     toggleShowInfoPlus,
     showInfoPlus,
-    _createdOn
-    
+    _createdOn,
+    onClickAcceptOrder
+
 }) => {
-const categoriesOrder=Object.keys(typeOrder).filter(key=>typeOrder[key]);
+    const { token } = useContext(AuthContext);
+    const servCarOrderServiceToken = servCarOrderService(token);
+    const [statusOrder, setStatusOrder] = useState('not Accepted')
+
+
+    useEffect(() => {
+
+        servCarOrderServiceToken.getItemsByClientOrderID(_id)
+            .then(result => {
+
+                const status = Object.values(result)[0].statusOrder
+                setStatusOrder(status);
+            })
+
+
+
+    }, [onClickAcceptOrder]);
+
+
+
+    const categoriesOrder = Object.keys(typeOrder).filter(key => typeOrder[key]);
+
     return (
+
         <tr id={_id} onClick={(e) => toggleShowInfoPlus(e)} className={styles["trbtn"]}>
 
             <td data-th="Service-Order No" >
@@ -21,7 +50,7 @@ const categoriesOrder=Object.keys(typeOrder).filter(key=>typeOrder[key]);
             </td>
             <td data-th="Type service" >
                 {categoriesOrder.join(', ')}
-                
+
             </td>
             <td data-th="Owner car" >
                 {user.flNames}
@@ -34,7 +63,7 @@ const categoriesOrder=Object.keys(typeOrder).filter(key=>typeOrder[key]);
                 na
             </td>
             <td data-th="Status" >
-                working
+                {statusOrder}
             </td>
 
         </tr>

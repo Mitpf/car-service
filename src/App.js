@@ -103,7 +103,7 @@ function App() {
     token: auth.accessToken,
     userEmail: auth.email,
     isAuthenticated: !!auth.accessToken,
-    isAdmin: '60f0cf0b-34b0-4abd-9769-8c42f830dffc' === auth._id,
+    isAdmin: 'admin@abv.bg' === auth.email,
     userContacts: {
       email: auth.email,
       phoneNumber: auth.phoneNumber,

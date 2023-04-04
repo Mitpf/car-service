@@ -9,19 +9,31 @@ import { OrderListInfoPlus } from '../OrderListRowInfoPlus/OderListInfoPlus'
 import { AuthContext } from '../../../contexts/AuthContext';
 
 import { orderServiceRequests } from '../../../services/orderService';
+import { servCarOrderService } from '../../../services/servCarOrderService';
 
-import { useCheckForUpdates } from '../../../hooks/useCheckForUpdates';
+
+
+import { useCheckForUpdatesCond } from '../../../hooks/useCheckForUpdatesCond'
+
+
 
 
 export const OrderListTable = ({ loadXdata }) => {
 
-    const { token } = useContext(AuthContext);
-    const orderServiceReqtoken = orderServiceRequests(token);
 
+    const [hookONoff, sethookONoff] = useState('OFF');
+
+
+
+
+    const { token } = useContext(AuthContext);
+
+    const orderServiceReqtoken = orderServiceRequests(token);
+    const servCarOrderServiceToken=servCarOrderService(token);
 
     const [orders, setOrders] = useState([]);
     const [ordersLength, setOrdersLength] = useState(0);
-    const [change, setChange] = useState(false);
+
     const [openInfoMethod, setopenInfoMethod] = useState('one');
     const [showInfoPlus, setshowInfoPlus] = useState({});
 
@@ -35,14 +47,31 @@ export const OrderListTable = ({ loadXdata }) => {
 
     }, [loadXdata]);
 
-    /* usage usecheckforupdates httpService,setStateLength, stateLength, setData,[additional depedencys] */
+    const onChangeHook = () => {
+        if (hookONoff == 'ON') {
+            sethookONoff('OFF')
+            return
+        }
 
-    useCheckForUpdates(orderServiceReqtoken.getAll,
+        if (hookONoff == 'OFF') {
+            sethookONoff('ON')
+            return
+        }
+    }
+
+    /* conditional hook for check db updates v2*/
+    /* usage usecheckforupdates(httpService,setStateLength, stateLength, setData,triger,[additional depedencys]) */
+
+    useCheckForUpdatesCond(orderServiceReqtoken.getAll,
         setOrdersLength, ordersLength,
-        setOrders, [setOrdersLength, loadXdata]);
+        setOrders, hookONoff, [ordersLength, onChangeHook]);
 
 
+    /* hook for changing method of open plus info in table*/
 
+    useEffect(() => {
+        setshowInfoPlus({})
+    }, [openInfoMethod]);
 
 
     const toggleShowInfoPlus = (e) => {
@@ -57,34 +86,44 @@ export const OrderListTable = ({ loadXdata }) => {
 
     const changeOpenMethod = e => setopenInfoMethod(e.target.value);
 
-    /* 
-    
-     const [clientOrders, setClientOrders] = useState([]);
-      const [ordersLength, setOrdersLength] = useState(0);
-    
-      useEffect(() => {
-        const intervalId = setInterval(async () => {
-          try {
-            const response = await fetch('http://localhost:3030/data/clientorders');
-            const data = await response.json();
-            if (data.length !== ordersLength) {
-              setOrdersLength(data.length);
-              setOrders(data);
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        }, 3000); // Poll every 3 seconds
-    
-        return () => {
-          clearInterval(intervalId);
-        };
-      }, [ordersLength]);
-    
-    
-    
-    
-    */
+    /* ONCLICK ACCEPT ORDER FUNCTION */
+
+    const onClickAcceptOrder = async (e, _clientOrderID) => {
+
+        e.preventDefault();
+        console.log('accept order clicked');
+        
+        const orderServReqtoken=orderServiceRequests(token);
+        const result = await orderServReqtoken.getOne(_clientOrderID);
+        
+
+        const { carInfo, user: ownerCarClientInfo, carAbmissionDate,
+            description: problemDescript, typeOrder, _id: clientOrderID, _ownerId: clientOrderOwnerID } = result;
+
+        const dataServOrder = {
+            carInfo, ownerCarClientInfo, carAbmissionDate,
+            problemDescript, typeOrder, clientOrderID, clientOrderOwnerID,
+            statusOrder: "accepted", diagnostic: "n/a", replacedParts: "n/a",
+            repairHistory: "n/a", totalPrice: "n/a"
+        }
+
+        const servOrderResult = await servCarOrderServiceToken.create(dataServOrder);
+
+
+        const resultRelation = await servCarOrderServiceToken.getItemsByClientOrderID(clientOrderID);
+
+        if (resultRelation.length > 0) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+
+
+
+    /* ------------------------- */
 
     return (
 
@@ -94,13 +133,14 @@ export const OrderListTable = ({ loadXdata }) => {
 
             <h1 className={styles.header}>Service Orders list</h1>
 
-            <div class={styles["search-container"]}>
+            <div className={styles["search-container"]}>
                 <form action="">
-                    <input classname={styles.inpSearch} type="text" placeholder="Search..." name="search" />
+                    <input className={styles.inpSearch} type="text" placeholder="Search..." name="search" />
 
                 </form>
             </div>
 
+            {/* RADIO BUTTONS CHANGE OPEN BEAHAVIOR METHOD */}
             <div className={styles.radioDiv}>
                 <input
                     type="radio"
@@ -119,12 +159,19 @@ export const OrderListTable = ({ loadXdata }) => {
                     checked={openInfoMethod === 'one'}
                     onChange={changeOpenMethod}
                 />
-
+                <span>   </span>
                 <label htmlFor="one">only-oneInfo Open</label>
+
+                {/* BUTTON LOAD prepulate DATA from diff users */}
 
                 <button onClick={loadXdata}>loadxData</button>
 
+                <button onClick={onChangeHook}>{hookONoff == 'ON' ? 'STOP useCheckHOOK' : "Start useCheckHOOK"}</button>
+                <br />
+
             </div>
+
+
 
             <table className={styles["rwd-table"]}>
                 <tbody>
@@ -152,15 +199,21 @@ export const OrderListTable = ({ loadXdata }) => {
                             <Fragment key={x._id}>
                                 <OrderListRow
                                     //id={x._id}
+                                    onClickAcceptOrder={onClickAcceptOrder}
                                     {...x}
                                     toggleShowInfoPlus={toggleShowInfoPlus}
                                     showInfoPlus={showInfoPlus}
                                 />
-                                {showInfoPlus[x._id] && <OrderListInfoPlus id={x._id} {...x} />}
+                                {showInfoPlus[x._id] && <OrderListInfoPlus id={x._id} {...x} onClickAcceptOrder={onClickAcceptOrder}/>}
                             </Fragment>
 
                         ))
+
                     }
+
+                    <td></td>
+
+
 
                 </tbody>
             </table>
