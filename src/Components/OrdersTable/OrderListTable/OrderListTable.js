@@ -23,13 +23,13 @@ export const OrderListTable = ({ loadXdata }) => {
 
     const [hookONoff, sethookONoff] = useState('OFF');
 
-
+    const [onAcceptState, setOnAcceptState] = useState(false);
 
 
     const { token } = useContext(AuthContext);
 
     const orderServiceReqtoken = orderServiceRequests(token);
-    const servCarOrderServiceToken=servCarOrderService(token);
+    const servCarOrderServiceToken = servCarOrderService(token);
 
     const [orders, setOrders] = useState([]);
     const [ordersLength, setOrdersLength] = useState(0);
@@ -92,10 +92,10 @@ export const OrderListTable = ({ loadXdata }) => {
 
         e.preventDefault();
         console.log('accept order clicked');
-        
-        const orderServReqtoken=orderServiceRequests(token);
+
+        const orderServReqtoken = orderServiceRequests(token);
         const result = await orderServReqtoken.getOne(_clientOrderID);
-        
+
 
         const { carInfo, user: ownerCarClientInfo, carAbmissionDate,
             description: problemDescript, typeOrder, _id: clientOrderID, _ownerId: clientOrderOwnerID } = result;
@@ -113,6 +113,7 @@ export const OrderListTable = ({ loadXdata }) => {
         const resultRelation = await servCarOrderServiceToken.getItemsByClientOrderID(clientOrderID);
 
         if (resultRelation.length > 0) {
+            setOnAcceptState(oldState=>!oldState)
             return true;
         }
 
@@ -199,12 +200,12 @@ export const OrderListTable = ({ loadXdata }) => {
                             <Fragment key={x._id}>
                                 <OrderListRow
                                     //id={x._id}
-                                    onClickAcceptOrder={onClickAcceptOrder}
+                                    onAcceptState={onAcceptState}
                                     {...x}
                                     toggleShowInfoPlus={toggleShowInfoPlus}
                                     showInfoPlus={showInfoPlus}
                                 />
-                                {showInfoPlus[x._id] && <OrderListInfoPlus id={x._id} {...x} onClickAcceptOrder={onClickAcceptOrder}/>}
+                                {showInfoPlus[x._id] && <OrderListInfoPlus id={x._id} {...x} onClickAcceptOrder={onClickAcceptOrder} />}
                             </Fragment>
 
                         ))

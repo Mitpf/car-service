@@ -16,7 +16,7 @@ export const OrderListRow = ({
     toggleShowInfoPlus,
     showInfoPlus,
     _createdOn,
-    onClickAcceptOrder
+    onAcceptState
 
 }) => {
     const { token } = useContext(AuthContext);
@@ -35,7 +35,7 @@ export const OrderListRow = ({
 
 
 
-    }, [onClickAcceptOrder]);
+    }, [onAcceptState]);
 
 
 
