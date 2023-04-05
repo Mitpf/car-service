@@ -14,6 +14,7 @@ import { AuthMainPage } from './Components/Auth/AuthMainPage';
 import { Logout } from './Components/Auth/Logout/Logout';
 import { CreateOrder } from './Components/CreateOrder/CreateOrder';
 import { Home } from './Components/HOME/Home';
+import { MyOrders } from './Components/MyOrders/MyOrders';
 
 
 
@@ -34,6 +35,7 @@ function App() {
 
   const onLoginSubmit = async (data) => {
     try {
+      console.log('logindata', data);
       const result = await authServTokenReq.login(data);
 
       setAuth(result);
@@ -79,6 +81,7 @@ function App() {
 
     dataArr.forEach(async x => {
       try {
+        console.log(x.user);
         const result = await authServTokenReq.register(x.user);
 
         setAuth(result);
@@ -91,6 +94,8 @@ function App() {
       }
 
     })
+
+
   }
 
 
@@ -122,11 +127,12 @@ function App() {
 
 
         <Routes>
-          <Route path='/' element={<Home/>} />
+          <Route path='/' element={<Home />} />
           <Route path='/orders/list' element={<OrderListTable {...{ loadXdata }} />} />
           <Route path='/user/auth/*' element={<AuthMainPage />} />
           <Route path='/user/auth/logout' element={<Logout />} />
           <Route path='/user/createorder' element={<CreateOrder />} />
+          <Route path='/user/:userID/orders/*' element={<MyOrders />} />
 
         </Routes>
 

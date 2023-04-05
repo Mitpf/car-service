@@ -178,8 +178,8 @@ export const OrderListTable = ({ loadXdata }) => {
                 <tbody>
 
                     <tr >
-                        <th >Service-Order No</th>
-                        <th >Type service</th>
+                        <th >Date of creation</th>
+                        <th >Type Order-Issue</th>
                         <th >Owner car</th>
                         <th >Car model</th>
                         <th >Calc Price</th>

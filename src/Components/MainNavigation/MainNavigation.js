@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Fragment, useContext } from 'react';
 
 
@@ -11,7 +11,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 export const MainNavigation = () => {
 
-  const { isAuthenticated, userEmail, isAdmin } = useContext(AuthContext)
+  const { isAuthenticated, userEmail, isAdmin, userId } = useContext(AuthContext)
 
   return (
 
@@ -25,14 +25,14 @@ export const MainNavigation = () => {
           <header>
             <nav>
               <div className={styles["logo"]}>
-              <Link to="/"> Service Car Reminder</Link>
+                <Link to="/"> Service Car Reminder</Link>
               </div>
-              
-            
-                <h4 className={styles.admin}>ADMIN MODE</h4>
-              
 
-              
+
+              <h4 className={styles.admin}>ADMIN MODE</h4>
+
+
+
               <label htmlFor="menubrop" className={styles["bartoggle"]}>≡</label>
               <input type="checkbox" id="menubrop" className={styles.menubrop} />
 
@@ -82,10 +82,15 @@ export const MainNavigation = () => {
               <input type="checkbox" id="menubrop" className={styles.menubrop} />
 
               <ul className={styles["NavMenu"]}>
-              
-                <li><a href="#">My orders</a></li>
-                
-                
+
+                <li><NavLink
+                  to={`/user/${userId}/orders`}
+                  className={({isActive}) => isActive ? styles['.activeLink'] : '' }
+                >
+                  My orders
+                </NavLink></li>
+
+
                 <li><a href="#">Repair Stories</a></li>
                 <li><a href="#">My Car Reminder</a></li>
 
@@ -102,7 +107,7 @@ export const MainNavigation = () => {
                   <input type="checkbox" id="droplist1" />
 
                   <ul>
-                  <li><Link to="/user/createorder">make new Order</Link></li>
+                    <li><Link to="/user/createorder">make new Order</Link></li>
 
                     <li><Link to="/user/auth/logout">Logout</Link></li>
                   </ul>

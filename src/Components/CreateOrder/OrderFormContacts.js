@@ -65,12 +65,12 @@ export const OrderFormContacts = ({
 
                 {/* phone number */}
                 <input
-                    disabled={phoneNumber}
+                    disabled={!!phoneNumber}
                     type="tel"
                     className={styles.inpTxtMailTel}
                     name="phoneNumber"
                     placeholder="phoneNumber"
-                    value={phoneNumber}
+                    value={values.phoneNumber}
                     onChange={changeHandler}
                 />
 

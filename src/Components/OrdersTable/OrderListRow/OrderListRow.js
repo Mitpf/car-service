@@ -1,6 +1,7 @@
 
-
+import {formatDate} from '../../../utils/dateUtils'
 import styles from '../OrdersTable.module.css';
+import moment from 'moment';
 
 import { servCarOrderService } from '../../../services/servCarOrderService';
 
@@ -46,7 +47,7 @@ export const OrderListRow = ({
         <tr id={_id} onClick={(e) => toggleShowInfoPlus(e)} className={styles["trbtn"]}>
 
             <td data-th="Service-Order No" >
-                {_createdOn}
+                {formatDate(_createdOn)}  {/* encodeURIComponent(`$_createdOn="${_createdOn}"`); */}
             </td>
             <td data-th="Type service" >
                 {categoriesOrder.join(', ')}
