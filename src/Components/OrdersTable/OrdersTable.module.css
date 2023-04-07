@@ -167,7 +167,9 @@ td .arrow {
   border-radius: 4px;
   width: 70px;
   margin: 10px;
-  display: inline-block
+  display: inline-block;
+
+
 }
 
 .warning {
@@ -229,4 +231,74 @@ td .arrow {
   color: #20066f;
   padding: 10px;
   border: 2px solid #04f99f;
+}
+/* client orders */
+
+
+.divClientOrders {
+  display: block;
+  background-color: #e2f4fa;
+  padding: 15px;
+  padding-bottom: 7px;
+ 
+  margin: auto;
+  width:800px;
+  border-radius: 10px;
+  border: 2px solid rgb(21, 39, 111);
+  margin-bottom:10px;
+
+  min-height: 250px;
+  
+   
+}
+
+.spanRight{
+  float: right;
+  
+  margin-right: 7px;
+  text-align: right;
+
+}
+
+.container {
+  width: 55%;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.title {
+
+  background: linear-gradient(to bottom right, #2a2c50 0%, #3a557c 100%);
+  border-radius: 5px 5px 0px 0;
+  padding: 2px;
+  padding-left: 8px;
+  padding-bottom: 2px;
+  color: #f6f6f6;
+  margin-bottom:9px;
+  
+}
+
+.maxWidth{
+  max-width: 600px;
+}
+
+.imgCarClientOrd {
+  border-radius: 8px;
+  max-height: 85px;
+}
+
+/* hr{
+  margin-top: 7px;
+  margin-bottom: 5px;
+} */
+
+
+.imgDamages{
+
+  float: left;
+  margin-right: 10px;
 }

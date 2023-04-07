@@ -86,7 +86,9 @@ function App() {
 
         setAuth(result);
         const orderServiceToken = orderServiceRequests(result.accessToken);
-        await orderServiceToken.create(x.data);
+
+        x.records.forEach(async z => await orderServiceToken.create(z))
+
 
       }
       catch (error) {
@@ -94,7 +96,7 @@ function App() {
       }
 
     })
-
+    
 
   }
 

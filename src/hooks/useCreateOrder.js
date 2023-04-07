@@ -15,12 +15,14 @@ export const useCreateOrder = () => {
     const orderServiceToken = orderServiceRequests(token);
 
     const onSubmitHandler = async () => {
+
         const { problem, consumables, title, text,
             photos, brandModel, productDate, engine, km, imageUrl,
             flNames, email, phoneNumber, bookedDate, bookedHour } = values;
 
         const orderData = {
             typeOrder: { problem, consumables },
+            statusOrder:'not Accepted',
             description: { title, text, photos },
             carInfo: { brandModel, productDate, engine, km, imageUrl },
             user: { flNames, email, phoneNumber },

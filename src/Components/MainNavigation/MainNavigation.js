@@ -6,6 +6,7 @@ import styles from './MainNavigation.module.css';
 
 
 import { AuthContext } from '../../contexts/AuthContext';
+import { MyOrders } from '../MyOrders/MyOrders';
 
 
 
@@ -87,7 +88,7 @@ export const MainNavigation = () => {
                   to={`/user/${userId}/orders`}
                   className={({isActive}) => isActive ? styles['.activeLink'] : '' }
                 >
-                  My orders
+                  My Orders
                 </NavLink></li>
 
 

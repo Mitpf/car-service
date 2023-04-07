@@ -1,5 +1,5 @@
 
-import {formatDate} from '../../../utils/dateUtils'
+import { formatDate } from '../../../utils/formatDate'
 import styles from '../OrdersTable.module.css';
 import moment from 'moment';
 
@@ -40,7 +40,9 @@ export const OrderListRow = ({
 
 
 
-    const categoriesOrder = Object.keys(typeOrder).filter(key => typeOrder[key]);
+    const categoriesOrder = Object.keys(typeOrder)
+        .filter(key => typeOrder[key])
+        .join(', ');
 
     return (
 
@@ -50,7 +52,7 @@ export const OrderListRow = ({
                 {formatDate(_createdOn)}  {/* encodeURIComponent(`$_createdOn="${_createdOn}"`); */}
             </td>
             <td data-th="Type service" >
-                {categoriesOrder.join(', ')}
+                {categoriesOrder}
 
             </td>
             <td data-th="Owner car" >

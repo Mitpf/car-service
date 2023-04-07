@@ -31,6 +31,7 @@ export const orderServiceRequests = (token) => {
         return result;
     }
 
+
     const getItemsByPropNameValue = async (propName,propValue) => {
         const query = encodeURIComponent(`${propName}="${propValue}"`);
 
@@ -46,6 +47,8 @@ export const orderServiceRequests = (token) => {
 
     const edit = (orderId, data) => httpReqToken.put(`${baseUrl}/${orderId}`, data);
 
+    const update=(id, data)=>httpReqToken.patch(`${baseUrl}/${id}`, data)
+
     const deleteOrder = (orderId) => httpReqToken.delete(`${baseUrl}/${orderId}`);
 
 
@@ -54,6 +57,7 @@ export const orderServiceRequests = (token) => {
         getAll,
         getOne,
         edit,
+        update,
         deleteOrder,
         getItemsByPropNameValue
     }
