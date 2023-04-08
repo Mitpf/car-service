@@ -29,10 +29,14 @@ export const AuthProvider = ({
         try {
             console.log('logindata', data);
             const result = await authServTokenReq.login(data);
-
+console.log('rrres', result);
             setAuth(result);
+            if (result.email == 'admin@abv.bg') {
+                navigateTo('/orders/list');
+            }else{
+                navigateTo(`/user/${result._id}/orders`)
+            }
 
-            navigateTo('/');
         } catch (error) {
             console.log('There is a problem', error);
         }

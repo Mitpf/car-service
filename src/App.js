@@ -1,12 +1,12 @@
 
-import { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import { authServiceRequests } from './services/authServiceRequests';
+
 import { AuthProvider } from './contexts/AuthContext';
-import { AuthContext } from './contexts/AuthContext';
-import { loadData } from './loadData/loadData';
-import { orderServiceRequests } from './services/orderService';
+import { RouteGuard } from './Components/RouteGuards/RouteGurads';
+import { AdminGuard } from './Components/RouteGuards/AdminGurad';
+
 
 import './App.css';
 import { MainNavigation } from './Components/MainNavigation/MainNavigation';
@@ -17,6 +17,7 @@ import { CreateOrder } from './Components/CreateOrder/CreateOrder';
 import { Home } from './Components/HOME/Home';
 import { MyOrders } from './Components/MyOrders/MyOrders';
 import { ErrorServerDisconnected } from './Components/Errors/ErrorServerDisconnected';
+import { OwnerOrder } from './Components/RouteGuards/OwnerOrder';
 
 
 
@@ -29,8 +30,6 @@ function App() {
     document.title = "Car Service - Reminder";
   }, []);
 
-  /* -- */
- 
 
 
   return (
@@ -41,11 +40,32 @@ function App() {
 
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/orders/list' element={<OrderListTable  />} />
+
           <Route path='/user/auth/*' element={<AuthMainPage />} />
-          <Route path='/user/auth/logout' element={<Logout />} />
-          <Route path='/user/createorder' element={<CreateOrder />} />
-          <Route path='/user/:userID/orders/*' element={<MyOrders />} />
+
+          <Route element={<RouteGuard />}>
+
+            <Route path='/user/createorder' element={<CreateOrder />} />
+
+            <Route path='/orders/list' element={
+              <AdminGuard>
+                <OrderListTable />
+              </AdminGuard>
+            } />
+
+            <Route path='/user/:userID/orders/*' element={
+              <OwnerOrder>
+                <MyOrders />
+              </OwnerOrder>
+
+            } />
+
+
+
+            <Route path='/user/auth/logout' element={<Logout />} />
+          </Route>
+
+
           <Route path='/errors/serverdisconnected' element={<ErrorServerDisconnected />} />
 
         </Routes>

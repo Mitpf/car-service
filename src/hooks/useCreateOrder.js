@@ -4,13 +4,14 @@ import { AuthContext } from '../contexts/AuthContext';
 import { useForm } from './useForm';
 import { httpRequests } from '../services/httpRequests';
 import { orderServiceRequests } from '../services/orderService';
+import { Navigate } from 'react-router-dom';
 
 
 
 
 export const useCreateOrder = () => {
 
-    const { userContacts, token } = useContext(AuthContext);
+    const { userContacts, token, userId } = useContext(AuthContext);
     const { email, phoneNumber, flNames } = userContacts;
     const orderServiceToken = orderServiceRequests(token);
 
@@ -22,14 +23,16 @@ export const useCreateOrder = () => {
 
         const orderData = {
             typeOrder: { problem, consumables },
-            statusOrder:'not Accepted',
+            statusOrder: 'not Accepted',
             description: { title, text, photos },
             carInfo: { brandModel, productDate, engine, km, imageUrl },
             user: { flNames, email, phoneNumber },
             carAbmissionDate: { date: bookedDate, hour: bookedHour }
         }
-
+        console.log('hiasdas');
         const result = await orderServiceToken.create(orderData);
+        
+        
     }
 
 
