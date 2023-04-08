@@ -54,8 +54,7 @@ export const MyOrders = () => {
                 await clientOrdersTokenReq.edit(x.clientOrderID, { ...x.author, statusOrder: x.statusOrder })
             });
 
-            const orders = await clientOrderTokenReq.getItemsByPropNameValue('_ownerId', userId)
-            setThisUserClientOrders(orders)
+            
 
         }
 
@@ -63,6 +62,15 @@ export const MyOrders = () => {
 
 
     }, []);
+
+    useEffect(() => {
+        clientOrderTokenReq.getItemsByPropNameValue('_ownerId', userId)
+            .then(result => {
+                const orders = result;
+                setThisUserClientOrders(orders);
+            })
+        
+    }, [])
 
 
 

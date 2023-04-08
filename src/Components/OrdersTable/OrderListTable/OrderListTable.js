@@ -18,7 +18,7 @@ import { useCheckForUpdatesCond } from '../../../hooks/useCheckForUpdatesCond'
 
 
 
-export const OrderListTable = ({ loadXdata }) => {
+export const OrderListTable = () => {
 
 
     const [hookONoff, sethookONoff] = useState('OFF');
@@ -26,7 +26,7 @@ export const OrderListTable = ({ loadXdata }) => {
     const [onAcceptState, setOnAcceptState] = useState(false);
 
 
-    const { token } = useContext(AuthContext);
+    const { token,loadXdata } = useContext(AuthContext);
 
     const orderServiceReqtoken = orderServiceRequests(token);
     const servCarOrderServiceToken = servCarOrderService(token);
