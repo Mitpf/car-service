@@ -93,31 +93,47 @@ export const MyOrders = () => {
 
                     return (
 
-                        <div className={styles.divClientOrders}>
+                        <div className={styles.divClientOrders} key={x._id}>
 
                             <div className={styles.title}>
-                                {x.description.title}  <span className={styles.spanRight}> Status: {x.statusOrder}</span>
+                                <span className={styles.spanLeft}>
+                                    created on: {formatDate(x._createdOn)}
+                                </span>
+
+
+                                <span className={styles.spanRight}>
+                                    Status: {x.statusOrder}
+                                </span>
+
+                                <span className={styles.spanCenter}>
+                                    {x.description.title}
+
+                                </span>
+
                             </div>
-
-                            <span className={styles.spanRight}>
-                                created on:
-                                <br></br>
-                                {formatDate(x._createdOn)}
-                            </span>
-
-                            <p>type issue: {categoriesOrder}</p>
-
-                            <p className={styles.maxWidth}>
-                                <span>description: </span>
-                                {x.description.text}
-                            </p>
                             <span className={styles.spanRight}>
                                 car:
                                 <br></br>
                                 {x.carInfo.brandModel}
                                 <br></br>
-                                <img className={styles.imgCarClientOrd} src={x.carInfo.imageUrl} alt="" />
+
+                                <ImageViewer  >
+                                    <img className={styles.imgCarClientOrd} src={x.carInfo.imageUrl} alt="" />
+                                </ImageViewer>
+
                             </span>
+
+                            <p>type issue: {categoriesOrder}</p>
+
+
+
+                            <p className={styles.maxWidth}>
+                                <span>description: </span>
+                                {x.description.text}
+                            </p>
+
+
+
                             <p >
                                 Date appoitment: {formatDateDMY(x.carAbmissionDate.date)} - hour: {x.carAbmissionDate.hour}
                             </p>
@@ -133,7 +149,7 @@ export const MyOrders = () => {
 
                                         <div className={styles.orderPhotos} key={x.link}>
                                             <ImageViewer  >
-                                                <img className={styles.imgDamages} src={x.link} className={styles.orderPhotos} />
+                                                <img className={styles.imgDamages} src={x.link} />
                                             </ImageViewer>
 
                                         </div>
