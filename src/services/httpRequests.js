@@ -36,6 +36,16 @@ const httpreq = async (method, token, url, data) => {
 };
 
 export const httpRequests = (token) => {
+
+    if (!token) {
+        const serializedAuth = localStorage.getItem('auth');
+
+        if (serializedAuth) {
+            const auth = JSON.parse(serializedAuth);
+            token = auth.accessToken;
+        }
+    }
+
     return {
         get: httpreq.bind(null, 'GET', token),
         post: httpreq.bind(null, 'POST', token),

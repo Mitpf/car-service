@@ -18,8 +18,8 @@ export const AuthProvider = ({
 
     const [auth, setAuth] = useLocalStorage('auth', {});
     const navigateTo = useNavigate();
-    console.log(auth.accessToken);
-    const authServTokenReq = authServiceRequests(auth.accessToken);
+    
+    const authServTokenReq = authServiceRequests();
 
 
     /* -----Auth reqs--------- */
@@ -64,6 +64,7 @@ console.log('rrres', result);
                 // Other error, clear localStorage
                 console.log('logout clearing LocalStorage');
                 localStorage.clear();
+                setAuth({});
                 navigateTo('/errors/serverdisconnected');
             }
 

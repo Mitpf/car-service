@@ -22,12 +22,12 @@ export const MyOrders = () => {
 
     const [thisUserAcceptedOrders, setThisUserAcceptedOrders] = useState([]);
     const [thisUserClientOrders, setThisUserClientOrders] = useState([]);
-
+    const [ready, setReady] = useState(false);
 
 
 
     /*-----FILTER-servacarOrders:----- by USERclient && Accepted=true-------------*/
-    /*  this hook returns all accepted client orders recorded in servisecarDB only from one USERclient maded, 
+    /*  this hook returns all accepted (all copied from client means auotamtic  accepted) client orders recorded in servisecarDB only from one USERclient maded, 
     and returns original orders BY clientOrderID related to the accepted in servcarOrdersDB  */
     /* does'nt RETURN clientorders, which are not ACCEPTED(recorded) by/in SErviceCArDB */
     /* ---------- */
@@ -36,53 +36,73 @@ export const MyOrders = () => {
     /* ---- */
     /*  function (search, relation) , function ({propName:propValue}, {relationID: DBcollectionName})*/
 
+
+
+     useEffect(() => {
+        async function fetchData() {
+          try {
+            const result = await servOrderTokenReq.getItemsByQueryRelation(
+              { clientOrderOwnerID: userId },
+              { clientOrderID: 'clientorders' }
+            );
+            setThisUserAcceptedOrders(result);
+      
+            console.log('related result', result);
+      
+            for (let x of result) {
+              await clientOrdersTokenReq.edit(x.clientOrderID, { ...x.author, statusOrder: x.statusOrder });
+              console.log('x.statusOrder', x.statusOrder);
+            }
+          } catch (error) {
+            console.error('An error occurred while fetching data:', error);
+            setThisUserAcceptedOrders([0]);
+          }
+        }
+      
+        fetchData();
+      }, []);
+
+
+
     useEffect(() => {
 
         async function fetchData() {
-
-            const result = await servOrderTokenReq.getItemsByQueryRelation(
-                { clientOrderOwnerID: userId },
-                { clientOrderID: 'clientorders' }
-            );
-
-            setThisUserAcceptedOrders(result);
-
-            console.log(result[0]);
-
-            result.forEach(async x => {
-
+          try {
+            if (thisUserAcceptedOrders.length > 0) {
+              console.log('thisUserAcceptedOrders', thisUserAcceptedOrders);
+      
+              for (let x of thisUserAcceptedOrders) {
                 await clientOrdersTokenReq.edit(x.clientOrderID, { ...x.author, statusOrder: x.statusOrder })
-            });
-
-            
-
+              }
+      
+              setReady(true);
+            }
+          } catch (error) {
+            console.error('An error occurred while fetching data:', error);
+            setReady(true);
+          }
         }
-
+      
         fetchData();
+      
+      }, [thisUserAcceptedOrders]);
 
-
-    }, []);
 
     useEffect(() => {
-        clientOrderTokenReq.getItemsByPropNameValue('_ownerId', userId)
-            .then(result => {
-                const orders = result;
-                setThisUserClientOrders(orders);
-            })
-        
-    }, [])
+        if (ready) {
+            clientOrderTokenReq.getItemsByPropNameValue('_ownerId', userId)
+                .then(result => {
+                    console.log('fin res', result);
+                    const orders = result;
+                    console.log('orders', orders);
+                    setThisUserClientOrders(orders);
 
+                })
+        }
 
+    }, [ready])
 
-    console.log('this', thisUserClientOrders);
-
-    /*all client orders filter only by current user */
-    /*  useEffect(() => {
- 
-         clientOrderTokenReq.getItemsByPropNameValue('_ownerId', userId)
-             .then(result => setThisUserClientOrders(result))
- 
-     }, []); */
+  
 
 
     return (

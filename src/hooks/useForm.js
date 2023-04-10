@@ -24,6 +24,8 @@ export const useForm = (initialValues, onSubmitHandler) => {
         e.preventDefault();
 
         onSubmitHandler(values);
+
+        setValues(initialValues);
     };
     /*  const handleCheckboxChange = (event) => {
         setIsChecked(event.target.checked);
