@@ -1,15 +1,20 @@
-import styles from '../OrdersTable/OrdersTable.module.css';
-import { ImageViewer } from "react-image-viewer-dv";
+
 
 import { Fragment, useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
-import { formatDate } from '../../utils/formatDate';
-import { formatDateDMY } from '../../utils/formatDateDMY';
-
 
 import { orderServiceRequests } from '../../services/orderService';
 import { servCarOrderService } from '../../services/servCarOrderService';
+import { AuthContext } from '../../contexts/AuthContext';
+
+import { formatDate } from '../../utils/formatDate';
+import { formatDateDMY } from '../../utils/formatDateDMY';
+import { ImageViewer } from "react-image-viewer-dv";
+
 import { MyOrdersItem } from './MyOrders_Item/MyOrders_Item';
+
+import styles from '../OrdersTable/OrdersTable.module.css';
+
+import { useSyncOrders } from '../../hooks/useSyncOrders';
 
 
 
@@ -18,91 +23,16 @@ export const MyOrders = () => {
     const { token, userId } = useContext(AuthContext);
     const clientOrdersTokenReq = orderServiceRequests(token);
     const servOrderTokenReq = servCarOrderService(token);
-    const clientOrderTokenReq = orderServiceRequests(token);
-
-    const [thisUserAcceptedOrders, setThisUserAcceptedOrders] = useState([]);
     const [thisUserClientOrders, setThisUserClientOrders] = useState([]);
-    const [ready, setReady] = useState(false);
 
-
-
-    /*-----FILTER-servacarOrders:----- by USERclient && Accepted=true-------------*/
-    /*  this hook returns all accepted (all copied from client means auotamtic  accepted) client orders recorded in servisecarDB only from one USERclient maded, 
-    and returns original orders BY clientOrderID related to the accepted in servcarOrdersDB  */
-    /* does'nt RETURN clientorders, which are not ACCEPTED(recorded) by/in SErviceCArDB */
-    /* ---------- */
-    /* usage request function --> 
-    in this case author is 'clientorders' */
-    /* ---- */
-    /*  function (search, relation) , function ({propName:propValue}, {relationID: DBcollectionName})*/
-
-
-
-     useEffect(() => {
-        async function fetchData() {
-          try {
-            const result = await servOrderTokenReq.getItemsByQueryRelation(
-              { clientOrderOwnerID: userId },
-              { clientOrderID: 'clientorders' }
-            );
-            setThisUserAcceptedOrders(result);
-      
-            console.log('related result', result);
-      
-            for (let x of result) {
-              await clientOrdersTokenReq.edit(x.clientOrderID, { ...x.author, statusOrder: x.statusOrder });
-              console.log('x.statusOrder', x.statusOrder);
-            }
-          } catch (error) {
-            console.error('An error occurred while fetching data:', error);
-            setThisUserAcceptedOrders([0]);
-          }
-        }
-      
-        fetchData();
-      }, []);
-
-
+    const result = useSyncOrders(userId, clientOrdersTokenReq, servOrderTokenReq);
 
     useEffect(() => {
+        
+        setThisUserClientOrders(result);
+    },[result]);
 
-        async function fetchData() {
-          try {
-            if (thisUserAcceptedOrders.length > 0) {
-              console.log('thisUserAcceptedOrders', thisUserAcceptedOrders);
-      
-              for (let x of thisUserAcceptedOrders) {
-                await clientOrdersTokenReq.edit(x.clientOrderID, { ...x.author, statusOrder: x.statusOrder })
-              }
-      
-              setReady(true);
-            }
-          } catch (error) {
-            console.error('An error occurred while fetching data:', error);
-            setReady(true);
-          }
-        }
-      
-        fetchData();
-      
-      }, [thisUserAcceptedOrders]);
-
-
-    useEffect(() => {
-        if (ready) {
-            clientOrderTokenReq.getItemsByPropNameValue('_ownerId', userId)
-                .then(result => {
-                    console.log('fin res', result);
-                    const orders = result;
-                    console.log('orders', orders);
-                    setThisUserClientOrders(orders);
-
-                })
-        }
-
-    }, [ready])
-
-  
+    
 
 
     return (
