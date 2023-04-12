@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
@@ -18,7 +18,7 @@ export const AuthProvider = ({
 
     const [auth, setAuth] = useLocalStorage('auth', {});
     const navigateTo = useNavigate();
-    
+
     const authServTokenReq = authServiceRequests();
 
 
@@ -29,11 +29,11 @@ export const AuthProvider = ({
         try {
             console.log('logindata', data);
             const result = await authServTokenReq.login(data);
-console.log('rrres', result);
+            console.log('rrres', result);
             setAuth(result);
             if (result.email == 'admin@abv.bg') {
                 navigateTo('/orders/list');
-            }else{
+            } else {
                 navigateTo(`/user/${result._id}/orders`)
             }
 
@@ -119,6 +119,8 @@ console.log('rrres', result);
 
     }
 
+  
+
 
     const contextValues = {
 
@@ -135,7 +137,8 @@ console.log('rrres', result);
             phoneNumber: auth.phoneNumber,
             flNames: auth.firstLastNames
         },
-        loadXdata
+        loadXdata,
+      
 
     };
 

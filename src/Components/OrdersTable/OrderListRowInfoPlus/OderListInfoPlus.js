@@ -2,6 +2,7 @@
 import { ImageViewer } from "react-image-viewer-dv";
 import { Fragment, useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { StatesContext } from "../../../contexts/StatesContext";
 
 import styles from '../OrdersTable.module.css';
 import { orderServiceRequests } from "../../../services/orderService";
@@ -24,6 +25,8 @@ export const OrderListInfoPlus = ({
     const [isAccepted, setIsAccepted] = useState(false);
 
     const { token } = useContext(AuthContext);
+
+
     const orderServiceReqToken = orderServiceRequests(token);
     const servCarOrderServiceToken = servCarOrderService(token);
 
@@ -45,13 +48,18 @@ export const OrderListInfoPlus = ({
 
     const onClikAcceptHandler = async (e) => {
 
+       
         const result = await onClickAcceptOrder(e, _clientOrderID);
-        console.log('accres', result);
+
         if (result) {
-            setIsAccepted(true)
+            setIsAccepted(true);
+
+
         }
 
     }
+
+
 
 
     /* const onClickAcceptOrder = async (e) => {
@@ -152,7 +160,7 @@ export const OrderListInfoPlus = ({
 
                             type="button"
                             value="Accept Order"
-                            onClick={(e, _clientOrderID) => onClikAcceptHandler(e, _clientOrderID)}
+                            onClick={onClikAcceptHandler}
                             disabled={isAccepted}
                             id={isAccepted ? "disabledButton" : "btntake"}
 

@@ -5,12 +5,13 @@ import { Fragment, useState, useEffect, useContext } from 'react';
 import { orderServiceRequests } from '../../services/orderService';
 import { servCarOrderService } from '../../services/servCarOrderService';
 import { AuthContext } from '../../contexts/AuthContext';
+import { StatesContext } from '../../contexts/StatesContext';
 
 import { formatDate } from '../../utils/formatDate';
 import { formatDateDMY } from '../../utils/formatDateDMY';
 import { ImageViewer } from "react-image-viewer-dv";
 
-import { MyOrdersItem } from './MyOrders_Item/MyOrders_Item';
+
 
 import styles from '../OrdersTable/OrdersTable.module.css';
 
@@ -21,18 +22,22 @@ import { useSyncOrders } from '../../hooks/useSyncOrders';
 export const MyOrders = () => {
 
     const { token, userId } = useContext(AuthContext);
+
+
     const clientOrdersTokenReq = orderServiceRequests(token);
     const servOrderTokenReq = servCarOrderService(token);
     const [thisUserClientOrders, setThisUserClientOrders] = useState([]);
 
-    const result = useSyncOrders(userId, clientOrdersTokenReq, servOrderTokenReq);
+    const clientOrders = useSyncOrders(userId, clientOrdersTokenReq, servOrderTokenReq);
+
+
 
     useEffect(() => {
-        
-        setThisUserClientOrders(result);
-    },[result]);
 
-    
+        setThisUserClientOrders(clientOrders);
+    }, [clientOrders]);
+
+
 
 
     return (
@@ -70,7 +75,7 @@ export const MyOrders = () => {
 
                             </div>
                             <span className={styles.spanRight}>
-                                car:
+                               <span className={styles.spanBold}>car:</span> 
                                 <br></br>
                                 {x.carInfo.brandModel}
                                 <br></br>
@@ -81,27 +86,26 @@ export const MyOrders = () => {
 
                             </span>
 
-                            <p>type issue: {categoriesOrder}</p>
+                            <p> <span className={styles.spanBold}>Type issue:</span> {categoriesOrder}</p>
 
 
 
                             <p className={styles.maxWidth}>
-                                <span>description: </span>
+                                <span className={styles.spanBold}>description: </span>
                                 {x.description.text}
                             </p>
 
 
 
                             <p >
-                                Date appoitment: {formatDateDMY(x.carAbmissionDate.date)} - hour: {x.carAbmissionDate.hour}
+                                <span className={styles.spanBold}>Date appoitment:</span> {formatDateDMY(x.carAbmissionDate.date)} - hour: {x.carAbmissionDate.hour}
                             </p>
-                            contacts:
-
+                           <span className={styles.spanBold}>contacts:</span> 
                             <span className={styles.spanContacts}> {x.user.flNames}  |  {x.user.phoneNumber}  |   {x.user.email}</span>
 
                             <div>
 
-                                {x.description.photos.length > 0 && <p>photos damages:</p>}
+                                {x.description.photos.length > 0 && <p><span className={styles.spanBold}>photos damages:</span></p>}
                                 {
                                     x.description.photos.map(x => (
 
@@ -119,11 +123,11 @@ export const MyOrders = () => {
 
                             </div>
                             <hr></hr>
-                            <p>SERVICE INFO:</p>
-                            <p>diagnostic:</p>
-                            <p>replacedParts:</p>
-                            <p>repairHistory:</p>
-                            <p>totalPrice:</p>
+                            <p>  <span className={styles.spanBold}>SERVICE INFO</span> </p>
+                            <p><span className={styles.spanBold}>diagnostic:</span></p>
+                            <p><span className={styles.spanBold}>replacedParts:</span></p>
+                            <p><span className={styles.spanBold}>repairHistory:</span></p>
+                            <p><span className={styles.spanBold}>totalPrice:</span></p>
                         </div>
 
 

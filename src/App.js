@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 
 import { AuthProvider } from './contexts/AuthContext';
+import { StateProvider } from './contexts/StatesContext';
 import { RouteGuard } from './Components/RouteGuards/RouteGurads';
 import { AdminGuard } from './Components/RouteGuards/AdminGurad';
 
@@ -33,46 +34,48 @@ function App() {
 
 
   return (
-    <AuthProvider >
-      <>
-        <MainNavigation />
+    <StateProvider>
+      <AuthProvider >
+        <>
+          <MainNavigation />
 
 
-        <Routes>
-          <Route path='/' element={<Home />} />
+          <Routes>
+            <Route path='/' element={<Home />} />
 
-          <Route path='/user/auth/*' element={<AuthMainPage />} />
+            <Route path='/user/auth/*' element={<AuthMainPage />} />
 
-          <Route element={<RouteGuard />}>
+            <Route element={<RouteGuard />}>
 
-            <Route path='/user/createorder' element={<CreateOrder />} />
+              <Route path='/user/createorder' element={<CreateOrder />} />
 
-            <Route path='/orders/list' element={
-              <AdminGuard>
-                <OrderListTable />
-              </AdminGuard>
-            } />
+              <Route path='/orders/list' element={
+                <AdminGuard>
+                  <OrderListTable />
+                </AdminGuard>
+              } />
 
-            <Route path='/user/:userID/orders/*' element={
-              <OwnerOrder>
-                <MyOrders />
-              </OwnerOrder>
+              <Route path='/user/:userID/orders/*' element={
+                <OwnerOrder>
+                  <MyOrders />
+                </OwnerOrder>
 
-            } />
-
-
-
-            <Route path='/user/auth/logout' element={<Logout />} />
-          </Route>
+              } />
 
 
-          <Route path='/errors/serverdisconnected' element={<ErrorServerDisconnected />} />
 
-        </Routes>
+              <Route path='/user/auth/logout' element={<Logout />} />
+            </Route>
 
 
-      </>
-    </AuthProvider>
+            <Route path='/errors/serverdisconnected' element={<ErrorServerDisconnected />} />
+
+          </Routes>
+
+
+        </>
+      </AuthProvider>
+    </StateProvider>
 
 
   );

@@ -4,7 +4,7 @@ import { AuthContext } from '../contexts/AuthContext';
 import { useForm } from './useForm';
 import { httpRequests } from '../services/httpRequests';
 import { orderServiceRequests } from '../services/orderService';
-import { Navigate } from 'react-router-dom';
+import { useNavigate,redirect, Navigate } from 'react-router-dom';
 
 
 
@@ -14,6 +14,8 @@ export const useCreateOrder = () => {
     const { userContacts, token, userId } = useContext(AuthContext);
     const { email, phoneNumber, flNames } = userContacts;
     const orderServiceToken = orderServiceRequests(token);
+
+    const navigateTo = useNavigate();
 
     const onSubmitHandler = async () => {
 
@@ -31,6 +33,8 @@ export const useCreateOrder = () => {
         }
         console.log('hiasdas');
         const result = await orderServiceToken.create(orderData);
+
+        navigateTo(`/user/${userId}/orders`);
         
         
     }
