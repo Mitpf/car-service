@@ -19,6 +19,7 @@ import { Home } from './Components/HOME/Home';
 import { MyOrders } from './Components/MyOrders/MyOrders';
 import { ErrorServerDisconnected } from './Components/Errors/ErrorServerDisconnected';
 import { OwnerOrder } from './Components/RouteGuards/OwnerOrder';
+import { DetailsOrder } from './Components/MyOrders/Details/DetailsClientOrder';
 
 
 
@@ -58,6 +59,13 @@ function App() {
               <Route path='/user/:userID/orders/*' element={
                 <OwnerOrder>
                   <MyOrders />
+                </OwnerOrder>
+
+              } />
+
+              <Route path='/user/:userID/orders/:orderID/details/*' element={
+                <OwnerOrder>
+                  <DetailsOrder />
                 </OwnerOrder>
 
               } />

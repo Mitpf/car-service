@@ -10,6 +10,7 @@
   max-width: 100%;
   border-collapse: collapse;
 }
+
 /*  */
 .rwd-table tr:first-child {
   border-top: none;
@@ -270,8 +271,9 @@ td .arrow {
   display: inline-block;
   text-align: center;
 }
+
 .spanBold {
-font-weight: 800;
+  font-weight: 800;
 }
 
 .container {
@@ -306,8 +308,13 @@ font-weight: 800;
   max-height: 85px;
 }
 
-hr{
-  margin-top: 7px;
+.hrMain {
+  margin-top: 75px;
+  margin-bottom: 5px;
+}
+
+.hrPhotos {
+  margin-top: 0px;
   margin-bottom: 5px;
 }
 
@@ -318,4 +325,32 @@ hr{
   width: 70px;
   margin: 10px;
   display: inline-block;
+}
+
+.btnRightNoPhotos {
+  margin-top: 5px;
+  padding: 3px;
+  text-align: center;
+  float: right;
+  color: white;
+  background-color: #2f3a77;
+  text-decoration: none;
+  width: 70px;
+
+}
+
+.btnRightPhotos {
+  margin-top: 85px;
+  padding: 3px;
+  text-align: center;
+  float: right;
+  color: white;
+  background-color: #2f3a77;
+  text-decoration: none;
+  width: 70px;
+}
+
+.spaceButtons {
+  width: 10px;
+  padding: 0px;
 }

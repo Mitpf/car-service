@@ -73,7 +73,8 @@ export const servCarOrderService = (token) => {
         create,
         getItemsByClientOrderID,
         checkIsAcceptedByID,
-        getItemsByQueryRelation
+        getItemsByQueryRelation,
+        getItemsByPropNameValue
     }
 
 }

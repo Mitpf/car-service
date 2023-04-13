@@ -93,5 +93,5 @@ export const useSyncOrders = (userId, clientOrdersTokenReq, servOrderTokenReq) =
 
 
 
-    return thisUserClientOrders
+    return {thisUserAcceptedOrders,thisUserClientOrders }
 }
