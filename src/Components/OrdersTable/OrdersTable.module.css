@@ -172,7 +172,6 @@ td .arrow {
   display: inline-block;
 
 
-
 }
 
 .warning {
@@ -236,121 +235,5 @@ td .arrow {
   border: 2px solid #04f99f;
 }
 
-/* client orders */
 
 
-.divClientOrders {
-  display: block;
-  background-color: #e2f4fa;
-  padding: 15px;
-  padding-bottom: 7px;
-
-  margin: auto;
-  width: 800px;
-  border-radius: 10px;
-  border: 2px solid rgb(21, 39, 111);
-  margin-bottom: 10px;
-
-  min-height: 250px;
-
-
-}
-
-.spanRight {
-  float: right;
-  margin-right: 7px;
-  text-align: right;
-}
-
-.spanLeft {
-  float: left;
-  text-align: left;
-}
-
-.spanCenter {
-  display: inline-block;
-  text-align: center;
-}
-
-.spanBold {
-  font-weight: 800;
-}
-
-.container {
-  width: 55%;
-  padding-right: 15px;
-  padding-left: 15px;
-  padding-bottom: 0px;
-  margin-left: auto;
-  margin-right: auto;
-
-}
-
-.title {
-
-  background: linear-gradient(to bottom right, #2a2c50 0%, #3a557c 100%);
-  border-radius: 5px 5px 0px 0;
-  padding: 2px;
-  padding-left: 8px;
-  padding-bottom: 2px;
-  color: #f6f6f6;
-  margin-bottom: 9px;
-  text-align: center;
-
-}
-
-.maxWidth {
-  max-width: 600px;
-}
-
-.imgCarClientOrd {
-  border-radius: 8px;
-  max-height: 85px;
-}
-
-.hrMain {
-  margin-top: 75px;
-  margin-bottom: 5px;
-}
-
-.hrPhotos {
-  margin-top: 0px;
-  margin-bottom: 5px;
-}
-
-
-.imgDamages {
-  margin-right: 10px;
-  border-radius: 4px;
-  width: 70px;
-  margin: 10px;
-  display: inline-block;
-}
-
-.btnRightNoPhotos {
-  margin-top: 5px;
-  padding: 3px;
-  text-align: center;
-  float: right;
-  color: white;
-  background-color: #2f3a77;
-  text-decoration: none;
-  width: 70px;
-
-}
-
-.btnRightPhotos {
-  margin-top: 85px;
-  padding: 3px;
-  text-align: center;
-  float: right;
-  color: white;
-  background-color: #2f3a77;
-  text-decoration: none;
-  width: 70px;
-}
-
-.spaceButtons {
-  width: 10px;
-  padding: 0px;
-}

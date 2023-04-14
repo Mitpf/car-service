@@ -58,7 +58,7 @@ export const orderServiceRequests = (token) => {
         getOne,
         edit,
         update,
-        deleteOrder,
+        delete:deleteOrder,
         getItemsByPropNameValue
     }
 
