@@ -26,6 +26,8 @@ import { DetailsOrder } from './Components/MyOrders/Details/DetailsClientOrder';
 
 
 
+
+
 function App() {
 
   useEffect(() => {
@@ -48,7 +50,7 @@ function App() {
 
             <Route element={<RouteGuard />}>
 
-              <Route path='/user/createorder' element={<CreateOrder />} />
+              <Route path='/user/createorder' element={<CreateOrder isEdit={false}/>} />
 
               <Route path='/orders/list' element={
                 <AdminGuard>
@@ -66,6 +68,13 @@ function App() {
               <Route path='/user/:userID/orders/:orderID/details/*' element={
                 <OwnerOrder>
                   <DetailsOrder />
+                </OwnerOrder>
+
+              } />
+
+              <Route path='/user/:userID/orders/:orderID/edit/*' element={
+                <OwnerOrder>
+                  <CreateOrder isEdit />
                 </OwnerOrder>
 
               } />

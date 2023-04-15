@@ -26,7 +26,7 @@ export const OrderFormContacts = ({
                 </span>
                 {/* INPUT user NAMES */}
                 <input
-                    disabled={flNames}
+                    
                     className={styles.inpTxtMailTel}
                     name="flNames"
                     placeholder="firstName lastName"
@@ -45,7 +45,7 @@ export const OrderFormContacts = ({
                 </span>
 
                 <input
-                    disabled="disabled"
+                    
                     className={styles.inpTxtMailTel}
                     name="email"
                     placeholder="email"
@@ -65,7 +65,7 @@ export const OrderFormContacts = ({
 
                 {/* phone number */}
                 <input
-                    disabled={!!phoneNumber}
+                    
                     type="tel"
                     className={styles.inpTxtMailTel}
                     name="phoneNumber"

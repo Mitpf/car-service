@@ -36,6 +36,7 @@ export const MyOrdersItem = ({
 
 }) => {
 
+
     const initServOrderData = {
         diagnostic: 'n/a',
         replacedParts: 'n/a',
@@ -202,11 +203,11 @@ export const MyOrdersItem = ({
 
                             You are going to delete your order!
                             <br></br>
-                            Are you Sure?
+                            Are you sure?
                         </ConfirmModal>
 
 
-                        <Link className={styles.LinkButton} to={``}>
+                        <Link className={styles.LinkButton} to={`/user/${_ownerId}/orders/${_id}/edit/`} >
                             EDIT
                         </Link>
 

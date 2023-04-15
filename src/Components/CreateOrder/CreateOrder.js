@@ -1,6 +1,5 @@
 
 
-
 import styles from './CreateOrder.module.css';
 import { OrderCarInfo } from './OrderCarInfo';
 import { OrderFormContacts } from './OrderFormContacts';
@@ -12,16 +11,18 @@ import { useCreateOrder } from '../../hooks/useCreateOrder';
 
 
 
-export const CreateOrder = () => {
+export const CreateOrder = ({ isEdit }) => {
 
 
+ 
+    
 
     const { values, changeHandler, onSubmit, countInputs,
-        addInputfields, removeInputfields, flNames, email, phoneNumber } = useCreateOrder();
+        addInputfields, removeInputfields, flNames, email, phoneNumber,orderID } = useCreateOrder({ isEdit });
 
-        
 
-        
+
+
     return (
 
         <div className={styles.container}>
@@ -58,6 +59,7 @@ export const CreateOrder = () => {
                             addInputfields,
                             removeInputfields,
                             countInputs,
+                            orderID
                         }}
                     />
 

@@ -10,8 +10,11 @@ export const OrderFormCarService = ({
     addInputfields,
     removeInputfields,
     countInputs,
+    orderID
 
 }) => {
+
+    
 
     return (
 
@@ -104,8 +107,8 @@ export const OrderFormCarService = ({
             </button>
 
             {
-                countInputs.map(x => (
-                    <div id="photoLinks" key={x}>
+                countInputs.map((x,index) => (
+                    <div id="photoLinks" key={`photo-${index}-${x}-${orderID}`}>
 
                         <span className={`${styles.labelspan} ${styles.spanmargin}`}>
                             Photo {x}
@@ -115,12 +118,13 @@ export const OrderFormCarService = ({
                             className={styles.inpTxtMailTel}
                             name="photos"
                             placeholder={`link ${x}`}
-                            value={values.photos[x - 1].link}
-                            onChange={changeHandler}
+                            value={values.photos.length >= x ? values.photos[x - 1].link : ''}
+                            onChange={(e) => changeHandler(e, x)}
                         />
 
                     </div>
-                ))
+                )
+                )
             }
 
 
