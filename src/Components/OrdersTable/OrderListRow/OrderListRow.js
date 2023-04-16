@@ -14,6 +14,7 @@ export const OrderListRow = ({
     user,
     typeOrder,
     carInfo,
+    description,
     toggleShowInfoPlus,
     showInfoPlus,
     _createdOn,
@@ -52,7 +53,7 @@ export const OrderListRow = ({
                 {formatDate(_createdOn)}  {/* encodeURIComponent(`$_createdOn="${_createdOn}"`); */}
             </td>
             <td data-th="Type service" >
-                {categoriesOrder}
+               {description.title} / {categoriesOrder}
 
             </td>
             <td data-th="Owner car" >

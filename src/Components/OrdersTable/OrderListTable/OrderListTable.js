@@ -179,7 +179,7 @@ export const OrderListTable = () => {
 
                     <tr >
                         <th >Date of creation</th>
-                        <th >Type Order-Issue</th>
+                        <th >Title / Type Order</th>
                         <th >Owner car</th>
                         <th >Car model</th>
                         <th >Calc Price</th>

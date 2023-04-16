@@ -48,7 +48,7 @@ export const OrderListInfoPlus = ({
 
     const onClikAcceptHandler = async (e) => {
 
-       
+
         const result = await onClickAcceptOrder(e, _clientOrderID);
 
         if (result) {
@@ -62,33 +62,7 @@ export const OrderListInfoPlus = ({
 
 
 
-    /* const onClickAcceptOrder = async (e) => {
-    
-        e.preventDefault();
-        console.log('accept order clicked');
-        const result = await orderServiceReqToken.getOne(_clientOrderID);
-    
-    
-        const { carInfo, user: ownerCarClientInfo, carAbmissionDate,
-            description: problemDescript, typeOrder, _id: clientOrderID, _ownerId: clientOrderOwnerID } = result;
-    
-        const dataServOrder = {
-            carInfo, ownerCarClientInfo, carAbmissionDate,
-            problemDescript, typeOrder, clientOrderID, clientOrderOwnerID,
-            statusOrder: "accepted", diagnostic: "n/a", replacedParts: "n/a",
-            repairHistory: "n/a", totalPrice: "n/a"
-        }
-    
-        const servOrderResult = await servCarOrderServiceToken.create(dataServOrder);
-    
-    
-        const resultRelation = await servCarOrderServiceToken.getItemsByClientOrderID(clientOrderID);
-    
-        if (resultRelation.length > 0) {
-            setIsAccepted(true)
-        }
-    
-    } */
+
 
     return (
         <Fragment>
@@ -152,6 +126,12 @@ export const OrderListInfoPlus = ({
             </tr>
             {/* TAKE ORDER BUTTON */}
             <tr>
+
+                <td colspan="5" className={styles.tdService}>
+                    <p className={styles.hcOrder}>SERVICE ORDER</p>
+
+                </td>
+
                 <td colSpan="1" className={styles.tdService}>
 
                     {!isAccepted &&
@@ -171,10 +151,7 @@ export const OrderListInfoPlus = ({
 
                 </td>
 
-                <td colspan="5" className={styles.tdService}>
-                    <p className={styles.hcOrder}>SERVICE ORDER</p>
 
-                </td>
 
             </tr>
 

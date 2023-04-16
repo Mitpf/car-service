@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { AuthContext } from "../../../contexts/AuthContext";
-import { useSyncOrders } from "../../../hooks/useSyncOrders";
+
+import { useUpdateStatusOrder } from "../../../hooks/useUpdateStatus";
 import { orderServiceRequests } from "../../../services/orderService";
 import { servCarOrderService } from "../../../services/servCarOrderService";
 
@@ -15,7 +16,8 @@ export const DetailsOrder = () => {
     const clientOrdersTokenReq = orderServiceRequests(token);
     const servOrderTokenReq = servCarOrderService(token);
 
-    const { thisUserClientOrders } = useSyncOrders(userId, clientOrdersTokenReq, servOrderTokenReq);
+    
+    const [thisUserClientOrders, thisUserAcceptedOrders] = useUpdateStatusOrder();
 
     const initServOrderData = {
         diagnostic: 'n/a',

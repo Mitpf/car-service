@@ -9,12 +9,14 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 import styles from '../OrdersTable/OrdersTable.module.css';
 
-import { useSyncOrders } from '../../hooks/useSyncOrders';
+import { useUpdateStatusOrder } from '../../hooks/useUpdateStatus';
 import { MyOrdersItem } from './MyOrders_Item/MyOrders_Item';
 
 
 
 export const MyOrders = () => {
+
+
 
     const { token, userId } = useContext(AuthContext);
 
@@ -24,43 +26,65 @@ export const MyOrders = () => {
     const [thisUserClientOrders, setThisUserClientOrders] = useState([]);
     const [thisUserAcceptedOrders, setThisUserAcceptedOrders] = useState([]);
 
-    const { thisUserClientOrders: clientOrders,
-        thisUserAcceptedOrders: servOrders } = useSyncOrders(userId, clientOrdersTokenReq, servOrderTokenReq);
+
+    /* this hook take statusOrder value from service-orderCollection and record/assign this value in statusOrder in client-orderCollection */
+
+    const [clientOrders, acceptedOrder] = useUpdateStatusOrder();
 
     useEffect(() => {
-        setThisUserClientOrders(clientOrders);
-        setThisUserAcceptedOrders(servOrders);
-    }, [clientOrders]);
+        if (clientOrders.length > 0) {
+            setThisUserClientOrders(clientOrders);
+
+        }
+
+        if (acceptedOrder.length > 0) {
+            setThisUserAcceptedOrders(acceptedOrder);
+        }
+
+    }, [clientOrders,acceptedOrder]);
+  
+    /* END OF HOOKs */
+
+
+    if (thisUserClientOrders.length > 0) {
+        console.log('thisUserClientOrders', thisUserClientOrders);
+
+        console.log('aceptedOrders', thisUserAcceptedOrders);
+
+        return (
+
+            <Fragment>
+
+                <h1 className={styles.header}>My orders</h1>
+
+                {
+                    thisUserClientOrders.map(x => {
 
 
 
+                        return (
+                            <MyOrdersItem
+                                {...x}
+                                key={x._id}
+                                servOrder={thisUserAcceptedOrders.find(z => z.clientOrderID == x._id)}
+                                isDetails={false}
+                            />
 
-    return (
-
-        <Fragment>
-
-            <h1 className={styles.header}>My orders</h1>
-
-            {thisUserClientOrders.map(x => {
-
-                
-                return (
-                    <MyOrdersItem
-                        {...x}
-                        key={x._id}
-                        servOrder={thisUserAcceptedOrders.find(z => z.clientOrderID == x._id)}
-                        isDetails={false}
-                    />
-
-                )
-            }
+                        )
+                    }
 
 
 
-            )}
+                    )}
 
 
 
-        </Fragment>
-    )
+            </Fragment>
+        )
+
+
+    }
+
+
+
 }

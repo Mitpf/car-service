@@ -56,7 +56,9 @@ export const servCarOrderService = (token) => {
         const relationQuery = encodeURIComponent(`author=${idRelationName}:${nameRelationDB}`);
 
         const result = await httpReqToken.get(`${baseUrl}?where=${searchQuery}&load=${relationQuery}`);
+       
         const data = Object.values(result);
+        console.log('res relate', result, "data", data);
         return data;
     }
 
