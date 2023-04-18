@@ -61,9 +61,10 @@ changeHandler
                     className={styles.inpTxtMailTel}
                     name="engine"
                     id="engine"
-                    value={values.engine}
+                    value={values.engine || ""}
                     onChange={changeHandler}
                 >
+                    <option value="">Select a type Engine</option>
                     <option value="petrol">Petrol</option>
                     <option value="diesel">Diesel</option>
                     <option value="autogas">Autogas (LPG)</option>

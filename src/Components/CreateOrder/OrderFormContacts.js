@@ -66,7 +66,7 @@ export const OrderFormContacts = ({
                 {/* phone number */}
                 <input
                     
-                    type="tel"
+                    type="number"
                     className={styles.inpTxtMailTel}
                     name="phoneNumber"
                     placeholder="phoneNumber"

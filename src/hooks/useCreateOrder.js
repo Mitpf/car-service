@@ -6,6 +6,8 @@ import { httpRequests } from '../services/httpRequests';
 import { orderServiceRequests } from '../services/orderService';
 import { useNavigate, useParams, redirect, Navigate } from 'react-router-dom';
 
+import { allertError } from '../utils/allertMessage';
+
 
 
 
@@ -27,6 +29,45 @@ export const useCreateOrder = ({ isEdit }) => {
             photos, brandModel, productDate, engine, km, imageUrl,
             flNames, email, phoneNumber, bookedDate, bookedHour } = values;
 
+         if (flNames.length < 2) {
+             allertError('Name should be at least 2 characters');
+             return;
+         }
+ 
+         if (phoneNumber.length < 6) {
+             allertError('Phone number should be at least 6 digits');
+             return;
+         }
+         if (bookedDate == '' || bookedHour == '') {
+             allertError('Should choose date and hour for appoitment');
+             return;
+         }
+         
+ 
+         if (problem == false && consumables == false) {
+             allertError('checkmark at least one type of Order');
+             return;
+         }
+         if(title.length<3){
+           return allertError('need title of description, at least 3 characters')
+         }
+
+        if (text.length < 10) {
+            return allertError('description text minimum 10 characters')
+        }
+        if (brandModel.length < 3) {
+            return allertError('fill brandmodel name car, at least 3 characters')
+        }
+
+        if (productDate==''){
+            return allertError('choose date of production')
+        }
+        if (engine==''){
+            return allertError('choose type engine')
+        }
+
+        console.log(productDate);
+
         const orderData = {
             typeOrder: { problem, consumables },
             statusOrder: 'not Accepted',
@@ -42,7 +83,7 @@ export const useCreateOrder = ({ isEdit }) => {
             return navigateTo(`/user/${userId}/orders`);
         }
 
-
+        console.log('problem', problem);
         const result = await clientOrderTokenReq.create(orderData);
         navigateTo(`/user/${userId}/orders`);
 
@@ -114,7 +155,7 @@ export const useCreateOrder = ({ isEdit }) => {
                     changeValues(currentData);
 
                     const countPhotos = currentData.photos.length;
-                    const photosArray= arrayFromNum(countPhotos);
+                    const photosArray = arrayFromNum(countPhotos);
                     setCountInputs(photosArray)
                 })
 

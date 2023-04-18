@@ -27,7 +27,7 @@ export const orderServiceRequests = (token) => {
 
     const create = async (orderData) => {
         const result = await httpReqToken.post(baseUrl, orderData);
-        console.log('result', result);
+        
         return result;
     }
 

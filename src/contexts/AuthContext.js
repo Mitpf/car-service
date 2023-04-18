@@ -1,3 +1,6 @@
+
+import { allertError } from '../utils/allertMessage';
+
 import { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -39,6 +42,7 @@ export const AuthProvider = ({
 
         } catch (error) {
             console.log('There is a problem', error);
+            allertError('not valid username or password', error.message);
         }
     };
 
@@ -53,16 +57,19 @@ export const AuthProvider = ({
         }
         catch (error) {
             console.log('ERROR', error);
+            allertError(error);
 
             if (error.code === 403 && error.message === 'Invalid access token') {
                 // The token is no longer valid, prompt the user to log in again
                 console.log('Token expired, please log in again');
+                allertError('Token expired, please log in again');
                 setAuth({});
 
                 navigateTo('/user/auth/login');
             } else {
                 // Other error, clear localStorage
                 console.log('logout clearing LocalStorage');
+                allertError('logout clearing LocalStorage');
                 localStorage.clear();
                 setAuth({});
                 navigateTo('/errors/serverdisconnected');
@@ -78,10 +85,24 @@ export const AuthProvider = ({
     const onRegisterSubmit = async (values) => {
 
         const { repassword, ...registerData } = values;
-        if (repassword !== registerData.password) {
+
+        if (registerData.email.length < 6) {
+            allertError(`insert email must be minumum 6 characters`);
             return;
         }
-        console.log('regdata', registerData);
+
+        if (repassword !== registerData.password) {
+            allertError('passwords did not match');
+            return;
+        }
+
+        if (registerData.password.length < 6) {
+            allertError(`insert password should be minimum 6 characters`);
+            return;
+        }
+
+
+
         try {
             const result = await authServTokenReq.register(registerData);
             setAuth(result);
@@ -90,6 +111,7 @@ export const AuthProvider = ({
         }
         catch (error) {
             console.log('There is a problem', error);
+            allertError(`Server problem ${error.message}`)
         }
 
     };
@@ -113,13 +135,14 @@ export const AuthProvider = ({
             }
             catch (error) {
                 console.log('There is a problem', error);
+                allertError('There is a problem', error);
             }
 
         })
 
     }
 
-  
+
 
 
     const contextValues = {
@@ -138,7 +161,7 @@ export const AuthProvider = ({
             flNames: auth.firstLastNames
         },
         loadXdata,
-      
+
 
     };
 
