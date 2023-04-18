@@ -34,7 +34,7 @@ export const Register = () => {
 
             <form method="POST" onSubmit={onSubmit}>
                 <input
-                    type="text" id="email" className="fadeIn second" placeholder="email*"
+                    type="email" id="email" className="fadeIn second" placeholder="email*"
                     name={LogFormKeys.Email}
                     value={values[LogFormKeys.Email]}
                     onChange={changeHandler}

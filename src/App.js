@@ -5,7 +5,8 @@ import { Routes, Route } from 'react-router-dom';
 
 import { AuthProvider } from './contexts/AuthContext';
 import { StateProvider } from './contexts/StatesContext';
-import { RouteGuard } from './Components/RouteGuards/RouteGurads';
+import { IsNotAuthentGuard } from './Components/RouteGuards/IsNotAuthentGuard';
+import { IsAuthentGuard } from './Components/RouteGuards/IsAuthentGuard';
 import { AdminGuard } from './Components/RouteGuards/AdminGurad';
 
 
@@ -44,13 +45,20 @@ function App() {
 
 
           <Routes>
+
+            <Route element={<IsAuthentGuard/>}>
+
+              <Route path='/user/auth/*' element={<AuthMainPage />} />
+
+            </Route>
+
             <Route path='/' element={<Home />} />
 
-            <Route path='/user/auth/*' element={<AuthMainPage />} />
 
-            <Route element={<RouteGuard />}>
 
-              <Route path='/user/createorder' element={<CreateOrder isEdit={false}/>} />
+            <Route element={<IsNotAuthentGuard />}>
+
+              <Route path='/user/createorder' element={<CreateOrder isEdit={false} />} />
 
               <Route path='/orders/list' element={
                 <AdminGuard>
@@ -82,6 +90,7 @@ function App() {
 
 
               <Route path='/user/auth/logout' element={<Logout />} />
+
             </Route>
 
 
