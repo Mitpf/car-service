@@ -56,6 +56,8 @@ export const MyOrders = () => {
             <Fragment>
 
                 <h1 className={styles.header}>My orders</h1>
+                <br></br>
+                <br></br>
 
                 {
                     thisUserClientOrders.map(x => {

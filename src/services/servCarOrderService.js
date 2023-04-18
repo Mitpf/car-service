@@ -9,6 +9,12 @@ export const servCarOrderService = (token) => {
 
     const httpReqToken = httpRequests(token);
 
+    const getOne = async (orderID) => {
+        const result = await httpReqToken.get((`${baseUrl}/${orderID}`));
+
+        return result;
+    }
+
     const create = async (orderData) => {
         const result = await httpReqToken.post(baseUrl, orderData);
 
@@ -56,12 +62,13 @@ export const servCarOrderService = (token) => {
         const relationQuery = encodeURIComponent(`author=${idRelationName}:${nameRelationDB}`);
 
         const result = await httpReqToken.get(`${baseUrl}?where=${searchQuery}&load=${relationQuery}`);
-       
+
         const data = Object.values(result);
         console.log('res relate', result, "data", data);
         return data;
     }
 
+    const edit = (orderId, data) => httpReqToken.put(`${baseUrl}/${orderId}`, data);
 
     /* 
     const searchQuery = encodeURIComponent(`gameId="${gameId}"`);
@@ -76,7 +83,9 @@ export const servCarOrderService = (token) => {
         getItemsByClientOrderID,
         checkIsAcceptedByID,
         getItemsByQueryRelation,
-        getItemsByPropNameValue
+        getItemsByPropNameValue,
+        getOne,
+        edit
     }
 
 }

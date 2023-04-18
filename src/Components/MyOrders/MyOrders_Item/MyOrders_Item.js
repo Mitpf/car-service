@@ -69,155 +69,231 @@ export const MyOrdersItem = ({
 
 
     return (
+
+
+
+
+
         <Fragment>
-            <br></br>
-            <br></br>
-            <br></br>
-            <div className={styles.divClientOrders} key={_id}>
-
-                <div className={styles.title}>
-                    <span className={styles.spanLeft}>
-                        created on: {formatDate(_createdOn)}
-                    </span>
 
 
-                    <span className={styles.spanRight}>
-                        Status: {statusOrder}
-                    </span>
 
-                    <span className={styles.spanCenter}>
-                        {description.title}
+            {!isDetails &&
+                <>
 
-                    </span>
 
-                </div>
-                <span className={styles.spanRight}>
-                    <span className={styles.spanBold}>car: </span>
 
-                    {carInfo.brandModel}
+                    <div className={styles.divClientOrders} key={_id}>
+
+                        <div className={styles.title}>
+                            <span className={styles.spanLeft}>
+                                created on: {formatDate(_createdOn)}
+                            </span>
+
+
+                            <span className={styles.spanRight}>
+                                Status: {statusOrder}
+                            </span>
+
+                            <span className={styles.spanCenter}>
+                                {description.title}
+
+                            </span>
+
+                        </div>
+
+                        <span className={styles.spanRight}>
+                            <span className={styles.spanBold}>car: </span>
+
+                            {carInfo.brandModel}
+                            <br></br>
+
+                            <ImageViewer  >
+                                <img className={styles.imgCarClientOrd} src={carInfo.imageUrl} alt="" />
+                            </ImageViewer>
+                            <br></br>
+                            <Link className={styles.LinkButton} to={`${_id}/details`}>
+                                Details
+                            </Link>
+                        </span>
+
+
+
+
+                        {/* first TD */}
+                        <br></br>
+                        <p> <span className={styles.spanBold}>Type issue:</span> {categoriesOrder}</p>
+                        <br></br>
+                        <p className={styles.maxWidth}>
+                            <span className={styles.spanBold}>description: </span>
+                            {description.text}
+                        </p>
+
+                        <br></br>
+
+                        <p >
+                            <span className={styles.spanBold}>Date appoitment:</span> {formatDateDMY(carAbmissionDate.date)} - hour: {carAbmissionDate.hour}
+                        </p>
+
+
+
+                    </div>
+
+
+                </>
+
+            }
+
+
+            {isDetails &&
+                <>
+
+                    <br></br>
+                    <br></br>
                     <br></br>
 
-                    <ImageViewer  >
-                        <img className={styles.imgCarClientOrd} src={carInfo.imageUrl} alt="" />
-                    </ImageViewer>
+                    <div className={styles.divClientOrders} key={_id}>
+
+                        <div className={styles.title}>
+                            <span className={styles.spanLeft}>
+                                created on: {formatDate(_createdOn)}
+                            </span>
 
 
-                    {isDetails &&
+                            <span className={styles.spanRight}>
+                                Status: {statusOrder}
+                            </span>
 
-                        <>
-                            <p> <span className={styles.spanBold}>productDate:</span> {carInfo.productDate}</p>
-                            <p> <span className={styles.spanBold}>traveled:</span> {carInfo.km} km</p>
-                            <p><span className={styles.spanBold}>engine type:</span> {carInfo.engine}</p>
-                        </>
-                    }
+                            <span className={styles.spanCenter}>
+                                {description.title}
 
+                            </span>
 
+                        </div>
+                        <span className={styles.spanRight}>
+                            <span className={styles.spanBold}>car: </span>
 
-                </span>
-                {/* first TD */}
-                <p> <span className={styles.spanBold}>Type issue:</span> {categoriesOrder}</p>
-
-
-
-                <p className={styles.maxWidth}>
-                    <span className={styles.spanBold}>title: </span>
-                    {description.title}
-                </p>
-                <p className={styles.maxWidth}>
-                    <span className={styles.spanBold}>description: </span>
-                    {description.text}
-                </p>
-
-
-
-                <p >
-                    <span className={styles.spanBold}>Date appoitment:</span> {formatDateDMY(carAbmissionDate.date)} - hour: {carAbmissionDate.hour}
-                </p>
-                <span className={styles.spanBold}>contacts:</span>
-                <span className={styles.spanContacts}> {user.flNames}  |  {user.phoneNumber}  |   {user.email}</span>
-
-                <div>
-
-                    {description.photos.length > 0 && <p><span className={styles.spanBold}>photos damages:</span></p>}
-                    {
-                        description.photos.map(x => (
-
-                            <div className={styles.imgDamages} key={x.link}>
-                                <ImageViewer  >
-                                    <img className={styles.imgDamages} src={x.link} />
-                                </ImageViewer>
-
-                            </div>
-
-                        ))
-
-
-                    }
-
-
-                </div>
-
-
-
-                {description.photos.length > 0 && <hr className={styles.hrPhotos} />}
-                {!description.photos.length && <hr className={styles.hrMain} />}
-
-                {/*   <p>id {_id}</p> */}
-                <p>  <span className={styles.spanBold}>SERVICE INFO</span> {isDetails && <span className={styles.notEdit} >Not editable!</span>} </p>
-
-
-                <p><span className={styles.spanBold}>diagnostic: </span> {servOrderData.diagnostic}</p>
-                <p><span className={styles.spanBold}>replacedParts: </span>{servOrderData.replacedParts}</p>
-                <p><span className={styles.spanBold}>repairHistory: </span>{servOrderData.repairHistory}</p>
-                <p><span className={styles.spanBold}>totalPrice: </span>{servOrderData.totalPrice}</p>
-                <p><span className={styles.spanBold}>status: </span>{servOrderData.statusOrder}</p>
-
-            </div>
-
-
-
-            {/* -------------------- */}
-
-
-            <div className={styles.divButtons}>
-
-                {
-                    !isDetails &&
-
-                    <Link className={styles.LinkButton} to={`${_id}/details`}>
-                        Details
-                    </Link>
-                }
-
-                {
-                    isDetails &&
-
-
-                    <div className={styles.LinkContainer}>
-
-                        <ConfirmModal
-                            title="Delete confirmation"
-                            name="DELETE"
-                            handleOK={handleDeleteOk}
-                        >
-
-                            You are going to delete your order!
+                            {carInfo.brandModel}
                             <br></br>
-                            Are you sure?
-                        </ConfirmModal>
+
+                            <ImageViewer  >
+                                <img className={styles.imgCarClientOrd} src={carInfo.imageUrl} alt="" />
+                            </ImageViewer>
 
 
-                        <Link className={styles.LinkButton} to={`/user/${_ownerId}/orders/${_id}/edit/`} >
-                            EDIT
-                        </Link>
+                            {isDetails &&
+
+                                <>
+                                    <p> <span className={styles.spanBold}>productDate:</span> {carInfo.productDate}</p>
+                                    <p> <span className={styles.spanBold}>traveled:</span> {carInfo.km} km</p>
+                                    <p><span className={styles.spanBold}>engine type:</span> {carInfo.engine}</p>
+                                </>
+                            }
+
+
+
+                        </span>
+
+                        {/* first TD */}
+
+                        <p> <span className={styles.spanBold}>Type issue:</span> {categoriesOrder}</p>
+                        <br></br>
+
+                        <p className={styles.maxWidth}>
+                            <span className={styles.spanBold}>title: </span>
+                            {description.title}
+                        </p>
+                        <p className={styles.maxWidth}>
+                            <span className={styles.spanBold}>description: </span>
+                            {description.text}
+                        </p>
+
+
+
+                        <p >
+                            <span className={styles.spanBold}>Date appoitment:</span> {formatDateDMY(carAbmissionDate.date)} - hour: {carAbmissionDate.hour}
+                        </p>
+                        <span className={styles.spanBold}>contacts:</span>
+                        <span className={styles.spanContacts}> {user.flNames}  |  {user.phoneNumber}  |   {user.email}</span>
+
+                        <div>
+
+                            {description.photos.length > 0 && <p><span className={styles.spanBold}>photos damages:</span></p>}
+
+                            {
+                                description.photos.map(x => (
+
+                                    <div className={styles.imgDamages} key={x.link}>
+                                        <ImageViewer  >
+                                            <img className={styles.imgDamages} src={x.link} />
+                                        </ImageViewer>
+
+                                    </div>
+
+                                ))
+
+
+                            }
+
+
+                        </div>
+
+
+
+                        {description.photos.length > 0 && <hr className={styles.hrPhotos} />}
+                        {!description.photos.length && <hr className={styles.hrMain} />}
+
+                        {/*   <p>id {_id}</p> */}
+                        <p>  <span className={styles.spanBold}>SERVICE INFO</span> {isDetails && <span className={styles.notEdit} >Not editable!</span>} </p>
+
+
+                        <p><span className={styles.spanBold}>diagnostic: </span> {servOrderData.diagnostic}</p>
+                        <p><span className={styles.spanBold}>replacedParts: </span>{servOrderData.replacedParts}</p>
+                        <p><span className={styles.spanBold}>repairHistory: </span>{servOrderData.repairHistory}</p>
+                        <p><span className={styles.spanBold}>totalPrice: </span>{servOrderData.totalPrice}</p>
+                        <p><span className={styles.spanBold}>status: </span>{servOrderData.statusOrder}</p>
 
                     </div>
 
 
 
-                }
 
-            </div>
+                    {/* --------BUTTONS DIV------------ */}
+                    {/* /user/:userID/orders/ */}
+
+                    <div className={styles.divButtons}>
+
+                        <Link className={styles.LinkButtonRight} to={`/user/${_ownerId}/orders/`} >
+                            BACK
+                        </Link>
+{/* MODAL */}
+                        <div className={styles.LinkContainer}>
+
+                            <ConfirmModal
+                                title="Delete confirmation"
+                                name="DELETE"
+                                handleOK={handleDeleteOk}
+                            >
+
+                                You are going to delete your order!
+                                <br></br>
+                                Are you sure?
+                            </ConfirmModal>
+
+
+                            <Link className={styles.LinkButton} to={`/user/${_ownerId}/orders/${_id}/edit/`} >
+                                EDIT
+                            </Link>
+
+                        </div>
+
+
+                    </div>
+
+
+                </>
+            }
+
 
         </Fragment>
     )

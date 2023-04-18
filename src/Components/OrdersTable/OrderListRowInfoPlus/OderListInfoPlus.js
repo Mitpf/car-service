@@ -7,7 +7,8 @@ import { StatesContext } from "../../../contexts/StatesContext";
 import styles from '../OrdersTable.module.css';
 import { orderServiceRequests } from "../../../services/orderService";
 import { servCarOrderService } from "../../../services/servCarOrderService";
-
+import { EditServInfoModal as EditModal } from "../../Modals/EditServInfoModal";
+import { FormCreateEditServ } from '../../ServiceCreateEdit/FormCreateEditServ'
 
 
 
@@ -18,50 +19,83 @@ export const OrderListInfoPlus = ({
     carInfo,
     description,
     user,
-    onClickAcceptOrder
-
-
+    onClickAcceptOrder,
+    toggleOnAcceptState
 }) => {
-    const [isAccepted, setIsAccepted] = useState(false);
-
     const { token } = useContext(AuthContext);
 
-
     const orderServiceReqToken = orderServiceRequests(token);
-    const servCarOrderServiceToken = servCarOrderService(token);
+    const servOrderTokenReq = servCarOrderService(token);
+    const checkIsAccepted = servOrderTokenReq.checkIsAcceptedByID;
 
-    const checkIsAccepted = servCarOrderServiceToken.checkIsAcceptedByID;
+    const [isAccepted, setIsAccepted] = useState(false);
+
+    const initServOrder = {
+        diagnostic: 'no/acc',
+        replacedParts: 'no/acc',
+        repairHistory: 'no/acc',
+        totalPrice: 'no/acc',
+        statusOrder: 'no/acc'
+    };
+    const [formValues, setFormValues] = useState(initServOrder);
 
 
 
-    useEffect(() => {
-        async function fetchData() {
-            const result = await checkIsAccepted(_clientOrderID);
-            console.log(result);
-            if (result) {
-                setIsAccepted(true);
-            }
-        }
-        fetchData();
 
-    }, []);
+    const [servOrder, setServOrder] = useState(initServOrder);
 
     const onClikAcceptHandler = async (e) => {
 
+        await onClickAcceptOrder(e, _clientOrderID);
 
-        const result = await onClickAcceptOrder(e, _clientOrderID);
+        document.getElementById("modalOpen").click();
 
-        if (result) {
-            setIsAccepted(true);
-
-
-        }
 
     }
 
+    /* get request for service order */
 
+    useEffect(() => {
+        try {
 
+            servOrderTokenReq.getItemsByClientOrderID(_clientOrderID)
+                .then(result => {
+                    // console.log('reees', result)
+                    if (result.length > 0) {
+                        setServOrder(result[0]);
+                        setIsAccepted(true);
+                    }
+                    else {
+                        setIsAccepted(false);
+                    }
 
+                })
+
+        }
+        catch (err) {
+            console.log('error', err);
+            setIsAccepted(false);
+        }
+
+    }, [onClickAcceptOrder])
+
+    /* 
+    take state of values from child comp, 
+    pass taked values to MODAL HANDLER
+     */
+
+    const loadFormValues = (handledNewValues) => {
+        setFormValues(handledNewValues);
+    }
+
+    const modalHandler = async () => {
+        const servOrderID = servOrder._id;
+
+        const editresult = await servOrderTokenReq.edit(servOrderID, { ...servOrder, ...formValues });
+        console.log('editresult', editresult);
+        toggleOnAcceptState();
+
+    }
 
 
     return (
@@ -128,34 +162,82 @@ export const OrderListInfoPlus = ({
             <tr>
 
                 <td colspan="5" className={styles.tdService}>
-                    <p className={styles.hcOrder}>SERVICE ORDER</p>
+                    <p className={styles.hcOrder}>SERVICE ORDER INFO:</p>
 
-                </td>
+                    <p><span className={styles.spanBold}>diagnostic: </span> {servOrder.diagnostic}</p>
+                    <p><span className={styles.spanBold}>replacedParts: </span>{servOrder.replacedParts}</p>
+                    <p><span className={styles.spanBold}>repairHistory: </span>{servOrder.repairHistory}</p>
+                    <p><span className={styles.spanBold}>totalPrice: </span>{servOrder.totalPrice}</p>
+                    <p><span className={styles.spanBold}>status: </span>{servOrder.statusOrder}</p>
+                    <br></br>
 
-                <td colSpan="1" className={styles.tdService}>
+                    {/* imported MODAL to open for edit serv info */}
 
-                    {!isAccepted &&
+                    {isAccepted &&
+                        <>
 
-                        <input
+                            <div className="modal" style={{ pointerEvents: 'auto' }}>
+                                < EditModal
+                                    title="Edit Service Info"
+                                    name="Edit"
+                                    handleOK={modalHandler}
+                                    onClick={() => console.log('modal element clicked')}
+                                >
 
-                            type="button"
-                            value="Accept Order"
-                            onClick={onClikAcceptHandler}
-                            disabled={isAccepted}
-                            id={isAccepted ? "disabledButton" : "btntake"}
 
-                        />
+                                    <label className={`${styles.titleInput} ${styles.label}`}>
+
+                                        <FormCreateEditServ
+                                            clientOrderID={_clientOrderID}
+                                            loadFormValues={loadFormValues}
+                                            
+                                        />
+
+                                    </label>
+
+
+                                </EditModal>
+                            </div>
+
+
+
+                        </>
 
                     }
 
 
                 </td>
 
+                {/* button accept + open-modal-ancLink for edit */}
+
+                <td colSpan="1" className={styles.tdService}>
+
+                    {!isAccepted &&
+
+
+                        <button
+                            value="Accept Order"
+                            onClick={onClikAcceptHandler}
+                            disabled={isAccepted}
+                            id={isAccepted ? "disabledButton" : "btntake"}
+                        >
+                            <a id="modalOpen"
+                                className={`${styles["modal-open"]} ${styles.modalOpen}`}
+                                href="#modal-tabbed">ACCEPT</a>
+                            ACC
+                        </button>
+
+                    }
+
+                </td>
+
+
+
 
 
             </tr>
 
-        </Fragment>
+        </Fragment >
     );
 
 

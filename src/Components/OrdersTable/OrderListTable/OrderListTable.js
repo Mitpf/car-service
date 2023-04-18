@@ -26,7 +26,7 @@ export const OrderListTable = () => {
     const [onAcceptState, setOnAcceptState] = useState(false);
 
 
-    const { token,loadXdata } = useContext(AuthContext);
+    const { token, loadXdata } = useContext(AuthContext);
 
     const orderServiceReqtoken = orderServiceRequests(token);
     const servCarOrderServiceToken = servCarOrderService(token);
@@ -36,6 +36,10 @@ export const OrderListTable = () => {
 
     const [openInfoMethod, setopenInfoMethod] = useState('one');
     const [showInfoPlus, setshowInfoPlus] = useState({});
+
+    function toggleOnAcceptState() {
+        setOnAcceptState(oldState=>!oldState)
+    }
 
     useEffect(() => {
         orderServiceReqtoken.getAll()
@@ -93,8 +97,8 @@ export const OrderListTable = () => {
         e.preventDefault();
         console.log('accept order clicked');
 
-        const orderServReqtoken = orderServiceRequests(token);
-        const result = await orderServReqtoken.getOne(_clientOrderID);
+        const clientOrderTokenReq = orderServiceRequests(token);
+        const result = await clientOrderTokenReq.getOne(_clientOrderID);
 
 
         const { carInfo, user: ownerCarClientInfo, carAbmissionDate,
@@ -110,10 +114,10 @@ export const OrderListTable = () => {
         const servOrderResult = await servCarOrderServiceToken.create(dataServOrder);
 
 
-        const resultRelation = await servCarOrderServiceToken.getItemsByClientOrderID(clientOrderID);
+        const foundOrdersById = await servCarOrderServiceToken.getItemsByClientOrderID(clientOrderID);
 
-        if (resultRelation.length > 0) {
-            setOnAcceptState(oldState=>!oldState)
+        if (foundOrdersById.length > 0) {
+            toggleOnAcceptState();
             return true;
         }
 
@@ -141,7 +145,7 @@ export const OrderListTable = () => {
                 </form>
             </div>
 
-            {/* RADIO BUTTONS CHANGE OPEN BEAHAVIOR METHOD */}
+            {/* RADIO BUTTONS CHANGE OPEN BEHAVIOR METHOD */}
             <div className={styles.radioDiv}>
                 <input
                     type="radio"
@@ -198,6 +202,7 @@ export const OrderListTable = () => {
 
 
                             <Fragment key={x._id}>
+
                                 <OrderListRow
                                     //id={x._id}
                                     onAcceptState={onAcceptState}
@@ -205,7 +210,15 @@ export const OrderListTable = () => {
                                     toggleShowInfoPlus={toggleShowInfoPlus}
                                     showInfoPlus={showInfoPlus}
                                 />
-                                {showInfoPlus[x._id] && <OrderListInfoPlus id={x._id} {...x} onClickAcceptOrder={onClickAcceptOrder} />}
+
+                                {showInfoPlus[x._id] &&
+                                    <OrderListInfoPlus
+                                        id={x._id} {...x}
+                                        onClickAcceptOrder={onClickAcceptOrder}
+                                        toggleOnAcceptState={toggleOnAcceptState}
+
+                                    />}
+
                             </Fragment>
 
                         ))

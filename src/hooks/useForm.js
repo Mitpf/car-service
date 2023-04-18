@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 export const useForm = (initialValues, onSubmitHandler) => {
     const [values, setValues] = useState(initialValues);
 
-    const changeHandler = (e,currentCount) => {
+    /* change handler update data with new values and preserv old unchangedvalues */
+    const changeHandler = (e, currentCount) => {
         if (e.target.type == 'checkbox') {
 
             return setValues(state => ({ ...state, [e.target.name]: e.target.checked }));
@@ -12,10 +13,10 @@ export const useForm = (initialValues, onSubmitHandler) => {
 
         if (e.target.name == 'photos') {
             let pics = [...values.photos];
-            
-            pics[currentCount-1] = { link: e.target.value }
 
-            return setValues({ ...values, photos:pics })
+            pics[currentCount - 1] = { link: e.target.value }
+
+            return setValues({ ...values, photos: pics })
         }
 
 

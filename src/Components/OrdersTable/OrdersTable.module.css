@@ -236,4 +236,7 @@ td .arrow {
 }
 
 
-
+.modalOpen{
+ text-decoration: none;
+ color: white;
+}

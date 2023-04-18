@@ -23,27 +23,39 @@ export const OrderListRow = ({
 }) => {
     const { token } = useContext(AuthContext);
     const servCarOrderServiceToken = servCarOrderService(token);
-    const [statusOrder, setStatusOrder] = useState('not Accepted')
+
+    const initServorder = {
+        statusOrder: "Not Accepted!",
+        diagnostic: "n/a",
+        replacedParts: "n/a",
+        repairHistory: "n/a",
+        totalPrice: "n/a."
+    }
+    const [servOrder, setServOrder] = useState(initServorder);
 
 
-    useEffect(() => {
 
-        servCarOrderServiceToken.getItemsByClientOrderID(_id)
+      useEffect(() => {
+        try {
+          servCarOrderServiceToken.getItemsByClientOrderID(_id)
             .then(result => {
-
-                const status = Object.values(result)[0].statusOrder
-                setStatusOrder(status);
+              if (result.length > 0) {
+                setServOrder(result[0])
+              } else {
+                setServOrder(initServorder);
+              }
             })
-
-
-
-    }, [onAcceptState]);
-
+        }
+        catch (err) {
+          console.log('err', err);
+        }
+      }, [onAcceptState]);
 
 
     const categoriesOrder = Object.keys(typeOrder)
         .filter(key => typeOrder[key])
         .join(', ');
+
 
     return (
 
@@ -53,7 +65,7 @@ export const OrderListRow = ({
                 {formatDate(_createdOn)}  {/* encodeURIComponent(`$_createdOn="${_createdOn}"`); */}
             </td>
             <td data-th="Type service" >
-               {description.title} / {categoriesOrder}
+                {description.title} / {categoriesOrder}
 
             </td>
             <td data-th="Owner car" >
@@ -64,10 +76,10 @@ export const OrderListRow = ({
 
             </td>
             <td data-th="Calc Price" >
-                na
+                {servOrder.totalPrice}
             </td>
             <td data-th="Status" >
-                {statusOrder}
+                {servOrder.statusOrder}
             </td>
 
         </tr>
