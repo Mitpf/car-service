@@ -1,3 +1,8 @@
+enter admin mode in separate browser or incognito browser with admin@abv.bg psw:admin
+Or register new user with admin@abv.bg
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
