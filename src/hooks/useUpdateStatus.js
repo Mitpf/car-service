@@ -4,6 +4,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { orderServiceRequests } from "../services/orderService";
 import { servCarOrderService } from "../services/servCarOrderService";
+import { allertError } from "../utils/allertMessage";
 
 export const useUpdateStatusOrder = () => {
 
@@ -44,6 +45,7 @@ export const useUpdateStatusOrder = () => {
                     }
                 } catch (error) {
                     console.log('ERROR', error, error.message);
+                    //allertError(error)
                 }
             });
 
@@ -55,7 +57,8 @@ export const useUpdateStatusOrder = () => {
                 setThisUserClientOrders(finalResult)
             }
             catch (err) {
-                console.log('ERROR', err.message);
+                console.log('ERROR', err);
+                //allertError(err);
             }
 
 
@@ -65,29 +68,31 @@ export const useUpdateStatusOrder = () => {
             fetchData();
         } catch (error) {
             console.log("fetchData-ERROR", error);
+            //allertError(error);
         }
     }, [userId]);
 
 
 
     useEffect(() => {
-
         servOrderTokenReq.getItemsByPropNameValue('clientOrderOwnerID', userId)
-            .then(result => {
-                
-               // console.log('resacc', result)
-            setThisUserAcceptedOrders(result);
-            })
+          .then(result => {
+            if (result) {
+              setThisUserAcceptedOrders(result);
+            }
+          })
+          .catch(error => {
+            console.log('missing clientorders in servDB:', error);
+          });
+      }, []);
 
-    }, []);
 
-    
 
     if (thisUserClientOrders.length > 0) {
-        return [thisUserClientOrders,thisUserAcceptedOrders];
+        return [thisUserClientOrders, thisUserAcceptedOrders];
     }
     else {
-        return [[],[]];
+        return [[], []];
     }
 
 

@@ -7,83 +7,86 @@ import { servCarOrderService } from '../../../services/servCarOrderService';
 
 import { useEffect, useContext, useState } from 'react';
 import { AuthContext } from '../../../contexts/AuthContext';
+import { allertError } from '../../../utils/allertMessage';
 
 /* export component */
 export const OrderListRow = ({
-    _id,
-    user,
-    typeOrder,
-    carInfo,
-    description,
-    toggleShowInfoPlus,
-    showInfoPlus,
-    _createdOn,
-    onAcceptState
+  _id,
+  user,
+  typeOrder,
+  carInfo,
+  description,
+  toggleShowInfoPlus,
+  showInfoPlus,
+  _createdOn,
+  onAcceptState
 
 }) => {
-    const { token } = useContext(AuthContext);
-    const servCarOrderServiceToken = servCarOrderService(token);
+  const { token } = useContext(AuthContext);
+  const servCarOrderServiceToken = servCarOrderService(token);
 
-    const initServorder = {
-        statusOrder: "Not Accepted!",
-        diagnostic: "n/a",
-        replacedParts: "n/a",
-        repairHistory: "n/a",
-        totalPrice: "n/a."
+  const initServorder = {
+    statusOrder: "Not Accepted!",
+    diagnostic: "n/a",
+    replacedParts: "n/a",
+    repairHistory: "n/a",
+    totalPrice: "n/a."
+  }
+  const [servOrder, setServOrder] = useState(initServorder);
+
+
+
+  useEffect(() => {
+    try {
+      servCarOrderServiceToken.getItemsByClientOrderID(_id)
+        .then(result => {
+          if (result && result.length > 0) {
+            setServOrder(result[0])
+          } else {
+            setServOrder(initServorder);
+          }
+        })
     }
-    const [servOrder, setServOrder] = useState(initServorder);
+    catch (err) {
+
+      console.log('catched error is ', err);
+      allertError(err);
+    }
+  }, [onAcceptState]);
 
 
-
-      useEffect(() => {
-        try {
-          servCarOrderServiceToken.getItemsByClientOrderID(_id)
-            .then(result => {
-              if (result.length > 0) {
-                setServOrder(result[0])
-              } else {
-                setServOrder(initServorder);
-              }
-            })
-        }
-        catch (err) {
-          console.log('err', err);
-        }
-      }, [onAcceptState]);
+  const categoriesOrder = Object.keys(typeOrder)
+    .filter(key => typeOrder[key])
+    .join(', ');
 
 
-    const categoriesOrder = Object.keys(typeOrder)
-        .filter(key => typeOrder[key])
-        .join(', ');
+  return (
 
+    <tr id={_id} onClick={(e) => toggleShowInfoPlus(e)} className={styles["trbtn"]}>
 
-    return (
+      <td data-th="Service-Order No" >
+        {formatDate(_createdOn)}  {/* encodeURIComponent(`$_createdOn="${_createdOn}"`); */}
+      </td>
+      <td data-th="Type service" >
+        {description.title} / {categoriesOrder}
 
-        <tr id={_id} onClick={(e) => toggleShowInfoPlus(e)} className={styles["trbtn"]}>
+      </td>
+      <td data-th="Owner car" >
+        {user.flNames}
+      </td>
+      <td data-th="Car model" >
+        {carInfo.brandModel}
 
-            <td data-th="Service-Order No" >
-                {formatDate(_createdOn)}  {/* encodeURIComponent(`$_createdOn="${_createdOn}"`); */}
-            </td>
-            <td data-th="Type service" >
-                {description.title} / {categoriesOrder}
+      </td>
+      <td data-th="Calc Price" >
+        {servOrder.totalPrice}
+      </td>
+      <td data-th="Status" >
+        {servOrder.statusOrder}
+      </td>
 
-            </td>
-            <td data-th="Owner car" >
-                {user.flNames}
-            </td>
-            <td data-th="Car model" >
-                {carInfo.brandModel}
-
-            </td>
-            <td data-th="Calc Price" >
-                {servOrder.totalPrice}
-            </td>
-            <td data-th="Status" >
-                {servOrder.statusOrder}
-            </td>
-
-        </tr>
-    );
+    </tr>
+  );
 };
 
 

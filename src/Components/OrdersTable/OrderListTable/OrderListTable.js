@@ -14,6 +14,7 @@ import { servCarOrderService } from '../../../services/servCarOrderService';
 
 
 import { useCheckForUpdatesCond } from '../../../hooks/useCheckForUpdatesCond'
+import { allertError } from '../../../utils/allertMessage';
 
 
 
@@ -38,15 +39,17 @@ export const OrderListTable = () => {
     const [showInfoPlus, setshowInfoPlus] = useState({});
 
     function toggleOnAcceptState() {
-        setOnAcceptState(oldState=>!oldState)
+        setOnAcceptState(oldState => !oldState)
     }
 
     useEffect(() => {
+
         orderServiceReqtoken.getAll()
             .then(result => {
                 setOrders(result);
                 setOrdersLength(result.length);
             })
+            .catch(error=>console.log('Error', error))
 
 
     }, [loadXdata]);
@@ -93,35 +96,42 @@ export const OrderListTable = () => {
     /* ONCLICK ACCEPT ORDER FUNCTION */
 
     const onClickAcceptOrder = async (e, _clientOrderID) => {
+        try {
+            e.preventDefault();
+            console.log('accept order clicked');
 
-        e.preventDefault();
-        console.log('accept order clicked');
-
-        const clientOrderTokenReq = orderServiceRequests(token);
-        const result = await clientOrderTokenReq.getOne(_clientOrderID);
+            const clientOrderTokenReq = orderServiceRequests(token);
 
 
-        const { carInfo, user: ownerCarClientInfo, carAbmissionDate,
-            description: problemDescript, typeOrder, _id: clientOrderID, _ownerId: clientOrderOwnerID } = result;
+            const result = await clientOrderTokenReq.getOne(_clientOrderID);
 
-        const dataServOrder = {
-            carInfo, ownerCarClientInfo, carAbmissionDate,
-            problemDescript, typeOrder, clientOrderID, clientOrderOwnerID,
-            statusOrder: "accepted", diagnostic: "n/a", replacedParts: "n/a",
-            repairHistory: "n/a", totalPrice: "n/a"
+
+            const { carInfo, user: ownerCarClientInfo, carAbmissionDate,
+                description: problemDescript, typeOrder, _id: clientOrderID, _ownerId: clientOrderOwnerID } = result;
+
+            const dataServOrder = {
+                carInfo, ownerCarClientInfo, carAbmissionDate,
+                problemDescript, typeOrder, clientOrderID, clientOrderOwnerID,
+                statusOrder: "accepted", diagnostic: "n/a", replacedParts: "n/a",
+                repairHistory: "n/a", totalPrice: "n/a"
+            }
+
+            const servOrderResult = await servCarOrderServiceToken.create(dataServOrder);
+
+
+            const foundOrdersById = await servCarOrderServiceToken.getItemsByClientOrderID(clientOrderID);
+
+            if (foundOrdersById.length > 0) {
+                toggleOnAcceptState();
+                return true;
+            }
+
+            return false;
         }
-
-        const servOrderResult = await servCarOrderServiceToken.create(dataServOrder);
-
-
-        const foundOrdersById = await servCarOrderServiceToken.getItemsByClientOrderID(clientOrderID);
-
-        if (foundOrdersById.length > 0) {
-            toggleOnAcceptState();
-            return true;
+        catch (err) {
+            console.log('catched error is ', err);
+            allertError(err)
         }
-
-        return false;
 
     }
 
@@ -192,8 +202,11 @@ export const OrderListTable = () => {
 
                     {Object.values(orders).length === 0 &&
                         <>
-                            <h1 className={styles.warning}>no orders in DB or </h1>
-                            <h1 className={styles.warning} >not connected to the SERVER </h1>
+
+                            <tr><td className={styles.warning}>no orders in DB or</td></tr>
+                            <tr><td className={styles.warning}>not connected to the SERVER</td></tr>
+
+
                         </>
 
                     }

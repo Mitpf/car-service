@@ -13,6 +13,7 @@ import { formatDate } from '../../../utils/formatDate';
 import { formatDateDMY } from '../../../utils/formatDateDMY';
 
 import styles from './MyOrdersItem.module.css';
+import { allertError } from "../../../utils/allertMessage";
 
 
 
@@ -59,10 +60,17 @@ export const MyOrdersItem = ({
     }, [])
 
     const handleDeleteOk = async () => {
-        console.log('OK clicked');
+        try {
+            const result = await clientOrderTokenReq.delete(_id);
+        }
+        catch (error) {
+            console.log('catched error is ', error );
+            allertError(error)
+        }
 
-        const result = await clientOrderTokenReq.delete(_id);
-        console.log('result', result);
+
+
+
 
         navigateTo(`/user/${_ownerId}/orders`)
     }
@@ -266,7 +274,7 @@ export const MyOrdersItem = ({
                         <Link className={styles.LinkButtonRight} to={`/user/${_ownerId}/orders/`} >
                             BACK
                         </Link>
-{/* MODAL */}
+                        {/* MODAL */}
                         <div className={styles.LinkContainer}>
 
                             <ConfirmModal

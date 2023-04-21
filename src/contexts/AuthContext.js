@@ -42,7 +42,7 @@ export const AuthProvider = ({
 
         } catch (error) {
             console.log('There is a problem', error);
-            allertError('not valid username or password', error.message);
+            allertError('not valid username or password', error);
         }
     };
 
@@ -111,7 +111,7 @@ export const AuthProvider = ({
         }
         catch (error) {
             console.log('There is a problem', error);
-            allertError(`Server problem ${error.message}`)
+            allertError(`Server problem`, error);
         }
 
     };
@@ -119,10 +119,12 @@ export const AuthProvider = ({
 
     /* LOAD EXTERNAL DATA in DB with authorized requests */
 
-    const loadXdata = async () => {
+    /* const loadXdata = async () => {
         const dataArr = loadData();
 
-        dataArr.forEach(async x => {
+
+
+        const promises = dataArr.forEach(async x => {
             try {
 
                 const result = await authServTokenReq.register(x.user);
@@ -134,16 +136,44 @@ export const AuthProvider = ({
 
             }
             catch (error) {
-                console.log('There is a problem', error);
-                allertError('There is a problem', error);
+                console.log('There is a problem', error.message);
+                allertError(`There is a problem \n ${error.message}`);
             }
 
         })
+        await Promise.all(promises);
 
-    }
+        await authServTokenReq.register({ email: 'admin@abv.bg', password: 'admin' });
+    } */
 
 
+    const loadXdata = async () => {
+        try {
+          const dataArr = loadData();
+      
+          const promises = dataArr.map(async (x) => {
+            const result = await authServTokenReq.register(x.user);
+            setAuth(result);
+            const orderServiceReqToken = orderServiceRequests(result.accessToken);
+      
+            return Promise.all(
+              x.records.map(async (z) => {
+                await orderServiceReqToken.create(z);
+              })
+            );
+          });
+      
+          await Promise.all(promises);
+          //await authServTokenReq.logout();
+          localStorage.clear();
+          await authServTokenReq.login({ email: 'admin@abv.bg', password: 'admin' });
+        } catch (error) {
+          console.log('There is a problem', error.message);
+          allertError(`There is a problem \n ${error.message}`);
+        }
+      };
 
+/* authServTokenReq.login(data); */
 
     const contextValues = {
 

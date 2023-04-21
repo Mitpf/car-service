@@ -9,6 +9,7 @@ import { orderServiceRequests } from "../../../services/orderService";
 import { servCarOrderService } from "../../../services/servCarOrderService";
 import { EditServInfoModal as EditModal } from "../../Modals/EditServInfoModal";
 import { FormCreateEditServ } from '../../ServiceCreateEdit/FormCreateEditServ'
+import { allertError } from "../../../utils/allertMessage";
 
 
 
@@ -26,7 +27,7 @@ export const OrderListInfoPlus = ({
 
     const orderServiceReqToken = orderServiceRequests(token);
     const servOrderTokenReq = servCarOrderService(token);
-    const checkIsAccepted = servOrderTokenReq.checkIsAcceptedByID;
+    //const checkIsAccepted = servOrderTokenReq.checkIsAcceptedByID;
 
     const [isAccepted, setIsAccepted] = useState(false);
 
@@ -73,8 +74,9 @@ export const OrderListInfoPlus = ({
 
         }
         catch (err) {
-            console.log('error', err);
+            console.log('catched error is ', err );
             setIsAccepted(false);
+            allertError(err);
         }
 
     }, [onClickAcceptOrder])
@@ -190,7 +192,7 @@ export const OrderListInfoPlus = ({
                                         <FormCreateEditServ
                                             clientOrderID={_clientOrderID}
                                             loadFormValues={loadFormValues}
-                                            
+
                                         />
 
                                     </label>

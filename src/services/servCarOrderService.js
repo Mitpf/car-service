@@ -10,9 +10,16 @@ export const servCarOrderService = (token) => {
     const httpReqToken = httpRequests(token);
 
     const getOne = async (orderID) => {
-        const result = await httpReqToken.get((`${baseUrl}/${orderID}`));
+        try {
+            const result = await httpReqToken.get((`${baseUrl}/${orderID}`));
 
-        return result;
+            return result;
+        }
+        catch (error) {
+            console.log('error in getOne', error);
+        }
+
+
     }
 
     const create = async (orderData) => {
@@ -27,19 +34,36 @@ export const servCarOrderService = (token) => {
     const getItemsByClientOrderID = async (clientOrderID) => {
 
         const query = encodeURIComponent(`clientOrderID="${clientOrderID}"`);
+        try {
+            const result = await httpReqToken.get(`${baseUrl}?where=${query}`);
 
-        const result = await httpReqToken.get(`${baseUrl}?where=${query}`);
+            return result;
 
-        return result;
+        }
+        catch (error) {
+            console.log('clientOrder is not copied/accepted to servcar collection :', error);
+        }
+
     }
 
 
     const checkIsAcceptedByID = async (clientOrderID) => {
         const query = encodeURIComponent(`clientOrderID="${clientOrderID}"`);
 
-        const result = await httpReqToken.get(`${baseUrl}?where=${query}`);
+        try {
+            const result = await httpReqToken.get(`${baseUrl}?where=${query}`);
 
-        return result.length > 0;
+            if (result) {
+
+                return result.length > 0;
+            }
+            else { throw new Error(`check isaccepted error`) }
+
+        }
+        catch (error) {
+            console.log('error in ChecIsAccepted', error);
+        }
+
     }
 
     const getItemsByPropNameValue = async (propName, propValue) => {

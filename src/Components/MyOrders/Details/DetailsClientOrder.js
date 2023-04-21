@@ -2,12 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { AuthContext } from "../../../contexts/AuthContext";
+import { allertError } from "../../../utils/allertMessage";
 
 import { useUpdateStatusOrder } from "../../../hooks/useUpdateStatus";
 import { orderServiceRequests } from "../../../services/orderService";
 import { servCarOrderService } from "../../../services/servCarOrderService";
 
 import { MyOrdersItem } from "../MyOrders_Item/MyOrders_Item";
+
 
 export const DetailsOrder = () => {
     const { token, userId } = useContext(AuthContext);
@@ -16,7 +18,7 @@ export const DetailsOrder = () => {
     const clientOrdersTokenReq = orderServiceRequests(token);
     const servOrderTokenReq = servCarOrderService(token);
 
-    
+
     const [thisUserClientOrders, thisUserAcceptedOrders] = useUpdateStatusOrder();
 
     const initServOrderData = {
@@ -35,24 +37,52 @@ export const DetailsOrder = () => {
     useEffect(() => {
 
         async function fetchData() {
-            const result = await clientOrdersTokenReq.getOne(orderID);
-            // console.log('current client order', result);
-            setClientOrderData(result);
+
+            try {
+                const result = await clientOrdersTokenReq.getOne(orderID);
+                // console.log('current client order', result);
+                setClientOrderData(result);
+            }
+            catch (error) {
+                console.log('catched error is ', error );
+                allertError(error)
+            }
+
 
         }
+
         if (thisUserClientOrders.length > 0) {
-            fetchData();
+
+            try {
+                fetchData()
+            }
+            catch (error) {
+                console.log('catched error is ', error );
+                allertError(error);
+            }
+
         }
+
     }, [thisUserClientOrders])
 
     /* servise-info for Order from Servise DB if it is accepted at ALL */
     useEffect(() => {
-        servOrderTokenReq.getItemsByPropNameValue('clientOrderID', orderID)
-            .then(result => {
-                //console.log('result from service', result[0])
-                setServOrderData(result[0])
-            }
-            )
+
+        try {
+            servOrderTokenReq.getItemsByPropNameValue('clientOrderID', orderID)
+                .then(result => {
+                    //console.log('result from service', result[0])
+                    setServOrderData(result[0])
+                }
+                )
+
+        }
+        catch (error) {
+            console.log('catched error is ', error );
+            allertError(error);
+        }
+
+
 
     }, [])
 

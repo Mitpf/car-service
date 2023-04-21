@@ -4,6 +4,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { servCarOrderService } from "../../services/servCarOrderService";
 
 import { useForm } from "../../hooks/useForm";
+import { allertError } from "../../utils/allertMessage";
 
 
 export const FormCreateEditServ = ({
@@ -45,7 +46,8 @@ export const FormCreateEditServ = ({
                 })
         }
         catch (err) {
-            console.log('ERROR', err);
+            console.log('catched error is ', err );
+            allertError(err)
         }
 
 

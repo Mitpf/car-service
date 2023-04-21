@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { allertError } from "../utils/allertMessage";
 
 
 export const useCheckForUpdatesCond = (httpService, setStateLength, stateLength, setData,triger, depedencyArray) => {
@@ -24,6 +25,7 @@ export const useCheckForUpdatesCond = (httpService, setStateLength, stateLength,
   
         } catch (error) {
           console.error(error);
+          allertError(error);
         }
       }, 2000); // Poll every 2 seconds
   
