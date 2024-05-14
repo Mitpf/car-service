@@ -1,6 +1,9 @@
 import { httpRequests } from "./httpRequests"; 
 
-const baseUrl = `http://localhost:3030/users`;
+const prodhost = 'https://carserver-nsbr.onrender.com';
+const localhost = 'http://localhost:3030';
+const baseUrl = `${prodhost}/users`;
+
 
 export const authServiceRequests = (token) => {
     const request = httpRequests(token);

@@ -1,0 +1,26 @@
+.contdiv {
+
+    display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+
+
+.oneStory {
+    display: inline-block;
+    height: 100px;
+    width: calc(20% - 1px);
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.contdiv::after {
+    content: "";
+    flex: auto;
+  }
+
+  .contdiv > * {
+    margin: 5px;
+  }

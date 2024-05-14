@@ -1,7 +1,11 @@
 
 import { httpRequests } from "./httpRequests";
 
-const baseUrl = 'http://localhost:3030/data/servcarorders';
+
+const prodhost = 'https://carserver-nsbr.onrender.com';
+const localhost = 'http://localhost:3030';
+
+const baseUrl = `${prodhost}/data/servcarorders`;
 
 
 export const servCarOrderService = (token) => {

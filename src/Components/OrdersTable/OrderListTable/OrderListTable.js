@@ -49,7 +49,7 @@ export const OrderListTable = () => {
                 setOrders(result);
                 setOrdersLength(result.length);
             })
-            .catch(error=>console.log('Error', error))
+            .catch(error => console.log('Error', error))
 
 
     }, [loadXdata]);
@@ -186,7 +186,20 @@ export const OrderListTable = () => {
 
             </div>
 
+            {Object.values(orders).length === 0 &&
+                <>
 
+                    <div className={styles.headDiv}>
+
+                        <h1 className={styles.warning}>no orders in DB or</h1>
+
+                        <h1 className={styles.warning}>not connected to the SERVER</h1>
+                    </div>
+
+
+                </>
+
+            }
 
             <table className={styles["rwd-table"]}>
                 <tbody>
@@ -199,17 +212,7 @@ export const OrderListTable = () => {
                         <th >Calc Price</th>
                         <th >Status</th>
                     </tr>
-
-                    {Object.values(orders).length === 0 &&
-                        <>
-
-                            <tr><td className={styles.warning}>no orders in DB or</td></tr>
-                            <tr><td className={styles.warning}>not connected to the SERVER</td></tr>
-
-
-                        </>
-
-                    }
+                   
                     {
                         Object.values(orders).map(x => (
 

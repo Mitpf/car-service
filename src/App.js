@@ -21,6 +21,7 @@ import { MyOrders } from './Components/MyOrders/MyOrders';
 import { ErrorServerDisconnected } from './Components/Errors/ErrorServerDisconnected';
 import { OwnerOrder } from './Components/RouteGuards/OwnerOrder';
 import { DetailsOrder } from './Components/MyOrders/Details/DetailsClientOrder';
+import { RepairStories } from './Components/Auth/RepairStories/RepairStories';
 
 
 
@@ -46,7 +47,9 @@ function App() {
 
           <Routes>
 
-            <Route element={<IsAuthentGuard/>}>
+            <Route path='/repstories' element={<RepairStories />} />
+
+            <Route element={<IsAuthentGuard />}>
 
               <Route path='/user/auth/*' element={<AuthMainPage />} />
 

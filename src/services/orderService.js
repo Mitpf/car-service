@@ -1,7 +1,8 @@
 import { httpRequests } from "./httpRequests";
 
-
-const baseUrl = 'http://localhost:3030/data/clientorders'
+const prodhost = 'https://carserver-nsbr.onrender.com';
+const localhost = 'http://localhost:3030';
+const baseUrl = `${prodhost}/data/clientorders`;
 
 
 export const orderServiceRequests = (token) => {
@@ -27,12 +28,12 @@ export const orderServiceRequests = (token) => {
 
     const create = async (orderData) => {
         const result = await httpReqToken.post(baseUrl, orderData);
-        
+
         return result;
     }
 
 
-    const getItemsByPropNameValue = async (propName,propValue) => {
+    const getItemsByPropNameValue = async (propName, propValue) => {
         const query = encodeURIComponent(`${propName}="${propValue}"`);
 
         const result = await httpReqToken.get(`${baseUrl}?where=${query}`);
@@ -42,12 +43,12 @@ export const orderServiceRequests = (token) => {
     }
 
 
-    
+
 
 
     const edit = (orderId, data) => httpReqToken.put(`${baseUrl}/${orderId}`, data);
 
-    const update=(id, data)=>httpReqToken.patch(`${baseUrl}/${id}`, data)
+    const update = (id, data) => httpReqToken.patch(`${baseUrl}/${id}`, data)
 
     const deleteOrder = (orderId) => httpReqToken.delete(`${baseUrl}/${orderId}`);
 
@@ -58,7 +59,7 @@ export const orderServiceRequests = (token) => {
         getOne,
         edit,
         update,
-        delete:deleteOrder,
+        delete: deleteOrder,
         getItemsByPropNameValue
     }
 

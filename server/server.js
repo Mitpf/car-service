@@ -1,10 +1,11 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('http'), require('fs'), require('crypto')) :
-    typeof define === 'function' && define.amd ? define(['http', 'fs', 'crypto'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Server = factory(global.http, global.fs, global.crypto));
-}(this, (function (http, fs, crypto) { 'use strict';
+        typeof define === 'function' && define.amd ? define(['http', 'fs', 'crypto'], factory) :
+            (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Server = factory(global.http, global.fs, global.crypto));
+}(this, (function (http, fs, crypto) {
+    'use strict';
 
-    function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+    function _interopDefaultLegacy(e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
     var http__default = /*#__PURE__*/_interopDefaultLegacy(http);
     var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
@@ -13,14 +14,14 @@
     class ServiceError extends Error {
         constructor(message = 'Service Error') {
             super(message);
-            this.name = 'ServiceError'; 
+            this.name = 'ServiceError';
         }
     }
 
     class NotFoundError extends ServiceError {
         constructor(message = 'Resource not found') {
             super(message);
-            this.name = 'NotFoundError'; 
+            this.name = 'NotFoundError';
             this.status = 404;
         }
     }
@@ -28,7 +29,7 @@
     class RequestError extends ServiceError {
         constructor(message = 'Request error') {
             super(message);
-            this.name = 'RequestError'; 
+            this.name = 'RequestError';
             this.status = 400;
         }
     }
@@ -36,7 +37,7 @@
     class ConflictError extends ServiceError {
         constructor(message = 'Resource conflict') {
             super(message);
-            this.name = 'ConflictError'; 
+            this.name = 'ConflictError';
             this.status = 409;
         }
     }
@@ -44,7 +45,7 @@
     class AuthorizationError extends ServiceError {
         constructor(message = 'Unauthorized') {
             super(message);
-            this.name = 'AuthorizationError'; 
+            this.name = 'AuthorizationError';
             this.status = 401;
         }
     }
@@ -52,7 +53,7 @@
     class CredentialError extends ServiceError {
         constructor(message = 'Forbidden') {
             super(message);
-            this.name = 'CredentialError'; 
+            this.name = 'CredentialError';
             this.status = 403;
         }
     }
@@ -556,8 +557,8 @@
             if (query.pageSize) {
                 responseData = responseData.slice(0, pageSize);
             }
-    		
-    		if (query.distinct) {
+
+            if (query.distinct) {
                 const props = query.distinct.split(',').filter(p => p != '');
                 responseData = Object.values(responseData.reduce((distinct, c) => {
                     const key = props.map(p => c[p]).join('::');
@@ -793,7 +794,7 @@
     }
 
     function onRequest(context, tokens, query, body) {
-        Object.entries(body).forEach(([k,v]) => {
+        Object.entries(body).forEach(([k, v]) => {
             console.log(`${k} ${v ? 'enabled' : 'disabled'}`);
             context.util[k] = v;
         });
@@ -931,7 +932,7 @@
          * @param {Object} data Value to store. Shallow merge will be performed!
          * @return {Object} Updated entry.
          */
-         function merge(collection, id, data) {
+        function merge(collection, id, data) {
             if (!collections.has(collection)) {
                 throw new ReferenceError('Collection does not exist: ' + collection);
             }
@@ -1318,359 +1319,804 @@
 
     var identity = "email";
     var protectedData = {
-    	users: {
-    		"35c62d76-8152-4626-8712-eeb96381bea8": {
-    			email: "peter@abv.bg",
-    			username: "Peter",
-    			hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
-    		},
-    		"847ec027-f659-4086-8032-5173e2f9c93a": {
-    			email: "george@abv.bg",
-    			username: "George",
-    			hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
-    		},
-    		"60f0cf0b-34b0-4abd-9769-8c42f830dffc": {
-    			email: "admin@abv.bg",
-    			username: "Admin",
-    			hashedPassword: "fac7060c3e17e6f151f247eacb2cd5ae80b8c36aedb8764e18a41bbdc16aa302"
-    		}
-    	},
-    	sessions: {
-    	}
+        users: {
+            "35c62d76-8152-4626-8712-eeb96381bea8": {
+                email: "peter@abv.bg",
+                username: "Peter",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            },
+            "847ec027-f659-4086-8032-5173e2f9c93a": {
+                email: "george@abv.bg",
+                username: "George",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            },
+            "60f0cf0b-34b0-4abd-9769-8c42f830dffc": {
+                email: "admin@abv.bg",
+                username: "Admin",
+                hashedPassword: "fac7060c3e17e6f151f247eacb2cd5ae80b8c36aedb8764e18a41bbdc16aa302"
+            },
+            "40d0cg0b-51b0-1sxa-7996-4d42f150shfz": {
+                email: "ivan1@abv.bg",
+                username: "Ivan1",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            },
+            "b1dae8d3-dc35-49de-be4f-a8dc25aa3ffa": {
+                email: "ivan2@abv.bg",
+                username: "Ivan2",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            },
+            "5264ac31-22e6-401c-9900-1918b87bc773": {
+                email: "ivan3@abv.bg",
+                username: "Ivan3",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            },
+            "6e8b9c55-e2d4-46eb-b963-90fcc3306f22": {
+                email: "ivan4@abv.bg",
+                username: "Ivan4",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            }
+        },
+        sessions: {
+        }
     };
     var seedData = {
-    	recipes: {
-    		"3987279d-0ad4-4afb-8ca9-5b256ae3b298": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			name: "Easy Lasagna",
-    			img: "assets/lasagna.jpg",
-    			ingredients: [
-    				"1 tbsp Ingredient 1",
-    				"2 cups Ingredient 2",
-    				"500 g  Ingredient 3",
-    				"25 g Ingredient 4"
-    			],
-    			steps: [
-    				"Prepare ingredients",
-    				"Mix ingredients",
-    				"Cook until done"
-    			],
-    			_createdOn: 1613551279012
-    		},
-    		"8f414b4f-ab39-4d36-bedb-2ad69da9c830": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			name: "Grilled Duck Fillet",
-    			img: "assets/roast.jpg",
-    			ingredients: [
-    				"500 g  Ingredient 1",
-    				"3 tbsp Ingredient 2",
-    				"2 cups Ingredient 3"
-    			],
-    			steps: [
-    				"Prepare ingredients",
-    				"Mix ingredients",
-    				"Cook until done"
-    			],
-    			_createdOn: 1613551344360
-    		},
-    		"985d9eab-ad2e-4622-a5c8-116261fb1fd2": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			name: "Roast Trout",
-    			img: "assets/fish.jpg",
-    			ingredients: [
-    				"4 cups Ingredient 1",
-    				"1 tbsp Ingredient 2",
-    				"1 tbsp Ingredient 3",
-    				"750 g  Ingredient 4",
-    				"25 g Ingredient 5"
-    			],
-    			steps: [
-    				"Prepare ingredients",
-    				"Mix ingredients",
-    				"Cook until done"
-    			],
-    			_createdOn: 1613551388703
-    		}
-    	},
-    	comments: {
-    		"0a272c58-b7ea-4e09-a000-7ec988248f66": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			content: "Great recipe!",
-    			recipeId: "8f414b4f-ab39-4d36-bedb-2ad69da9c830",
-    			_createdOn: 1614260681375,
-    			_id: "0a272c58-b7ea-4e09-a000-7ec988248f66"
-    		}
-    	},
-    	records: {
-    		i01: {
-    			name: "John1",
-    			val: 1,
-    			_createdOn: 1613551388703
-    		},
-    		i02: {
-    			name: "John2",
-    			val: 1,
-    			_createdOn: 1613551388713
-    		},
-    		i03: {
-    			name: "John3",
-    			val: 2,
-    			_createdOn: 1613551388723
-    		},
-    		i04: {
-    			name: "John4",
-    			val: 2,
-    			_createdOn: 1613551388733
-    		},
-    		i05: {
-    			name: "John5",
-    			val: 2,
-    			_createdOn: 1613551388743
-    		},
-    		i06: {
-    			name: "John6",
-    			val: 3,
-    			_createdOn: 1613551388753
-    		},
-    		i07: {
-    			name: "John7",
-    			val: 3,
-    			_createdOn: 1613551388763
-    		},
-    		i08: {
-    			name: "John8",
-    			val: 2,
-    			_createdOn: 1613551388773
-    		},
-    		i09: {
-    			name: "John9",
-    			val: 3,
-    			_createdOn: 1613551388783
-    		},
-    		i10: {
-    			name: "John10",
-    			val: 1,
-    			_createdOn: 1613551388793
-    		}
-    	},
-    	catches: {
-    		"07f260f4-466c-4607-9a33-f7273b24f1b4": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			angler: "Paulo Admorim",
-    			weight: 636,
-    			species: "Atlantic Blue Marlin",
-    			location: "Vitoria, Brazil",
-    			bait: "trolled pink",
-    			captureTime: 80,
-    			_createdOn: 1614760714812,
-    			_id: "07f260f4-466c-4607-9a33-f7273b24f1b4"
-    		},
-    		"bdabf5e9-23be-40a1-9f14-9117b6702a9d": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			angler: "John Does",
-    			weight: 554,
-    			species: "Atlantic Blue Marlin",
-    			location: "Buenos Aires, Argentina",
-    			bait: "trolled pink",
-    			captureTime: 120,
-    			_createdOn: 1614760782277,
-    			_id: "bdabf5e9-23be-40a1-9f14-9117b6702a9d"
-    		}
-    	},
-    	furniture: {
-    	},
-    	orders: {
-    	},
-    	movies: {
-    		"1240549d-f0e0-497e-ab99-eb8f703713d7": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			title: "Black Widow",
-    			description: "Natasha Romanoff aka Black Widow confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Comes on the screens 2020.",
-    			img: "https://miro.medium.com/max/735/1*akkAa2CcbKqHsvqVusF3-w.jpeg",
-    			_createdOn: 1614935055353,
-    			_id: "1240549d-f0e0-497e-ab99-eb8f703713d7"
-    		},
-    		"143e5265-333e-4150-80e4-16b61de31aa0": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			title: "Wonder Woman 1984",
-    			description: "Diana must contend with a work colleague and businessman, whose desire for extreme wealth sends the world down a path of destruction, after an ancient artifact that grants wishes goes missing.",
-    			img: "https://pbs.twimg.com/media/ETINgKwWAAAyA4r.jpg",
-    			_createdOn: 1614935181470,
-    			_id: "143e5265-333e-4150-80e4-16b61de31aa0"
-    		},
-    		"a9bae6d8-793e-46c4-a9db-deb9e3484909": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			title: "Top Gun 2",
-    			description: "After more than thirty years of service as one of the Navy's top aviators, Pete Mitchell is where he belongs, pushing the envelope as a courageous test pilot and dodging the advancement in rank that would ground him.",
-    			img: "https://i.pinimg.com/originals/f2/a4/58/f2a458048757bc6914d559c9e4dc962a.jpg",
-    			_createdOn: 1614935268135,
-    			_id: "a9bae6d8-793e-46c4-a9db-deb9e3484909"
-    		}
-    	},
-    	likes: {
-    	},
-    	ideas: {
-    		"833e0e57-71dc-42c0-b387-0ce0caf5225e": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			title: "Best Pilates Workout To Do At Home",
-    			description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima possimus eveniet ullam aspernatur corporis tempore quia nesciunt nostrum mollitia consequatur. At ducimus amet aliquid magnam nulla sed totam blanditiis ullam atque facilis corrupti quidem nisi iusto saepe, consectetur culpa possimus quos? Repellendus, dicta pariatur! Delectus, placeat debitis error dignissimos nesciunt magni possimus quo nulla, fuga corporis maxime minus nihil doloremque aliquam quia recusandae harum. Molestias dolorum recusandae commodi velit cum sapiente placeat alias rerum illum repudiandae? Suscipit tempore dolore autem, neque debitis quisquam molestias officia hic nesciunt? Obcaecati optio fugit blanditiis, explicabo odio at dicta asperiores distinctio expedita dolor est aperiam earum! Molestias sequi aliquid molestiae, voluptatum doloremque saepe dignissimos quidem quas harum quo. Eum nemo voluptatem hic corrupti officiis eaque et temporibus error totam numquam sequi nostrum assumenda eius voluptatibus quia sed vel, rerum, excepturi maxime? Pariatur, provident hic? Soluta corrupti aspernatur exercitationem vitae accusantium ut ullam dolor quod!",
-    			img: "./images/best-pilates-youtube-workouts-2__medium_4x3.jpg",
-    			_createdOn: 1615033373504,
-    			_id: "833e0e57-71dc-42c0-b387-0ce0caf5225e"
-    		},
-    		"247efaa7-8a3e-48a7-813f-b5bfdad0f46c": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			title: "4 Eady DIY Idea To Try!",
-    			description: "Similique rem culpa nemo hic recusandae perspiciatis quidem, quia expedita, sapiente est itaque optio enim placeat voluptates sit, fugit dignissimos tenetur temporibus exercitationem in quis magni sunt vel. Corporis officiis ut sapiente exercitationem consectetur debitis suscipit laborum quo enim iusto, labore, quod quam libero aliquid accusantium! Voluptatum quos porro fugit soluta tempore praesentium ratione dolorum impedit sunt dolores quod labore laudantium beatae architecto perspiciatis natus cupiditate, iure quia aliquid, iusto modi esse!",
-    			img: "./images/brightideacropped.jpg",
-    			_createdOn: 1615033452480,
-    			_id: "247efaa7-8a3e-48a7-813f-b5bfdad0f46c"
-    		},
-    		"b8608c22-dd57-4b24-948e-b358f536b958": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			title: "Dinner Recipe",
-    			description: "Consectetur labore et corporis nihil, officiis tempora, hic ex commodi sit aspernatur ad minima? Voluptas nesciunt, blanditiis ex nulla incidunt facere tempora laborum ut aliquid beatae obcaecati quidem reprehenderit consequatur quis iure natus quia totam vel. Amet explicabo quidem repellat unde tempore et totam minima mollitia, adipisci vel autem, enim voluptatem quasi exercitationem dolor cum repudiandae dolores nostrum sit ullam atque dicta, tempora iusto eaque! Rerum debitis voluptate impedit corrupti quibusdam consequatur minima, earum asperiores soluta. A provident reiciendis voluptates et numquam totam eveniet! Dolorum corporis libero dicta laborum illum accusamus ullam?",
-    			img: "./images/dinner.jpg",
-    			_createdOn: 1615033491967,
-    			_id: "b8608c22-dd57-4b24-948e-b358f536b958"
-    		}
-    	},
-    	catalog: {
-    		"53d4dbf5-7f41-47ba-b485-43eccb91cb95": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			make: "Table",
-    			model: "Swedish",
-    			year: 2015,
-    			description: "Medium table",
-    			price: 235,
-    			img: "./images/table.png",
-    			material: "Hardwood",
-    			_createdOn: 1615545143015,
-    			_id: "53d4dbf5-7f41-47ba-b485-43eccb91cb95"
-    		},
-    		"f5929b5c-bca4-4026-8e6e-c09e73908f77": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			make: "Sofa",
-    			model: "ES-549-M",
-    			year: 2018,
-    			description: "Three-person sofa, blue",
-    			price: 1200,
-    			img: "./images/sofa.jpg",
-    			material: "Frame - steel, plastic; Upholstery - fabric",
-    			_createdOn: 1615545572296,
-    			_id: "f5929b5c-bca4-4026-8e6e-c09e73908f77"
-    		},
-    		"c7f51805-242b-45ed-ae3e-80b68605141b": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			make: "Chair",
-    			model: "Bright Dining Collection",
-    			year: 2017,
-    			description: "Dining chair",
-    			price: 180,
-    			img: "./images/chair.jpg",
-    			material: "Wood laminate; leather",
-    			_createdOn: 1615546332126,
-    			_id: "c7f51805-242b-45ed-ae3e-80b68605141b"
-    		}
-    	},
-    	teams: {
-    		"34a1cab1-81f1-47e5-aec3-ab6c9810efe1": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			name: "Storm Troopers",
-    			logoUrl: "/assets/atat.png",
-    			description: "These ARE the droids we're looking for",
-    			_createdOn: 1615737591748,
-    			_id: "34a1cab1-81f1-47e5-aec3-ab6c9810efe1"
-    		},
-    		"dc888b1a-400f-47f3-9619-07607966feb8": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			name: "Team Rocket",
-    			logoUrl: "/assets/rocket.png",
-    			description: "Gotta catch 'em all!",
-    			_createdOn: 1615737655083,
-    			_id: "dc888b1a-400f-47f3-9619-07607966feb8"
-    		},
-    		"733fa9a1-26b6-490d-b299-21f120b2f53a": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			name: "Minions",
-    			logoUrl: "/assets/hydrant.png",
-    			description: "Friendly neighbourhood jelly beans, helping evil-doers succeed.",
-    			_createdOn: 1615737688036,
-    			_id: "733fa9a1-26b6-490d-b299-21f120b2f53a"
-    		}
-    	},
-    	members: {
-    		"cc9b0a0f-655d-45d7-9857-0a61c6bb2c4d": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			teamId: "34a1cab1-81f1-47e5-aec3-ab6c9810efe1",
-    			status: "member",
-    			_createdOn: 1616236790262,
-    			_updatedOn: 1616236792930
-    		},
-    		"61a19986-3b86-4347-8ca4-8c074ed87591": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			teamId: "dc888b1a-400f-47f3-9619-07607966feb8",
-    			status: "member",
-    			_createdOn: 1616237188183,
-    			_updatedOn: 1616237189016
-    		},
-    		"8a03aa56-7a82-4a6b-9821-91349fbc552f": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			teamId: "733fa9a1-26b6-490d-b299-21f120b2f53a",
-    			status: "member",
-    			_createdOn: 1616237193355,
-    			_updatedOn: 1616237195145
-    		},
-    		"9be3ac7d-2c6e-4d74-b187-04105ab7e3d6": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			teamId: "dc888b1a-400f-47f3-9619-07607966feb8",
-    			status: "member",
-    			_createdOn: 1616237231299,
-    			_updatedOn: 1616237235713
-    		},
-    		"280b4a1a-d0f3-4639-aa54-6d9158365152": {
-    			_ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
-    			teamId: "dc888b1a-400f-47f3-9619-07607966feb8",
-    			status: "member",
-    			_createdOn: 1616237257265,
-    			_updatedOn: 1616237278248
-    		},
-    		"e797fa57-bf0a-4749-8028-72dba715e5f8": {
-    			_ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
-    			teamId: "34a1cab1-81f1-47e5-aec3-ab6c9810efe1",
-    			status: "member",
-    			_createdOn: 1616237272948,
-    			_updatedOn: 1616237293676
-    		}
-    	}
+        clientorders:
+        {
+            "e805a57e-476d-4193-a967-1ce9c68521fe": {
+                "_ownerId": "40d0cg0b-51b0-1sxa-7996-4d42f150shfz",
+                "user": {
+                    "flNames": "Ivan Petrovich11",
+                    "email": "ivan1@abv.bg",
+                    "phoneNumber": "0123456789"
+                },
+                "typeOrder": {
+                    "problem": false,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "Oil change",
+                    "text": "10w-40 synthetic oil to change",
+                    "photos": []
+                },
+                "carInfo": {
+                    "brandModel": "Toyota Corolla",
+                    "productDate": "2017 February",
+                    "engine": "gasoline",
+                    "km": 176355,
+                    "imageUrl": "https://carsales.pxcrush.net/car/spec/S000BHAO.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874345,
+                "_id": "e805a57e-476d-4193-a967-1ce9c68521fe"
+            },
+            "45d85642-9a4d-424b-8475-ed8a80252ec4": {
+                "_ownerId": "40d0cg0b-51b0-1sxa-7996-4d42f150shfz",
+                "user": {
+                    "flNames": "Ivan Petrovich11",
+                    "email": "ivan1@abv.bg",
+                    "phoneNumber": "0123456789"
+                },
+                "typeOrder": {
+                    "problem": true,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "accident",
+                    "text": "right front damaged, some rust to repair",
+                    "photos": [
+                        {
+                            "link": "https://cdn.motor1.com/images/mgl/Z3Yx2/s3/wrecked-subaru-forester-repair-by-arthur-tussik.webp"
+                        },
+                        {
+                            "link": "https://www.subaruforester.org/attachments/img_2538-jpg.536271/"
+                        }
+                    ]
+                },
+                "carInfo": {
+                    "brandModel": "Subaru Forester",
+                    "productDate": "2015 April",
+                    "engine": "gasoline",
+                    "km": 156355,
+                    "imageUrl": "https://automedia.investor.bg/media/files/resized/uploadedfiles/640x0/33e/5126b6d88043700c7f4c1ded7c0f633e-forester-4.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874353,
+                "_id": "45d85642-9a4d-424b-8475-ed8a80252ec4"
+            },
+            "f30f7504-40a6-44dd-9368-33a271cab75d": {
+                "_ownerId": "40d0cg0b-51b0-1sxa-7996-4d42f150shfz",
+                "user": {
+                    "flNames": "Ivan Petrovich11",
+                    "email": "ivan1@abv.bg",
+                    "phoneNumber": "0123456789"
+                },
+                "typeOrder": {
+                    "problem": true,
+                    "consumables": false
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "slow moving window",
+                    "text": "to fix a Slow Moving Power Window",
+                    "photos": []
+                },
+                "carInfo": {
+                    "brandModel": "dacia duster",
+                    "productDate": "2019 ",
+                    "engine": "gasoline",
+                    "km": 177355,
+                    "imageUrl": "https://automedia.investor.bg//media/files/resized/article/w1200x630/1ef/b83daa04d39cb7bab07cba4be6b151ef-06-1.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874364,
+                "_id": "f30f7504-40a6-44dd-9368-33a271cab75d"
+            },
+            "9d73f482-d30f-45fa-a2e5-24e1fac4b845": {
+                "_ownerId": "b1dae8d3-dc35-49de-be4f-a8dc25aa3ffa",
+                "user": {
+                    "flNames": "Ivan Petrovich22",
+                    "email": "ivan2@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": false,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "Loose wheel nut indicators change",
+                    "text": "the old one indicators stop working after 10 minutes",
+                    "photos": [
+                        {
+                            "link": "https://raneys-cdn11.imgix.net/images/stencil/1280x1280/products/195138/162402/RWCRW5810Y-1__22202.1618426094.jpg?c=2&imbypass=on"
+                        }
+                    ]
+                },
+                "carInfo": {
+                    "brandModel": "suzuki sx4",
+                    "productDate": "2018",
+                    "engine": "gasoline",
+                    "km": 189355,
+                    "imageUrl": "https://dinside.dagbladet.no/images/66617672.jpg?imageId=66617672&panow=100&panoh=58.6&panox=0&panoy=25.5&heightw=100&heighth=100&heightx=0&heighty=0&width=1200&height=675"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874379,
+                "_id": "9d73f482-d30f-45fa-a2e5-24e1fac4b845"
+            },
+            "004018c8-b015-4af0-9e12-5f8ff297a92b": {
+                "_ownerId": "b1dae8d3-dc35-49de-be4f-a8dc25aa3ffa",
+                "user": {
+                    "flNames": "Ivan Petrovich22",
+                    "email": "ivan2@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": true,
+                    "consumables": false
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "steering wheel play",
+                    "text": "there is steering wheel play, sprobably steering rack to recycle",
+                    "photos": []
+                },
+                "carInfo": {
+                    "brandModel": "Nissan Micra",
+                    "productDate": "2016 ",
+                    "engine": "gasoline",
+                    "km": 177334,
+                    "imageUrl": "https://www.auto-data.net/images/f76/Nissan-Micra-K11_1.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874383,
+                "_id": "004018c8-b015-4af0-9e12-5f8ff297a92b"
+            },
+            "18edcd34-b5eb-401b-bd4c-7536d7832b30": {
+                "_ownerId": "b1dae8d3-dc35-49de-be4f-a8dc25aa3ffa",
+                "user": {
+                    "flNames": "Ivan Petrovich22",
+                    "email": "ivan2@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": true,
+                    "consumables": false
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "door fix",
+                    "text": "back left door to fix",
+                    "photos": [
+                        {
+                            "link": "https://thumbs.dreamstime.com/b/damaged-citroen-picasso-door-167954156.jpg"
+                        }
+                    ]
+                },
+                "carInfo": {
+                    "brandModel": "citroen picasso",
+                    "productDate": "2010 April",
+                    "engine": "gasoline",
+                    "km": 156355,
+                    "imageUrl": "https://mobistatic2.focus.bg/mobile/photosorg/668/1/big//11677163486496668_I5.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874398,
+                "_id": "18edcd34-b5eb-401b-bd4c-7536d7832b30"
+            },
+            "61a1bdb2-9d0a-4537-8493-dbd314142bd4": {
+                "_ownerId": "5264ac31-22e6-401c-9900-1918b87bc773",
+                "user": {
+                    "flNames": "Ivan Petrovich33",
+                    "email": "ivan3@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": false,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "oil change",
+                    "text": "5w-30 oil castrol",
+                    "photos": []
+                },
+                "carInfo": {
+                    "brandModel": "Lada Niva",
+                    "productDate": "2000 April",
+                    "engine": "gasoline",
+                    "km": 353899,
+                    "imageUrl": "https://autobild.bg/wp-content/uploads/2017/12/Lada-Niva-729x486-d95dc0a848c502e0.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874420,
+                "_id": "61a1bdb2-9d0a-4537-8493-dbd314142bd4"
+            },
+            "7d3af0a9-6b9b-4f0b-9381-a9ffb018c193": {
+                "_ownerId": "5264ac31-22e6-401c-9900-1918b87bc773",
+                "user": {
+                    "flNames": "Ivan Petrovich33",
+                    "email": "ivan3@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": false,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "Timing belt replacement",
+                    "text": "over 50 000 km, time to change",
+                    "photos": []
+                },
+                "carInfo": {
+                    "brandModel": "Hyunday Matrix",
+                    "productDate": "2002 April",
+                    "engine": "gasoline",
+                    "km": 156355,
+                    "imageUrl": "https://cdn.autotrack.nl/cdn-cgi/image/width=1024/53414012/0-9eedeef66bb6155e33d801299b38d584.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874423,
+                "_id": "7d3af0a9-6b9b-4f0b-9381-a9ffb018c193"
+            },
+            "49a3fb57-1e03-404c-861b-d598946ba0aa": {
+                "_ownerId": "5264ac31-22e6-401c-9900-1918b87bc773",
+                "user": {
+                    "flNames": "Ivan Petrovich33",
+                    "email": "ivan3@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": true,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "engine light, less power",
+                    "text": "Reduced Engine Power, engine lights on, probably engine cables for change",
+                    "photos": [
+                        {
+                            "link": "https://townsquare.media/site/675/files/2021/02/light.jpg?w=980&q=75"
+                        }
+                    ]
+                },
+                "carInfo": {
+                    "brandModel": "Honda CRV",
+                    "productDate": "1999 december",
+                    "engine": "gasoline",
+                    "km": 280355,
+                    "imageUrl": "https://www.auto-data.net/images/f77/Honda-CR-V-I-RD.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874427,
+                "_id": "49a3fb57-1e03-404c-861b-d598946ba0aa"
+            },
+            "4c7bf4f7-9ff4-434a-9e75-b7eaac709972": {
+                "_ownerId": "6e8b9c55-e2d4-46eb-b963-90fcc3306f22",
+                "user": {
+                    "flNames": "Ivan Petrovich44",
+                    "email": "ivan4@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": true,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "brakes",
+                    "text": "cant stop easy , new pads",
+                    "photos": []
+                },
+                "carInfo": {
+                    "brandModel": "peugeot partner",
+                    "productDate": "2015 April",
+                    "engine": "gasoline",
+                    "km": 199355,
+                    "imageUrl": "https://cdn3.focus.bg/autodata/i/peugeot/partner/partner/large/47c1f5de802545dbcd3e3504e7c02cdf.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874437,
+                "_id": "4c7bf4f7-9ff4-434a-9e75-b7eaac709972"
+            },
+            "93f4d037-a056-4051-8890-97570cfe8453": {
+                "_ownerId": "6e8b9c55-e2d4-46eb-b963-90fcc3306f22",
+                "user": {
+                    "flNames": "Ivan Petrovich44",
+                    "email": "ivan4@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": true,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "noise at right",
+                    "text": "some noise at right. it seems roller change car, or some else, for diagnostic",
+                    "photos": []
+                },
+                "carInfo": {
+                    "brandModel": "SEAT CORDOBA",
+                    "productDate": "2008 April",
+                    "engine": "gasoline",
+                    "km": 188355,
+                    "imageUrl": "https://mobistatic2.focus.bg/mobile/photosorg/655/1/11652461404435655_rk.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874453,
+                "_id": "93f4d037-a056-4051-8890-97570cfe8453"
+            },
+            "fc2b8fb2-89ac-47c2-86c8-b208695497af": {
+                "_ownerId": "6e8b9c55-e2d4-46eb-b963-90fcc3306f22",
+                "user": {
+                    "flNames": "Ivan Petrovich44",
+                    "email": "ivan4@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": true,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "brakes",
+                    "text": "cant stop easy , new pads",
+                    "photos": []
+                },
+                "carInfo": {
+                    "brandModel": "peugeot partner",
+                    "productDate": "2015 April",
+                    "engine": "gasoline",
+                    "km": 199355,
+                    "imageUrl": "https://cdn3.focus.bg/autodata/i/peugeot/partner/partner/large/47c1f5de802545dbcd3e3504e7c02cdf.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874471,
+                "_id": "fc2b8fb2-89ac-47c2-86c8-b208695497af"
+            },
+            "5b9c2a1c-3062-4f41-823c-4e9211259eda": {
+                "_ownerId": "6e8b9c55-e2d4-46eb-b963-90fcc3306f22",
+                "user": {
+                    "flNames": "Ivan Petrovich44",
+                    "email": "ivan4@abv.bg",
+                    "phoneNumber": "089345687"
+                },
+                "typeOrder": {
+                    "problem": true,
+                    "consumables": true
+                },
+                "statusOrder": "not Accepted",
+                "description": {
+                    "title": "noise at right",
+                    "text": "some noise at right. it seems roller change car, or some else, for diagnostic",
+                    "photos": []
+                },
+                "carInfo": {
+                    "brandModel": "SEAT CORDOBA",
+                    "productDate": "2008 April",
+                    "engine": "gasoline",
+                    "km": 188355,
+                    "imageUrl": "https://mobistatic2.focus.bg/mobile/photosorg/655/1/11652461404435655_rk.jpg"
+                },
+                "carAbmissionDate": {
+                    "date": "2023-05-01",
+                    "hour": "14:30"
+                },
+                "_createdOn": 1715683874487,
+                "_id": "5b9c2a1c-3062-4f41-823c-4e9211259eda"
+            }
+        },
+        recipes: {
+            "3987279d-0ad4-4afb-8ca9-5b256ae3b298": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                name: "Easy Lasagna",
+                img: "assets/lasagna.jpg",
+                ingredients: [
+                    "1 tbsp Ingredient 1",
+                    "2 cups Ingredient 2",
+                    "500 g  Ingredient 3",
+                    "25 g Ingredient 4"
+                ],
+                steps: [
+                    "Prepare ingredients",
+                    "Mix ingredients",
+                    "Cook until done"
+                ],
+                _createdOn: 1613551279012
+            },
+            "8f414b4f-ab39-4d36-bedb-2ad69da9c830": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                name: "Grilled Duck Fillet",
+                img: "assets/roast.jpg",
+                ingredients: [
+                    "500 g  Ingredient 1",
+                    "3 tbsp Ingredient 2",
+                    "2 cups Ingredient 3"
+                ],
+                steps: [
+                    "Prepare ingredients",
+                    "Mix ingredients",
+                    "Cook until done"
+                ],
+                _createdOn: 1613551344360
+            },
+            "985d9eab-ad2e-4622-a5c8-116261fb1fd2": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                name: "Roast Trout",
+                img: "assets/fish.jpg",
+                ingredients: [
+                    "4 cups Ingredient 1",
+                    "1 tbsp Ingredient 2",
+                    "1 tbsp Ingredient 3",
+                    "750 g  Ingredient 4",
+                    "25 g Ingredient 5"
+                ],
+                steps: [
+                    "Prepare ingredients",
+                    "Mix ingredients",
+                    "Cook until done"
+                ],
+                _createdOn: 1613551388703
+            }
+        },
+        comments: {
+            "0a272c58-b7ea-4e09-a000-7ec988248f66": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                content: "Great recipe!",
+                recipeId: "8f414b4f-ab39-4d36-bedb-2ad69da9c830",
+                _createdOn: 1614260681375,
+                _id: "0a272c58-b7ea-4e09-a000-7ec988248f66"
+            }
+        },
+        records: {
+            i01: {
+                name: "John1",
+                val: 1,
+                _createdOn: 1613551388703
+            },
+            i02: {
+                name: "John2",
+                val: 1,
+                _createdOn: 1613551388713
+            },
+            i03: {
+                name: "John3",
+                val: 2,
+                _createdOn: 1613551388723
+            },
+            i04: {
+                name: "John4",
+                val: 2,
+                _createdOn: 1613551388733
+            },
+            i05: {
+                name: "John5",
+                val: 2,
+                _createdOn: 1613551388743
+            },
+            i06: {
+                name: "John6",
+                val: 3,
+                _createdOn: 1613551388753
+            },
+            i07: {
+                name: "John7",
+                val: 3,
+                _createdOn: 1613551388763
+            },
+            i08: {
+                name: "John8",
+                val: 2,
+                _createdOn: 1613551388773
+            },
+            i09: {
+                name: "John9",
+                val: 3,
+                _createdOn: 1613551388783
+            },
+            i10: {
+                name: "John10",
+                val: 1,
+                _createdOn: 1613551388793
+            }
+        },
+        catches: {
+            "07f260f4-466c-4607-9a33-f7273b24f1b4": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                angler: "Paulo Admorim",
+                weight: 636,
+                species: "Atlantic Blue Marlin",
+                location: "Vitoria, Brazil",
+                bait: "trolled pink",
+                captureTime: 80,
+                _createdOn: 1614760714812,
+                _id: "07f260f4-466c-4607-9a33-f7273b24f1b4"
+            },
+            "bdabf5e9-23be-40a1-9f14-9117b6702a9d": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                angler: "John Does",
+                weight: 554,
+                species: "Atlantic Blue Marlin",
+                location: "Buenos Aires, Argentina",
+                bait: "trolled pink",
+                captureTime: 120,
+                _createdOn: 1614760782277,
+                _id: "bdabf5e9-23be-40a1-9f14-9117b6702a9d"
+            }
+        },
+        furniture: {
+        },
+        orders: {
+        },
+        movies: {
+            "1240549d-f0e0-497e-ab99-eb8f703713d7": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                title: "Black Widow",
+                description: "Natasha Romanoff aka Black Widow confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Comes on the screens 2020.",
+                img: "https://miro.medium.com/max/735/1*akkAa2CcbKqHsvqVusF3-w.jpeg",
+                _createdOn: 1614935055353,
+                _id: "1240549d-f0e0-497e-ab99-eb8f703713d7"
+            },
+            "143e5265-333e-4150-80e4-16b61de31aa0": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                title: "Wonder Woman 1984",
+                description: "Diana must contend with a work colleague and businessman, whose desire for extreme wealth sends the world down a path of destruction, after an ancient artifact that grants wishes goes missing.",
+                img: "https://pbs.twimg.com/media/ETINgKwWAAAyA4r.jpg",
+                _createdOn: 1614935181470,
+                _id: "143e5265-333e-4150-80e4-16b61de31aa0"
+            },
+            "a9bae6d8-793e-46c4-a9db-deb9e3484909": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                title: "Top Gun 2",
+                description: "After more than thirty years of service as one of the Navy's top aviators, Pete Mitchell is where he belongs, pushing the envelope as a courageous test pilot and dodging the advancement in rank that would ground him.",
+                img: "https://i.pinimg.com/originals/f2/a4/58/f2a458048757bc6914d559c9e4dc962a.jpg",
+                _createdOn: 1614935268135,
+                _id: "a9bae6d8-793e-46c4-a9db-deb9e3484909"
+            }
+        },
+        likes: {
+        },
+        ideas: {
+            "833e0e57-71dc-42c0-b387-0ce0caf5225e": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                title: "Best Pilates Workout To Do At Home",
+                description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima possimus eveniet ullam aspernatur corporis tempore quia nesciunt nostrum mollitia consequatur. At ducimus amet aliquid magnam nulla sed totam blanditiis ullam atque facilis corrupti quidem nisi iusto saepe, consectetur culpa possimus quos? Repellendus, dicta pariatur! Delectus, placeat debitis error dignissimos nesciunt magni possimus quo nulla, fuga corporis maxime minus nihil doloremque aliquam quia recusandae harum. Molestias dolorum recusandae commodi velit cum sapiente placeat alias rerum illum repudiandae? Suscipit tempore dolore autem, neque debitis quisquam molestias officia hic nesciunt? Obcaecati optio fugit blanditiis, explicabo odio at dicta asperiores distinctio expedita dolor est aperiam earum! Molestias sequi aliquid molestiae, voluptatum doloremque saepe dignissimos quidem quas harum quo. Eum nemo voluptatem hic corrupti officiis eaque et temporibus error totam numquam sequi nostrum assumenda eius voluptatibus quia sed vel, rerum, excepturi maxime? Pariatur, provident hic? Soluta corrupti aspernatur exercitationem vitae accusantium ut ullam dolor quod!",
+                img: "./images/best-pilates-youtube-workouts-2__medium_4x3.jpg",
+                _createdOn: 1615033373504,
+                _id: "833e0e57-71dc-42c0-b387-0ce0caf5225e"
+            },
+            "247efaa7-8a3e-48a7-813f-b5bfdad0f46c": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                title: "4 Eady DIY Idea To Try!",
+                description: "Similique rem culpa nemo hic recusandae perspiciatis quidem, quia expedita, sapiente est itaque optio enim placeat voluptates sit, fugit dignissimos tenetur temporibus exercitationem in quis magni sunt vel. Corporis officiis ut sapiente exercitationem consectetur debitis suscipit laborum quo enim iusto, labore, quod quam libero aliquid accusantium! Voluptatum quos porro fugit soluta tempore praesentium ratione dolorum impedit sunt dolores quod labore laudantium beatae architecto perspiciatis natus cupiditate, iure quia aliquid, iusto modi esse!",
+                img: "./images/brightideacropped.jpg",
+                _createdOn: 1615033452480,
+                _id: "247efaa7-8a3e-48a7-813f-b5bfdad0f46c"
+            },
+            "b8608c22-dd57-4b24-948e-b358f536b958": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                title: "Dinner Recipe",
+                description: "Consectetur labore et corporis nihil, officiis tempora, hic ex commodi sit aspernatur ad minima? Voluptas nesciunt, blanditiis ex nulla incidunt facere tempora laborum ut aliquid beatae obcaecati quidem reprehenderit consequatur quis iure natus quia totam vel. Amet explicabo quidem repellat unde tempore et totam minima mollitia, adipisci vel autem, enim voluptatem quasi exercitationem dolor cum repudiandae dolores nostrum sit ullam atque dicta, tempora iusto eaque! Rerum debitis voluptate impedit corrupti quibusdam consequatur minima, earum asperiores soluta. A provident reiciendis voluptates et numquam totam eveniet! Dolorum corporis libero dicta laborum illum accusamus ullam?",
+                img: "./images/dinner.jpg",
+                _createdOn: 1615033491967,
+                _id: "b8608c22-dd57-4b24-948e-b358f536b958"
+            }
+        },
+        catalog: {
+            "53d4dbf5-7f41-47ba-b485-43eccb91cb95": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                make: "Table",
+                model: "Swedish",
+                year: 2015,
+                description: "Medium table",
+                price: 235,
+                img: "./images/table.png",
+                material: "Hardwood",
+                _createdOn: 1615545143015,
+                _id: "53d4dbf5-7f41-47ba-b485-43eccb91cb95"
+            },
+            "f5929b5c-bca4-4026-8e6e-c09e73908f77": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                make: "Sofa",
+                model: "ES-549-M",
+                year: 2018,
+                description: "Three-person sofa, blue",
+                price: 1200,
+                img: "./images/sofa.jpg",
+                material: "Frame - steel, plastic; Upholstery - fabric",
+                _createdOn: 1615545572296,
+                _id: "f5929b5c-bca4-4026-8e6e-c09e73908f77"
+            },
+            "c7f51805-242b-45ed-ae3e-80b68605141b": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                make: "Chair",
+                model: "Bright Dining Collection",
+                year: 2017,
+                description: "Dining chair",
+                price: 180,
+                img: "./images/chair.jpg",
+                material: "Wood laminate; leather",
+                _createdOn: 1615546332126,
+                _id: "c7f51805-242b-45ed-ae3e-80b68605141b"
+            }
+        },
+        teams: {
+            "34a1cab1-81f1-47e5-aec3-ab6c9810efe1": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                name: "Storm Troopers",
+                logoUrl: "/assets/atat.png",
+                description: "These ARE the droids we're looking for",
+                _createdOn: 1615737591748,
+                _id: "34a1cab1-81f1-47e5-aec3-ab6c9810efe1"
+            },
+            "dc888b1a-400f-47f3-9619-07607966feb8": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                name: "Team Rocket",
+                logoUrl: "/assets/rocket.png",
+                description: "Gotta catch 'em all!",
+                _createdOn: 1615737655083,
+                _id: "dc888b1a-400f-47f3-9619-07607966feb8"
+            },
+            "733fa9a1-26b6-490d-b299-21f120b2f53a": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                name: "Minions",
+                logoUrl: "/assets/hydrant.png",
+                description: "Friendly neighbourhood jelly beans, helping evil-doers succeed.",
+                _createdOn: 1615737688036,
+                _id: "733fa9a1-26b6-490d-b299-21f120b2f53a"
+            }
+        },
+        members: {
+            "cc9b0a0f-655d-45d7-9857-0a61c6bb2c4d": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                teamId: "34a1cab1-81f1-47e5-aec3-ab6c9810efe1",
+                status: "member",
+                _createdOn: 1616236790262,
+                _updatedOn: 1616236792930
+            },
+            "61a19986-3b86-4347-8ca4-8c074ed87591": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                teamId: "dc888b1a-400f-47f3-9619-07607966feb8",
+                status: "member",
+                _createdOn: 1616237188183,
+                _updatedOn: 1616237189016
+            },
+            "8a03aa56-7a82-4a6b-9821-91349fbc552f": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                teamId: "733fa9a1-26b6-490d-b299-21f120b2f53a",
+                status: "member",
+                _createdOn: 1616237193355,
+                _updatedOn: 1616237195145
+            },
+            "9be3ac7d-2c6e-4d74-b187-04105ab7e3d6": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                teamId: "dc888b1a-400f-47f3-9619-07607966feb8",
+                status: "member",
+                _createdOn: 1616237231299,
+                _updatedOn: 1616237235713
+            },
+            "280b4a1a-d0f3-4639-aa54-6d9158365152": {
+                _ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                teamId: "dc888b1a-400f-47f3-9619-07607966feb8",
+                status: "member",
+                _createdOn: 1616237257265,
+                _updatedOn: 1616237278248
+            },
+            "e797fa57-bf0a-4749-8028-72dba715e5f8": {
+                _ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                teamId: "34a1cab1-81f1-47e5-aec3-ab6c9810efe1",
+                status: "member",
+                _createdOn: 1616237272948,
+                _updatedOn: 1616237293676
+            }
+        }
     };
     var rules$1 = {
-    	users: {
-    		".create": false,
-    		".read": [
-    			"Owner"
-    		],
-    		".update": false,
-    		".delete": false
-    	},
-    	members: {
-    		".update": "isOwner(user, get('teams', data.teamId))",
-    		".delete": "isOwner(user, get('teams', data.teamId)) || isOwner(user, data)",
-    		"*": {
-    			teamId: {
-    				".update": "newData.teamId = data.teamId"
-    			},
-    			status: {
-    				".create": "newData.status = 'pending'"
-    			}
-    		}
-    	}
+        users: {
+            ".create": false,
+            ".read": [
+                "Owner"
+            ],
+            ".update": false,
+            ".delete": false
+        },
+        members: {
+            ".update": "isOwner(user, get('teams', data.teamId))",
+            ".delete": "isOwner(user, get('teams', data.teamId)) || isOwner(user, data)",
+            "*": {
+                teamId: {
+                    ".update": "newData.teamId = data.teamId"
+                },
+                status: {
+                    ".create": "newData.status = 'pending'"
+                }
+            }
+        }
     };
     var settings = {
-    	identity: identity,
-    	protectedData: protectedData,
-    	seedData: seedData,
-    	rules: rules$1
+        identity: identity,
+        protectedData: protectedData,
+        seedData: seedData,
+        rules: rules$1
     };
 
     const plugins = [

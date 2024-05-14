@@ -17,7 +17,9 @@ export const MainNavigation = () => {
   return (
 
     <Fragment>
+
       {/* ADMIN MODE NAVIGATION */}
+
       {
         isAuthenticated && isAdmin &&
 
@@ -44,7 +46,7 @@ export const MainNavigation = () => {
                 <li><Link to="/orders/list">Service Orders</Link></li>
 
                 <li><a href="#">all car-reminder LISt</a></li>
-                <li><a href="#">Repair Stories</a></li>
+                <li><Link to="/repstories">Repair Stories</Link></li>
 
                 <li><a href="#">
                   <label htmlFor="droplist1" className={styles.admin}>
@@ -86,15 +88,14 @@ export const MainNavigation = () => {
 
                 <li><NavLink
                   to={`/user/${userId}/orders`}
-                  className={({isActive}) => isActive ? styles['.activeLink'] : '' }
+                  className={({ isActive }) => isActive ? styles['.activeLink'] : ''}
                 >
                   My Orders
                 </NavLink></li>
 
 
-                <li><a href="#">Repair Stories</a></li>
+                <li><Link to="/repstories">Repair Stories</Link></li>
                 <li><a href="#">My Car Reminder</a></li>
-                <li><Link to="/user/createorder">make new Order</Link></li>
 
 
 
@@ -108,7 +109,7 @@ export const MainNavigation = () => {
                   <input type="checkbox" id="droplist1" />
 
                   <ul>
-                    
+
                     <li><Link to="/user/createorder">make new Order</Link></li>
 
                     <li><Link to="/user/auth/logout">Logout</Link></li>
@@ -125,6 +126,7 @@ export const MainNavigation = () => {
       }
 
       {/* GUEST-MODE-VIEW NAVIGATION  */}
+
       {!isAuthenticated &&
 
         <header>
@@ -135,7 +137,7 @@ export const MainNavigation = () => {
             <input type="checkbox" id="menubrop" className={styles.menubrop} />
             <ul className={styles["NavMenu"]}>
 
-              <li><a href="#">Repair Stories</a></li>
+              <li><Link to="/repstories">Repair Stories</Link></li>
               <li><a href="#">CAR-reminder demo</a></li>
               <li><a href="#">About Us</a></li>
 

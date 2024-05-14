@@ -148,29 +148,47 @@ export const AuthProvider = ({
 
 
     const loadXdata = async () => {
+
         try {
           const dataArr = loadData();
       
-          const promises = dataArr.map(async (x) => {
+          const promises = dataArr.map(async (x, index) => {
             const result = await authServTokenReq.register(x.user);
             setAuth(result);
             const orderServiceReqToken = orderServiceRequests(result.accessToken);
       
-            return Promise.all(
+            await Promise.all(
               x.records.map(async (z) => {
-                await orderServiceReqToken.create(z);
+                
+
+                if(index==dataArr.length-1){
+                    const authServiceTokenReq = authServiceRequests(result.accessToken)
+                    await Promise.all([
+                        orderServiceReqToken.create(z), localStorage.clear(),setAuth({}),
+                        authServiceTokenReq.login({ email: 'admin@abv.bg', password: 'admin' })
+                      ]);
+                  }
+
+                await orderServiceReqToken.create(z);  
+
               })
             );
+
+           
+
           });
       
           await Promise.all(promises);
-          //await authServTokenReq.logout();
-          localStorage.clear();
-          await authServTokenReq.login({ email: 'admin@abv.bg', password: 'admin' });
+
+         
+          
         } catch (error) {
           console.log('There is a problem', error.message);
           allertError(`There is a problem \n ${error.message}`);
         }
+
+
+
       };
 
 /* authServTokenReq.login(data); */
