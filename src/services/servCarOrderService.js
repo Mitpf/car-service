@@ -2,7 +2,7 @@
 import { httpRequests } from "./httpRequests";
 
 
-const prodhost = 'https://carserver-nsbr.onrender.com';
+const prodhost = 'https://carserver-mitpf-dimitar-petkovs-projects-5073153f.vercel.app';
 const localhost = 'http://localhost:3030';
 
 const baseUrl = `${prodhost}/data/servcarorders`;
