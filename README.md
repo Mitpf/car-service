@@ -1,7 +1,23 @@
-enter admin mode in separate browser or incognito browser with admin@abv.bg psw:admin
-Or register new user with admin@abv.bg
 
 
+## for admin panel/mode :
+
+enter admin mode in different browser
+ <br> (chrome for users, firefox for admin) or <br>
+incognito window with <br>
+admin@abv.bg psw: admin  <br>
+Or register new user with  <br> 
+admin@abv.bg
+
+#
+## for registered users /clients use:
+
+ivan1@abv.bg psw: 123456 <br>
+ivan2@abv.bg psw: 123456 <br>
+ivan3@abv.bg psw: 123456 <br>
+ivan4@abv.bg psw: 123456 <br>
+
+##
 
 # Getting Started with Create React App
 
